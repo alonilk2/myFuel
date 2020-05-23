@@ -5,39 +5,76 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="738.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="146.0" layoutY="8.0" opacity="0.78" prefHeight="34.0" prefWidth="328.0" text="Customer View" />
-      <VBox layoutY="50.0" prefHeight="410.0" prefWidth="144.0">
+      <ImageView fitHeight="490.0" fitWidth="647.0" layoutX="123.0" layoutY="63.0" opacity="0.18" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../AppData/Local/Temp/Pictures/gui_Porject/f7ef765679f733bd90e7775448a09aba.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="82.0" prefHeight="64.0" prefWidth="694.0" scaleShape="false" style="-fx-background-color: #420e36;">
          <children>
-            <Button mnemonicParsing="false" prefHeight="87.0" prefWidth="144.0" text="Home Page" />
-            <Button mnemonicParsing="false" prefHeight="97.0" prefWidth="149.0" text="Notifications" />
-            <Button mnemonicParsing="false" opacity="0.8" prefHeight="91.0" prefWidth="159.0" />
-            <Button mnemonicParsing="false" prefHeight="86.0" prefWidth="150.0" />
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="144.0" text="Log Out" />
+            <ImageView fitHeight="34.0" fitWidth="35.0" layoutX="646.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/user_account_profile_avatar_person_student_male-512.png" />
+               </image>
+            </ImageView>
          </children>
-      </VBox>
-      <AnchorPane layoutX="142.0" layoutY="26.0" prefHeight="432.0" prefWidth="588.0">
+      </AnchorPane>
+      <AnchorPane layoutX="-1.0" prefHeight="550.0" prefWidth="124.0" scaleShape="false" style="-fx-background-color: #420e36;">
+         <children>
+            <Label layoutX="44.0" layoutY="24.0" prefHeight="27.0" prefWidth="76.0" text="MyFuel" textFill="#fffdfd">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Button layoutX="10.0" layoutY="72.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="103.0" style="-fx-background-color: #420e36;" text="Home Page" textFill="#eeeded">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button layoutX="9.0" layoutY="136.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="114.0" style="-fx-background-color: #420e36;" text="Notifications" textFill="#eeeded">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button layoutX="4.0" layoutY="494.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="114.0" style="-fx-background-color: #420e36;" text="Log Out" textFill="#eeeded">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="34.0" fitWidth="45.0" layoutX="9.0" layoutY="14.0" opacity="0.75" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/gas-icon-6150.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="144.0" layoutY="75.0" prefHeight="432.0" prefWidth="588.0">
          <children>
             <ImageView fitHeight="335.0" fitWidth="582.0" layoutX="4.0" layoutY="112.0" opacity="0.18" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../AppData/Local/Temp/Pictures/gui_Porject/f7ef765679f733bd90e7775448a09aba.jpg" />
                </image>
             </ImageView>
-            <Label layoutX="363.0" layoutY="130.0" text="Fast Fuel" />
-            <Label layoutX="50.0" layoutY="130.0" text="Order Fuel For Home Use" />
-            <Label layoutX="59.0" layoutY="313.0" text="Tracking orders" />
-            <Button id="orderfuelhomebtn" layoutX="84.0" layoutY="78.0" mnemonicParsing="false" text="Order Fuel For Home Use" onAction="#onOrderFuelClick" />
-            <Button layoutX="363.0" layoutY="91.0" mnemonicParsing="false" text="Fast Fuel" />
-            <Button layoutX="74.0" layoutY="273.0" mnemonicParsing="false" text="Tracking orders" />
+            <Button id="orderfuelhomebtn" layoutX="42.0" layoutY="120.0" mnemonicParsing="false" onAction="#onOrderFuelClick" prefHeight="55.0" prefWidth="195.0" style="-fx-background-color: #420e36;" text="Order Fuel For Home Use" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="12.0" />
+               </font>
+            </Button>
+            <Button layoutX="321.0" layoutY="120.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="195.0" style="-fx-background-color: #420e36;" text="Fast Fuel" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="trackbutton" layoutX="42.0" layoutY="272.0" mnemonicParsing="false" onAction="#onTrackOrderClick" prefHeight="55.0" prefWidth="195.0" style="-fx-background-color: #420e36;" text="Tracking orders" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="12.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
-      <ImageView fitHeight="54.0" fitWidth="76.0" layoutX="7.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../AppData/Local/Temp/Rar$DIa16452.39826/iconfinder_fuel_103260.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>

@@ -6,8 +6,8 @@ import java.util.ResourceBundle;
 
 import com.gluonhq.charm.glisten.control.Icon;
 
-import gui.OrderFuelForHomeUseController;
 import gui.OrderFuelForHomeUseForm;
+import gui.TrackOrderForm;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,9 +25,17 @@ public class mainCustomerController implements Initializable {
 	private static final int DEFAULT_PORT = 5555;
 	@FXML 
 	private Button orderfuelhomebtn;
+	@FXML 
+	private Button trackbutton;
 	@FXML
 	private void onOrderFuelClick(ActionEvent event) throws Exception {
 		OrderFuelForHomeUseForm newform = new OrderFuelForHomeUseForm(client, mainStage);
+		client.setClientIF(newform);
+		newform.start(mainStage);
+	}
+	@FXML
+	private void onTrackOrderClick(ActionEvent event) throws Exception {
+		TrackOrderForm newform = new TrackOrderForm(client, mainStage);
 		client.setClientIF(newform);
 		newform.start(mainStage);
 	}
@@ -37,12 +45,14 @@ public class mainCustomerController implements Initializable {
 	}
 	public void setStage(Stage mainStage) {
 		this.mainStage = mainStage;
+    	client.setMainStage(mainStage);
 	}
 	public mainCustomerController(String args, Object ClientUI) {
 	    String host = "localhost";
 	    try 
 	    {
 	    	client = new ClientController(host, DEFAULT_PORT, ClientUI);
+	    	
 	    } 
 	    catch(IOException exception) 
 	    {

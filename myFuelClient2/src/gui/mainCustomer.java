@@ -1,4 +1,4 @@
-package gui;
+ package gui;
 
 import common.ClientIF;
 import control.mainCustomerController;
@@ -19,6 +19,9 @@ public class mainCustomer extends Application implements ClientIF {
 	public static void main(String[] args) {
 		mainCustomer mc = new mainCustomer();
 		launch(args);
+	}
+	public Stage getMainStage() {
+		return mainStage;
 	}
 	@Override
 	public void start(Stage primaryStage) throws Exception {

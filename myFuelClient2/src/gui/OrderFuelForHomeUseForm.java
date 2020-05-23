@@ -2,6 +2,7 @@ package gui;
 
 import common.ClientIF;
 import control.ClientController;
+import control.OrderFuelForHomeUseController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
