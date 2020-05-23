@@ -30,6 +30,7 @@ public class EchoServer extends AbstractServer
   
   //Global Lists ****************************************************
   private List<Order> ordersList;
+  private List<HomeFuelOrder> HomeFuelOrdersList;
   private List<FuelType> fuelTypesList;
   
   //Controllers *****************************************************
@@ -66,7 +67,8 @@ public class EchoServer extends AbstractServer
 				  if(genID == -1) client.sendToClient(false);
 				  else {
 					  newOrder.setOrderID(genID);
-					  ordersList.add(newOrder);					  
+					  ordersList.add(newOrder);				
+					  HomeFuelOrdersList.add(newOrder);
 					  client.sendToClient(true);
 				  }
 			  }
@@ -114,12 +116,22 @@ public class EchoServer extends AbstractServer
 					stm.setString(2, param[1]);
 					rs = stm.executeQuery();
 					if(rs.next()) 
-						for(int i=1; i<=5; i++)
+						for(int i=1; i<=6; i++)
 							retlist.add(rs.getString(i));
 					else return;
+					qrytempl = "SELECT u.username, u.password, u.firstname, u.lastname, u.email, c.customerid, c.customertype, c.purchaseplan,"
+							+ " c.creditcard FROM user u LEFT JOIN customer c On u.userid = c.customerid WHERE c.customerid = ?";
+					stm = conn.prepareStatement(qrytempl);
+					stm.setString(1, rs.getString(6));
+					rs = stm.executeQuery();
+					if(rs.next()) {
+						Customer c = new Customer(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), 
+								rs.getString(5), rs.getInt(6), CustomerType.valueOf(rs.getString(7)), PurchasePlan.valueOf(rs.getString(8)), rs.getString(9));
+						client.sendToClient(c);
+					}
 					usercontrol.createNewUserInstance(retlist);
 				}
-				catch (SQLException e) {
+				catch (SQLException | IOException e) {
 					e.printStackTrace();
 				}
 				break;
@@ -127,6 +139,24 @@ public class EchoServer extends AbstractServer
 			//pull is for getting info without any constraints
 			case "pull":
 			{
+				firstWord = firstWord[1].split(" ", 2);
+				//
+				//		Pull HomeFuelOrder List for Customer
+				//
+				if(firstWord[0].equals("homefuelorder")) { // => firstWord[1] = customerID
+					List<HomeFuelOrder> customerlist = new ArrayList<HomeFuelOrder>();
+					for(HomeFuelOrder h : HomeFuelOrdersList) {
+						if(h.getCustomerID() == Integer.parseInt(firstWord[1])) {
+							customerlist.add(h);
+						}
+					}
+					try {
+						client.sendToClient(customerlist);
+						break;
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 				try {
 					list = new ArrayList<List<Object>>();
 					qrytempl = "SELECT * FROM employees e LEFT JOIN user u ON u.email = e.email";
@@ -222,6 +252,7 @@ public class EchoServer extends AbstractServer
     //
     ordersList = new ArrayList<Order>();
     fuelTypesList = new ArrayList<FuelType>();
+    HomeFuelOrdersList = new ArrayList<HomeFuelOrder>();
     Connection conn = sqlcontrol.getConnection();
     Statement stm;
     ResultSet rs;
@@ -238,9 +269,20 @@ public class EchoServer extends AbstractServer
 		//Initialize Orders List
 		rs = stm.executeQuery("SELECT * FROM orders");
 		while(rs.next()) {
-			for(int i = 1; i <= 5; i++) {
-				Order o = new Order(rs.getInt(1), rs.getDouble(2), getFuelTypeFromString(rs.getString(3)), rs.getDouble(4), rs.getDate(5).toLocalDate());
+			for(int i = 1; i <= 6; i++) {
+				Order o = new Order(rs.getInt(1), rs.getDouble(2), getFuelTypeFromString(rs.getString(3)),
+						rs.getDouble(4), rs.getDate(5).toLocalDate(), rs.getInt(6));
 				ordersList.add(o);
+			}
+		}
+		//Initialize HomeFuelOrders List
+		rs = stm.executeQuery("SELECT h.orderid, h.status, h.scheduled, h.address, h.fastsupply, o.ordersum, o.fueltype, o.quantity, o.orderdate, o.customerid FROM homefuelorder h INNER JOIN orders o ON h.orderid = o.orderid");
+		while(rs.next()) {
+			for(int i = 1; i <= 5; i++) {
+				HomeFuelOrder o = new HomeFuelOrder(rs.getInt(1), rs.getDouble(6), getFuelTypeFromString(rs.getString(7)),
+						rs.getDouble(8), rs.getDate(9).toLocalDate(),OrderStatus.valueOf(rs.getString(2)),
+						rs.getDate(3).toLocalDate(), rs.getString(4), rs.getBoolean(5), rs.getInt(10));
+				HomeFuelOrdersList.add(o);
 			}
 		}
 	} catch (SQLException e) {
