@@ -221,7 +221,20 @@ public class RequestDBController {
 				}
 				return;
 			}
-			
+			case "fueltypetemp": { 
+				List<fueltypeTemp> pList = new ArrayList<fueltypeTemp>();
+				for(fueltypeTemp h : tempFuelList) {
+					if(h.getStatus().equals("wait")) { 
+						pList.add(h);
+					}
+				}
+				try {
+					client.sendToClient(pList);
+				} catch (IOException e) {
+						e.printStackTrace();
+				}
+				break;
+			}
 		}
 	}
 }

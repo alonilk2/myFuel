@@ -121,11 +121,9 @@ public class mainAdminController implements Initializable {
 	
 	public void getTableDataFromDB() {
 		String msg = "pull fueltypetemp";
-		//client.handleMessageFromClientUI(msg);
 		try {
 			client.sendToServer(msg);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
