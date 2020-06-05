@@ -27,8 +27,7 @@ public class OrderFromSupplierDBController {
 			ResultSet rs = stm.executeQuery("SELECT * FROM orderfromsupplier");
 			while(rs.next()) {
 				OrderFromSupplier o = new OrderFromSupplier(rs.getInt(1), OrderStatus.valueOf(rs.getString(2)),
-						EmployeeDBController.getEmployeeFromID(rs.getInt(3)),
-						Server.getFTControl().getFuelTypeFromString(rs.getString(4)), rs.getDouble(5));
+						Server.getFTControl().getFuelTypeFromString(rs.getString(3)), rs.getDouble(4));
 				orderFromSupplierList.add(o);
 			}
 			return true;

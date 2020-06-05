@@ -17,6 +17,7 @@ import Entity.OrderStatus;
 import Entity.Request;
 import Entity.User;
 import common.ClientIF;
+import gui.LoginForm;
 import gui.OrderFuelForHomeUseForm;
 import gui.TrackOrderForm;
 import javafx.application.Application;
@@ -55,22 +56,36 @@ public class mainFuelSupplierController implements Initializable {
 	@FXML
 	private TextField orderidinput;
 	@FXML
-	private ChoiceBox<OrderStatus> statuschoicebox;
+	private ChoiceBox<String> statuschoicebox;
 	@FXML 
 	private Button updatebutton;
+	@FXML 
+	private Button logoutbutton;
 	private ObservableList<OrderFromSupplier> olist;
 	@FXML
 	private void onUpdateClick(ActionEvent event) throws Exception {
-
+		String status = statuschoicebox.getSelectionModel().getSelectedItem();
+		String orderID = orderidinput.getText();
+		String msg = "update orderstatus " + orderID + " " + status;
+		Request req = new Request(msg);
+		client.sendToServer(req);
+		client.displayAlert(true, "Fuel order status has been updated successfully!");
+	}
+	@FXML
+	private void OnLogOutClick(ActionEvent event) throws Exception {
+		client.restartApplication(null);
 	}
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		getTableDataFromDB();
+		statuschoicebox.getItems().add(OrderStatus.DELIVERED.toString());
+		statuschoicebox.getItems().add(OrderStatus.PREPARING.toString());
+		statuschoicebox.getItems().add(OrderStatus.SHIPPING.toString());
 	}
 	
 	public void getTableDataFromDB() {
 		Employee fuelsupplier = (Employee)client.getCurrentProfile();
-		String msg = "pull orderfromsupplier "+fuelsupplier.getEmployeeid();
+		String msg = "pull orderfromsupplier";
 		Request req = new Request(msg);
 		try {
 			client.sendToServer(req);

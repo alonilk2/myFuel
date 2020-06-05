@@ -30,6 +30,32 @@ public class RequestDBController {
 			case "Price": { handlePriceRequest(Req, client); break; }
 			case "approve": { handleApprovePriceRequest(Req, client); break; }
 			case "rejecte": { handleRejectPriceRequest(Req, client); break; }
+			case "update": { handleUpdateRequest(Req, client); break; }
+		}
+	}
+	private void handleUpdateRequest(Request Req, ConnectionToClient client) {
+		switch(Req.getRequestComponent(1)) {
+			case "orderstatus" : {
+				ListIterator<OrderFromSupplier> l = Server.getOFSControl().getListIterator();
+				while(l.hasNext()) {
+					OrderFromSupplier tempOrder = l.next();
+					if(tempOrder.getorderID() == Integer.parseInt(Req.getRequestComponent(2))) {
+						tempOrder.setOrderStatus(OrderStatus.valueOf(Req.getRequestComponent(3)));
+						String qry;
+						PreparedStatement stm;
+						qry = "UPDATE orderfromsupplier SET status=? WHERE orderid = ? ";
+						try {
+							stm = conn.prepareStatement(qry);
+							stm.setString(1, tempOrder.getOrderStatus().toString());
+							stm.setInt(2, tempOrder.getorderID());
+							stm.execute();
+						}
+						 catch (SQLException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
 		}
 	}
 	private void handleBoundryRequest(Request Req, ConnectionToClient client) {
@@ -181,12 +207,8 @@ public class RequestDBController {
 			case "orderfromsupplier": {
 				List<OrderFromSupplier> orderslist = new ArrayList<OrderFromSupplier>();
 				ListIterator<OrderFromSupplier> liter = Server.getOFSControl().getListIterator();
-				while(liter.hasNext()) {
-					OrderFromSupplier tempOrder = liter.next();
-					if(tempOrder.getFuelSupplier().getEmployeeid() == Integer.parseInt(Req.getRequestComponent(2))){
-						orderslist.add(tempOrder);
-					}
-				}
+				while(liter.hasNext()) 
+					orderslist.add(liter.next());
 				try {
 					client.sendToClient(orderslist);
 				} catch (IOException e) {
@@ -221,7 +243,7 @@ public class RequestDBController {
 				}
 				return;
 			}
-			case "fueltypetemp": { 
+			/*case "fueltypetemp": { 
 				List<fueltypeTemp> pList = new ArrayList<fueltypeTemp>();
 				for(fueltypeTemp h : tempFuelList) {
 					if(h.getStatus().equals("wait")) { 
@@ -234,7 +256,7 @@ public class RequestDBController {
 						e.printStackTrace();
 				}
 				break;
-			}
+			}*/
 		}
 	}
 }

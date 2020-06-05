@@ -9,6 +9,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.lang.management.ManagementFactory;
 import java.util.List;
 
 import Entity.Customer;
@@ -54,6 +55,63 @@ public class ClientController extends AbstractClient
 public void setMainPage(ClientIF mainPage) {
 	this.mainPage = mainPage;
 }
+public static final String SUN_JAVA_COMMAND = "sun.java.command";
+
+/**
+ * Restart the current Java application
+ * @param runBeforeRestart some custom code to be run before restarting
+ * @throws IOException
+ */
+public void restartApplication(Runnable runBeforeRestart) throws IOException {
+	try {
+		// java binary
+		String java = System.getProperty("java.home") + "/bin/java";
+		// vm arguments
+		List<String> vmArguments = ManagementFactory.getRuntimeMXBean().getInputArguments();
+		StringBuffer vmArgsOneLine = new StringBuffer();
+		for (String arg : vmArguments) {
+			if (!arg.contains("-agentlib")) {
+				vmArgsOneLine.append(arg);
+				vmArgsOneLine.append(" ");
+			}
+		}
+		final StringBuffer cmd = new StringBuffer("\"" + java + "\" " + vmArgsOneLine);
+		String[] mainCommand = System.getProperty(SUN_JAVA_COMMAND).split(" ");
+		// program main is a jar
+		if (mainCommand[0].endsWith(".jar")) {
+			// if it's a jar, add -jar mainJar
+			cmd.append("-jar " + new File(mainCommand[0]).getPath());
+		} else {
+			// else it's a .class, add the classpath and mainClass
+			cmd.append("-cp \"" + System.getProperty("java.class.path") + "\" " + mainCommand[0]);
+		}
+		// finally add program arguments
+		for (int i = 1; i < mainCommand.length; i++) {
+			cmd.append(" ");
+			cmd.append(mainCommand[i]);
+		}
+		// execute the command in a shutdown hook, to be sure that all the
+		// resources have been disposed before restarting the application
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run() {
+				try {
+					Runtime.getRuntime().exec(cmd.toString());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		// execute some custom code before restarting
+		if (runBeforeRestart!= null) {
+			runBeforeRestart.run();
+		}
+		// exit
+		System.exit(0);
+		} catch (Exception e) {
+			throw new IOException("Error while trying to restart the application", e);
+		}
+	}
 public void handleMessageFromServer(Object msg) 
   {
 		if(msg instanceof Boolean) {

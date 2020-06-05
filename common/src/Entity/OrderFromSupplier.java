@@ -11,7 +11,6 @@ import iF.SQLReady;
 public class OrderFromSupplier implements Serializable, SQLReady {
 	private Integer orderID;
 	private OrderStatus orderStatus;
-	private Employee fuelSupplier;
 	private FuelType fuelType;
 	private Double quantity;
 	public OrderFromSupplier(OrderStatus orderStatus, FuelType fuelType, Double quantity) {
@@ -19,9 +18,8 @@ public class OrderFromSupplier implements Serializable, SQLReady {
 		this.fuelType = fuelType;
 		this.quantity = quantity;
 	}
-	public OrderFromSupplier(int orderID, OrderStatus orderStatus, Employee fuelSupplier, FuelType fuelType, Double quantity) {
+	public OrderFromSupplier(int orderID, OrderStatus orderStatus, FuelType fuelType, Double quantity) {
 		this.orderID = orderID;
-		this.fuelSupplier = fuelSupplier;
 		this.orderStatus = orderStatus;
 		this.fuelType = fuelType;
 		this.quantity = quantity;
@@ -31,12 +29,6 @@ public class OrderFromSupplier implements Serializable, SQLReady {
 	}
 	public void setOrderStatus(OrderStatus orderStatus) {
 		this.orderStatus = orderStatus;
-	}
-	public Employee getFuelSupplier() {
-		return fuelSupplier;
-	}
-	public void setFuelSupplier(Employee fuelSupplier) {
-		this.fuelSupplier = fuelSupplier;
 	}
 	public FuelType getFuelType() {
 		return fuelType;
