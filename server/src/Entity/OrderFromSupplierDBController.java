@@ -12,11 +12,13 @@ import control.sqlController;
 
 public class OrderFromSupplierDBController {
 	private List<OrderFromSupplier> orderFromSupplierList;
-	public OrderFromSupplierDBController(sqlController sqlcontrol) {
+	private sqlController sqlcontrol;
+	private EchoServer Server;
+	public OrderFromSupplierDBController(sqlController sqlcontrol, EchoServer Server) {
 		this.sqlcontrol = sqlcontrol;
+		this.Server = Server;
 		orderFromSupplierList = new ArrayList<OrderFromSupplier>();
 	}
-	private sqlController sqlcontrol;
 
 	public boolean initializeList() {
 		//Initialize Orders List
@@ -26,7 +28,7 @@ public class OrderFromSupplierDBController {
 			while(rs.next()) {
 				OrderFromSupplier o = new OrderFromSupplier(rs.getInt(1), OrderStatus.valueOf(rs.getString(2)),
 						EmployeeDBController.getEmployeeFromID(rs.getInt(3)),
-						FuelTypesDBController.getFuelTypeFromString(rs.getString(4)), rs.getDouble(5));
+						Server.getFTControl().getFuelTypeFromString(rs.getString(4)), rs.getDouble(5));
 				orderFromSupplierList.add(o);
 			}
 			return true;

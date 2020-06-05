@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import Entity.User;
 import common.ClientIF;
+import gui.FastFuelForm;
 import gui.OrderFuelForHomeUseForm;
 import gui.TrackOrderForm;
 import javafx.application.Application;
@@ -26,9 +27,17 @@ public class mainCustomerController implements Initializable {
 	private Button orderfuelhomebtn;
 	@FXML 
 	private Button trackbutton;
+	@FXML 
+	private Button fastfuelbutton;
 	@FXML
 	private void onOrderFuelClick(ActionEvent event) throws Exception {
 		OrderFuelForHomeUseForm newform = new OrderFuelForHomeUseForm(client, mainStage);
+		client.setClientIF(newform);
+		newform.start(mainStage);
+	}
+	@FXML
+	private void onFastFuelClick(ActionEvent event) throws Exception {
+		FastFuelForm newform = new FastFuelForm(client, mainStage);
 		client.setClientIF(newform);
 		newform.start(mainStage);
 	}

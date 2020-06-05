@@ -22,11 +22,86 @@ public class RequestDBController {
 		this.conn = sqlcontrol.getConnection();
 		this.Server = server;
 	}
-	
 	public void requestParser(Request Req, ConnectionToClient client) {
 		switch(Req.getRequestComponent(0)) {
 			case "login": { handleLoginRequestFromClient(Req, client); break; }
 			case "pull": { handlePullRequestFromClient(Req, client); break; }
+			case "boundery": { handleBoundryRequest(Req, client); break; }
+			case "Price": { handlePriceRequest(Req, client); break; }
+			case "approve": { handleApprovePriceRequest(Req, client); break; }
+			case "rejecte": { handleRejectPriceRequest(Req, client); break; }
+		}
+	}
+	private void handleBoundryRequest(Request Req, ConnectionToClient client) {
+		String qry;
+		PreparedStatement stm;
+		System.out.println("arrive: "+Req.getRequestComponent(0));
+		String bound = Req.getRequestComponent(1);;
+		String type = Req.getRequestComponent(2);;
+		qry = "UPDATE fueltype SET lowfuelbound=? WHERE name=? ";
+		try {
+			stm = conn.prepareStatement(qry);
+			stm.setString(1, bound);
+			stm.setString(2,type);
+			stm.execute();
+		}
+		 catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void handlePriceRequest(Request Req, ConnectionToClient client) {
+		PreparedStatement stm;
+		String bound = Req.getRequestComponent(1);
+		String type = Req.getRequestComponent(2);
+		String qry = "INSERT INTO fueltypetemp VALUES (?,?,?) ";
+		try {
+			stm = conn.prepareStatement(qry);
+			stm.setString(2, bound);
+			stm.setString(1,type);
+			stm.setString(3, "wait");
+			stm.execute();
+		}
+		 catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	private void handleApprovePriceRequest(Request Req, ConnectionToClient client) {
+		PreparedStatement stm;
+		String name = Req.getRequestComponent(1);
+		String newPrice = Req.getRequestComponent(2);
+		String qry = "UPDATE fueltype SET price=? WHERE name=? ";
+		try {
+			stm = conn.prepareStatement(qry);
+			stm.setString(2, name);
+			stm.setString(1,newPrice);
+			stm.execute();
+		}
+		 catch (SQLException e) {
+			e.printStackTrace();
+		}
+		qry = "DELETE FROM fueltypetemp WHERE name=? ";
+		try {
+			stm = conn.prepareStatement(qry);
+			stm.setString(1, name);
+			stm.execute();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void handleRejectPriceRequest(Request Req, ConnectionToClient client) {
+		PreparedStatement stm;
+		String name = Req.getRequestComponent(1);
+		String qry = "DELETE FROM fueltypetemp WHERE name=? ";
+		try {
+			stm = conn.prepareStatement(qry);
+			stm.setString(1, name);
+			stm.execute();
+		}
+		 catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -85,57 +160,68 @@ public class RequestDBController {
 	
 	private void handlePullRequestFromClient(Request Req, ConnectionToClient client) {
 		switch(Req.getRequestComponent(1)) {
-		case "homefuelorder": {
-			List<HomeFuelOrder> customerList = new ArrayList<HomeFuelOrder>();
-			ListIterator<HomeFuelOrder> liter = Server.getHFOControl().getListIterator();
-			while(liter.hasNext()) {
-				HomeFuelOrder tempOrder = liter.next();
-				if(tempOrder.getCustomerID() == Integer.parseInt(Req.getRequestComponent(2))) {
-					customerList.add(tempOrder);
+			case "homefuelorder": {
+				List<HomeFuelOrder> customerList = new ArrayList<HomeFuelOrder>();
+				ListIterator<HomeFuelOrder> liter = Server.getHFOControl().getListIterator();
+				while(liter.hasNext()) {
+					HomeFuelOrder tempOrder = liter.next();
+					if(tempOrder.getCustomerID() == Integer.parseInt(Req.getRequestComponent(2))) {
+						customerList.add(tempOrder);
+					}
 				}
-			}
-			try {
-				client.sendToClient(customerList);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return;
-		}
-
-		//		Pull Orders From Supplier List for Fuel Supplier
-		case "orderfromsupplier": {
-			List<OrderFromSupplier> orderslist = new ArrayList<OrderFromSupplier>();
-			ListIterator<OrderFromSupplier> liter = Server.getOFSControl().getListIterator();
-			while(liter.hasNext()) {
-				OrderFromSupplier tempOrder = liter.next();
-				if(tempOrder.getFuelSupplier().getEmployeeid() == Integer.parseInt(Req.getRequestComponent(2))){
-					orderslist.add(tempOrder);
-				}
-			}
-			try {
-				client.sendToClient(orderslist);
-			} catch (IOException e) {
+				try {
+					client.sendToClient(customerList);
+				} catch (IOException e) {
 					e.printStackTrace();
-			}
-			return;
-		}
-		
-		case "FuelType": {
-			try {
-				List<List<Object>> list = new ArrayList<List<Object>>();
-				PreparedStatement stm = conn.prepareStatement("SELECT * FROM FuelType");
-				ResultSet rs = stm.executeQuery();
-				while(rs.next()) {
-					List<Object> templist = new ArrayList<Object>();
-					for(int x=1; x<=5; x++) 
-						templist.add(rs.getString(x));
-					list.add(templist);
 				}
+				return;
+			}
+	
+			//		Pull Orders From Supplier List for Fuel Supplier
+			case "orderfromsupplier": {
+				List<OrderFromSupplier> orderslist = new ArrayList<OrderFromSupplier>();
+				ListIterator<OrderFromSupplier> liter = Server.getOFSControl().getListIterator();
+				while(liter.hasNext()) {
+					OrderFromSupplier tempOrder = liter.next();
+					if(tempOrder.getFuelSupplier().getEmployeeid() == Integer.parseInt(Req.getRequestComponent(2))){
+						orderslist.add(tempOrder);
+					}
+				}
+				try {
+					client.sendToClient(orderslist);
+				} catch (IOException e) {
+						e.printStackTrace();
+				}
+				return;
+			}
+			
+			case "FuelType": {
+				try {
+					List<List<Object>> list = new ArrayList<List<Object>>();
+					PreparedStatement stm = conn.prepareStatement("SELECT * FROM FuelType");
+					ResultSet rs = stm.executeQuery();
+					while(rs.next()) {
+						List<Object> templist = new ArrayList<Object>();
+						for(int x=1; x<=5; x++) 
+							templist.add(rs.getString(x));
+						list.add(templist);
+					}
 					client.sendToClient(list);
-				} catch (IOException | SQLException e) {
+				} 
+				catch (IOException | SQLException e) {
 					e.printStackTrace();
 				}
 			}
+			case "car": {
+				List<Car> list = Server.getCarControl().getCarListByCustomer(Integer.parseInt(Req.getRequestComponent(2)));
+				try {
+					client.sendToClient(list);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				return;
+			}
+			
 		}
 	}
 }

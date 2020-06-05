@@ -12,7 +12,7 @@ import java.util.List;
 import control.sqlController;
 
 public class FuelTypesDBController {
-	private static List<FuelType> fuelTypesList;
+	private List<FuelType> fuelTypesList;
 	private sqlController sqlcontrol;
 
 	public FuelTypesDBController(sqlController sqlcontrol) {
@@ -37,9 +37,9 @@ public class FuelTypesDBController {
 	public boolean updateFuelQuantity(FuelType ft, Double qty) {
 		try {
 			PreparedStatement stm = sqlcontrol.getConnection().prepareStatement("UPDATE fueltype SET quantity = ? where name = ?");
-			stm.setDouble(1, ft.getQuantity()+qty);
+			stm.setDouble(1, ft.getQuantity()-qty);
 			stm.setString(2, ft.getName());
-			ft.setQuantity(ft.getQuantity() + qty);
+			ft.setQuantity(ft.getQuantity() - qty);
 			stm.execute();
 			return true;
 		} catch (SQLException e) {
@@ -47,14 +47,14 @@ public class FuelTypesDBController {
 		}
 	return false;
 	}
-	public static FuelType getFuelTypeFromString(String name) {
+	public FuelType getFuelTypeFromString(String name) {
 		for(FuelType x : fuelTypesList) {
 			if(x.getName().equals(name))
 				return x;
 		}
 		return null;
 	}
-	public static FuelType findEqualFuelType(FuelType fuelType) {
+	public FuelType findEqualFuelType(FuelType fuelType) {
 		  for(FuelType f : fuelTypesList) {
 			  if(f.equals(fuelType)) {
 				  return f;

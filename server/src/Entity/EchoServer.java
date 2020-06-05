@@ -41,6 +41,8 @@ public class EchoServer extends AbstractServer
   private EmployeeDBController EmployeeControl;
   private OrderFromSupplierDBController OFSControl;
   private RequestDBController ReqControl;
+  private CarDBController CarControl;
+
   
   //Constructors ****************************************************
   
@@ -71,7 +73,19 @@ public class EchoServer extends AbstractServer
 			  if(msg instanceof HomeFuelOrder) {
 				  HomeFuelOrder newOrder = (HomeFuelOrder)msg;
 				  HFOControl.addNewOrderToDB(newOrder, client);
-				  FuelType tempFuelType = FuelTypesDBController.findEqualFuelType(newOrder.getFueltype());
+				  //Reduce Specific Fuel Type Stock:
+				  FuelType tempFuelType = FTControl.findEqualFuelType(newOrder.getFueltype());
+				  if(tempFuelType != null) {
+					  FTControl.updateFuelQuantity(tempFuelType, newOrder.getQuantity());
+					  if(FTControl.checkFuelStock(tempFuelType).booleanValue())
+						  OFSControl.createNewOrderFromFuelSupplier(tempFuelType);
+				  }
+			  }
+			  if(msg instanceof Order) {
+				  Order newOrder = (Order)msg;
+				  OrderControl.addNewOrderToDB(newOrder, client);
+				  FuelType tempFuelType = FTControl.findEqualFuelType(newOrder.getFueltype());
+				  //Reduce Specific Fuel Type Stock:
 				  if(tempFuelType != null) {
 					  FTControl.updateFuelQuantity(tempFuelType, newOrder.getQuantity());
 					  if(FTControl.checkFuelStock(tempFuelType).booleanValue())
@@ -105,6 +119,13 @@ public class EchoServer extends AbstractServer
 	public void setHFOControl(HomeFuelOrderDBController hFOControl) {
 		HFOControl = hFOControl;
 	}
+	  public CarDBController getCarControl() {
+			return CarControl;
+		}
+
+		public void setCarControl(CarDBController carControl) {
+			CarControl = carControl;
+		}
 
 	public OrderDBController getOrderControl() {
 		return OrderControl;
@@ -167,11 +188,12 @@ protected void serverStarted()
   }
   private void init() {
 	  FTControl = new FuelTypesDBController(sqlcontrol);
-	  OrderControl = new OrderDBController(sqlcontrol);
-	  HFOControl = new HomeFuelOrderDBController(sqlcontrol, OrderControl);
+	  OrderControl = new OrderDBController(sqlcontrol, this);
+	  HFOControl = new HomeFuelOrderDBController(sqlcontrol, OrderControl, this);
 	  EmployeeControl = new EmployeeDBController(sqlcontrol);
-	  OFSControl = new OrderFromSupplierDBController(sqlcontrol);
+	  OFSControl = new OrderFromSupplierDBController(sqlcontrol, this);
 	  ReqControl = new RequestDBController(sqlcontrol, this);
+	  CarControl = new CarDBController(sqlcontrol, this);
 	    //////////////////////////////////////////////////////
 	    //			Initialize Server Lists & Variables		//
 	    //						On start up					//
@@ -181,6 +203,7 @@ protected void serverStarted()
 	    HFOControl.initializeList();
 	    EmployeeControl.initializeList();
 	    OFSControl.initializeList();
+	    CarControl.initializeList();
   }
   public static void main(String[] args) 
   {

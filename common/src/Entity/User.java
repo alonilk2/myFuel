@@ -9,13 +9,21 @@ public class User implements Serializable{
 	protected String firstname;
 	protected String lastname;
 	protected String email;
+	protected int userid;
 	
-	public User(String username, String password, String firstname, String lastname, String email) {
+	public User(String username, String password, String firstname, String lastname, String email, int userid) {
 		this.username = username;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.password = password;
 		this.email = email;
+		this.userid = userid;
+	}
+	public int getUserid() {
+		return userid;
+	}
+	public void setUserid(int userid) {
+		this.userid = userid;
 	}
 	public String getUsername() {
 		return username;

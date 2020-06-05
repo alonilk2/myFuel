@@ -19,10 +19,12 @@ public class HomeFuelOrderDBController {
 
 	private sqlController sqlcontrol;
 	private OrderDBController OrderController;
+	private EchoServer Server;
 	private List<HomeFuelOrder> HomeFuelOrdersList;
-	public HomeFuelOrderDBController(sqlController sqlcontrol, OrderDBController OrderController) {
+	public HomeFuelOrderDBController(sqlController sqlcontrol, OrderDBController OrderController, EchoServer Server) {
 		this.sqlcontrol = sqlcontrol;
 		this.OrderController = OrderController;
+		this.Server = Server;
 		HomeFuelOrdersList = new ArrayList<HomeFuelOrder>();
 	}
 	
@@ -74,7 +76,7 @@ public class HomeFuelOrderDBController {
 					+ " o.ordersum, o.fueltype, o.quantity, o.orderdate, o.customerid FROM homefuelorder h"
 					+ " INNER JOIN orders o ON h.orderid = o.orderid");
 			while(rs.next()) {
-				HomeFuelOrder o = new HomeFuelOrder(rs.getInt(1), rs.getDouble(6), FuelTypesDBController.getFuelTypeFromString(rs.getString(7)),
+				HomeFuelOrder o = new HomeFuelOrder(rs.getInt(1), rs.getDouble(6), Server.getFTControl().getFuelTypeFromString(rs.getString(7)),
 					rs.getDouble(8), rs.getDate(9).toLocalDate(),OrderStatus.valueOf(rs.getString(2)),
 					rs.getDate(3).toLocalDate(), rs.getString(4), rs.getBoolean(5), rs.getInt(10));
 				HomeFuelOrdersList.add(o);

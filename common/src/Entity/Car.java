@@ -9,34 +9,34 @@ import java.sql.SQLException;
 import iF.SQLReady;
 
 public class Car implements Serializable, SQLReady{
-	private int CustomerID;
-	private int CarID;
-	private String FuelType;
+	private Integer CustomerID;
+	private Integer CarID;
+	private FuelType FuelType;
 
-	public Car(int customerID, int carID, String fuelType) {
+	public Car(Integer customerID, Integer carID, FuelType fuelType) {
 		this.CustomerID = customerID;
 		this.CarID = carID;
 		this.FuelType = fuelType;
 
 	}
-	public int getCustomerID() {
+	public Integer getCustomerID() {
 		return CustomerID;
 	}
-	public void setCustomerID(int customerID) {
+	public void setCustomerID(Integer customerID) {
 		CustomerID = customerID;
 	}
 	
-	public int getCarID() {
+	public Integer getCarID() {
 		return CarID;
 	}
-	public void setCarID(int carID) {
+	public void setCarID(Integer carID) {
 		CarID = carID;
 	}
 	
-	public String getFuelType() {
+	public FuelType getFuelType() {
 		return FuelType;
 	}
-	public void setFuelType(String fuelType) {
+	public void setFuelType(FuelType fuelType) {
 		FuelType = fuelType;
 	}
 	
@@ -56,7 +56,7 @@ public class Car implements Serializable, SQLReady{
 						stm = conn.prepareStatement(qry);
 						stm.setInt(1, this.getCustomerID());
 						stm.setInt(2, carID);
-						stm.setString(3, this.getFuelType());
+						stm.setString(3, this.getFuelType().getName());
 						stm.execute();
 						return carID;
 					} catch (SQLException e) {

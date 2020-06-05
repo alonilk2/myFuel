@@ -18,9 +18,12 @@ import javafx.application.Application;
 import common.ClientIF;
 import gui.LoginForm;
 import gui.OrderFuelForHomeUseForm;
+import gui.mainAdmin;
 import gui.mainCustomer;
 import gui.mainFuelSupplier;
 import gui.mainMarketingRepresentative;
+import gui.mainStationManager;
+import gui.marketingManagerMain;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -97,7 +100,28 @@ public class LoginController implements Initializable {
 				client.setMainPage(newform);
 				client.setCurrentProfile((Employee)msg);
 				newform.start(mainStage); 
-		}
+			}
+			else if(((Employee) msg).getRole().equals(Role.ADMINISTRATOR)) {
+				mainAdmin newform = new mainAdmin(client, mainStage);
+				client.setClientIF(newform);
+				client.setMainPage(newform);
+				client.setCurrentProfile((Employee)msg);
+				newform.start(mainStage); 
+			}
+			else if(((Employee) msg).getRole().equals(Role.MARKETING_MANAGER)) {
+				marketingManagerMain newform = new marketingManagerMain(client, mainStage);
+				client.setClientIF(newform);
+				client.setMainPage(newform);
+				client.setCurrentProfile((Employee)msg);
+				newform.start(mainStage); 
+			}
+			else if(((Employee) msg).getRole().equals(Role.STATION_MANAGER)) {
+				mainStationManager newform = new mainStationManager(client, mainStage);
+				client.setClientIF(newform);
+				client.setMainPage(newform);
+				client.setCurrentProfile((Employee)msg);
+				newform.start(mainStage); 
+			}
 		}
 		else if (msg instanceof Customer) {
 			mainCustomer newform = new mainCustomer(client, mainStage);

@@ -16,7 +16,7 @@ public class UserController {
 	}
 
 	public User createNewUserInstance(List<String> retobj) {
-		User nuser = new User(retobj.get(3), retobj.get(4), retobj.get(0), retobj.get(1), retobj.get(2));
+		User nuser = new User(retobj.get(3), retobj.get(4), retobj.get(0), retobj.get(1), retobj.get(2), Integer.parseInt(retobj.get(5)));
 		connectedUsers.add(nuser);
 		System.out.println(connectedUsers);
 		return nuser;

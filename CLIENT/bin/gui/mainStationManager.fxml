@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="738.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="146.0" layoutY="8.0" opacity="0.78" prefHeight="34.0" prefWidth="328.0" text="Station manager" />
+      <VBox layoutY="50.0" prefHeight="410.0" prefWidth="144.0">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="87.0" prefWidth="144.0" text="Home Page" />
+            <Button mnemonicParsing="false" prefHeight="97.0" prefWidth="149.0" text="Notifications" />
+            <Button mnemonicParsing="false" prefHeight="91.0" prefWidth="159.0" />
+            <Button mnemonicParsing="false" prefHeight="86.0" prefWidth="150.0" />
+            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="144.0" text="Log Out" />
+         </children>
+      </VBox>
+      <AnchorPane layoutX="142.0" layoutY="26.0" prefHeight="432.0" prefWidth="588.0">
+         <children>
+            <Label layoutX="318.0" layoutY="180.0" text="Set Low fuel Boundery" />
+            <Label layoutX="114.0" layoutY="180.0" text="Generating Reports" />
+            <Label layoutX="111.0" layoutY="297.0" text="Confirm New Orders" />
+            <Label layoutX="445.0" layoutY="-10.0" text="Israel Israeli " textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="95.0" layoutY="63.0" text="Welcome to MyFuel !" textFill="#10045e">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Button layoutX="140.0" layoutY="132.0" mnemonicParsing="false" text="Generating Reports" />
+            <Button layoutX="111.0" layoutY="248.0" mnemonicParsing="false" text="Confirm New Orders" />
+            <Button fx:id="LowFuelBound" layoutX="309.0" layoutY="132.0" mnemonicParsing="false" onAction="#onLowFuelBound" text="Set Low Fuel Boundery" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
