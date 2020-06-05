@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="243.0" prefWidth="530.0" style="-fx-background-color: #57b4ff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiServer.ServerWindow">
+   <children>
+      <Label layoutX="30.0" layoutY="14.0" prefHeight="36.0" prefWidth="231.0" text="Server Connection" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnConnect" layoutX="320.0" layoutY="78.0" mnemonicParsing="false" onMouseClicked="#connectedBtnClicked" onMouseEntered="#connectedBtnHover" onMouseExited="#connectedBtnExit" prefHeight="54.0" prefWidth="161.0" style="-fx-background-color: #058015;" text="Connect" textFill="WHITE" />
+      <Button fx:id="btnDisconnect" layoutX="320.0" layoutY="164.0" mnemonicParsing="false" onMouseClicked="#disConnectedBtnClicked" onMouseEntered="#disConnectedBtnHover" onMouseExited="#disConnectedBtnExit" prefHeight="54.0" prefWidth="161.0" style="-fx-background-color: #bc0404;" text="Disconnect " textFill="WHITE" />
+      <ImageView fx:id="imgStatus" fitHeight="36.0" fitWidth="49.0" layoutX="251.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../Downloads/gas-icon-6150.png" />
+         </image>
+      </ImageView>
+      <GridPane layoutX="33.0" layoutY="78.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Host:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfHost" prefHeight="25.0" prefWidth="76.0" text="localhost" GridPane.columnIndex="1" />
+            <Label text="Schema:" GridPane.rowIndex="2">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfSchema" prefHeight="25.0" prefWidth="76.0" text="myfuel" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Port:" GridPane.rowIndex="1">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfPort" prefHeight="25.0" prefWidth="76.0" text="5555" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Username:" GridPane.rowIndex="3">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="Password:" GridPane.rowIndex="4">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfUsername" prefHeight="25.0" prefWidth="76.0" text="root" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <PasswordField fx:id="tfPassword" text="1234" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
