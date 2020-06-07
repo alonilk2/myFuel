@@ -43,7 +43,8 @@ public class HomeFuelOrderDBController {
 			stm.setDouble(3, newOrder.getQuantity());
 			stm.setObject(4, newOrder.getOrderDate());
 			stm.setInt(5, newOrder.getCustomerID());
-			newOrder.getFueltype().updateFuelQuantity(conn, newOrder.getQuantity());
+			FuelType temp = Server.getFTControl().findEqualFuelType(newOrder.getFueltype());
+			Server.getFTControl().updateFuelQuantity(temp, newOrder.getQuantity());
 			stm.execute();
 			qry = "SELECT orderid FROM orders ORDER BY orderid DESC LIMIT 1";
 			stm = conn.prepareStatement(qry);

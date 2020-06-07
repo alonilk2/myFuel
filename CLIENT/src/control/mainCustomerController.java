@@ -30,10 +30,16 @@ public class mainCustomerController implements Initializable {
 	@FXML 
 	private Button fastfuelbutton;
 	@FXML
+	private Button logoutbutton;
+	@FXML
 	private void onOrderFuelClick(ActionEvent event) throws Exception {
 		OrderFuelForHomeUseForm newform = new OrderFuelForHomeUseForm(client, mainStage);
 		client.setClientIF(newform);
 		newform.start(mainStage);
+	}
+	@FXML
+	private void onLogOutClick(ActionEvent event) throws Exception {
+		client.restartApplication(null);
 	}
 	@FXML
 	private void onFastFuelClick(ActionEvent event) throws Exception {

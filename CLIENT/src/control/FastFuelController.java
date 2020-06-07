@@ -44,11 +44,18 @@ public class FastFuelController implements Initializable {
 				if(c.getCarID() == Integer.parseInt(caridcombo.getSelectionModel().getSelectedItem()))
 					car = c;
 			if(car != null) {
+				if(car.getFuelType().getQuantity() < Liters)
+				{
+					client.displayAlert(false, "Sorry, we don't have enough fuel in this moment. Please come back later.");
+					return;
+				}
 				float orderSum = car.getFuelType().getPrice()*Liters;
 				newOrder = new Order(orderSum, car.getFuelType(), Liters, LocalDate.now(), car.getCustomerID());
+				car.getFuelType().setQuantity(car.getFuelType().getQuantity()-Liters);
 			}
 			try {
 				client.sendToServer(newOrder);
+				client.displayAlert(true, "Your car has been refueled! Drive safe.");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

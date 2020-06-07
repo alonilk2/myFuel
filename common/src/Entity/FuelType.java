@@ -48,6 +48,7 @@ public class FuelType implements Serializable{
 	public boolean setQuantity(Double quantity) {
 		if(quantity < 0) return false;
 		this.quantity = quantity;
+		return true;
 	}
 
 	public float getPrice() {

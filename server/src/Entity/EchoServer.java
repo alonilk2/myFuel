@@ -53,11 +53,14 @@ public class EchoServer extends AbstractServer
     usercontrol = new UserController();
   }
 
-  public void handleMessageFromClient(Object msg, ConnectionToClient client)
-  {
+  public void handleMessageFromClient(Object msg, ConnectionToClient client)  {
 	System.out.println("Message received: " + msg + " from " + client);
 	if(msg instanceof Request) {
-		ReqControl.requestParser((Request)msg, client);
+		try {
+			ReqControl.requestParser((Request)msg, client);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return;
 	}
 	else try {

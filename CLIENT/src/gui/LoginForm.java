@@ -31,6 +31,7 @@ public class LoginForm extends Application implements ClientIF {
 			fxmload.setLocation(getClass().getResource("LoginFXML.fxml"));
 			fxmload.setController(loginctrl);
 			AnchorPane root = (AnchorPane)fxmload.load();
+			
 			Scene scene = new Scene(root,384,240);
 			//scene.getStylesheets().add(getClass().getResource("loginCSS.css").toExternalForm());
 			primaryStage.setScene(scene);

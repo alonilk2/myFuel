@@ -71,6 +71,7 @@ public class LoginController implements Initializable {
 	                + " Terminating client.");
 	    	System.exit(1);
 	    }
+
 	}
 	
 	
@@ -139,6 +140,9 @@ public class LoginController implements Initializable {
 	public void getObjectFromUI(Object msg) throws Exception {
 		if(msg instanceof User)
 			successLogin((User)msg);
+		else if(msg instanceof Boolean) {
+			client.displayAlert(false, "Username'\'Password is incorrect!");
+		}
 	}
 	public void setClientIF(ClientIF lgnScreen)
 	{
@@ -158,7 +162,7 @@ public class LoginController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+	    LgnButton.setDefaultButton(true);
 	}
 }
 	

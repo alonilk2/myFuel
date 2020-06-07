@@ -22,9 +22,14 @@ public class RequestDBController {
 		this.conn = sqlcontrol.getConnection();
 		this.Server = server;
 	}
-	public void requestParser(Request Req, ConnectionToClient client) {
+	public void requestParser(Request Req, ConnectionToClient client) throws IOException {
 		switch(Req.getRequestComponent(0)) {
-			case "login": { handleLoginRequestFromClient(Req, client); break; }
+			case "login": { 
+				if(!handleLoginRequestFromClient(Req, client)) {
+					client.sendToClient(false); //Report the client about login failure
+				}
+				break; 
+			}
 			case "pull": { handlePullRequestFromClient(Req, client); break; }
 			case "boundery": { handleBoundryRequest(Req, client); break; }
 			case "Price": { handlePriceRequest(Req, client); break; }
@@ -55,6 +60,7 @@ public class RequestDBController {
 						}
 					}
 				}
+				break;
 			}
 		}
 	}
@@ -131,7 +137,7 @@ public class RequestDBController {
 		}
 	}
 	
-	private void handleLoginRequestFromClient(Request Req, ConnectionToClient client) {
+	private boolean handleLoginRequestFromClient(Request Req, ConnectionToClient client) {
 		PreparedStatement stm;
 		ResultSet rs;
 		List<String> retList = new ArrayList<String>();
@@ -144,7 +150,7 @@ public class RequestDBController {
 			if(rs.next()) 
 				for(int i=1; i<=6; i++)
 					retList.add(rs.getString(i));
-			else return;
+			else return false;
 			Server.getUsercontrol().createNewUserInstance(retList);
 			String tempID = rs.getString(6);
 			//
@@ -160,7 +166,7 @@ public class RequestDBController {
 				Customer c = new Customer(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), 
 						rs.getString(5), rs.getInt(6), CustomerType.valueOf(rs.getString(7)), rs.getString(8));
 				client.sendToClient(c);
-				return;
+				return true;
 			}
 			//
 			//			Check if the user is an Employee
@@ -177,10 +183,11 @@ public class RequestDBController {
 						rs.getString(2));
 				client.sendToClient(e);
 			}
-			return;
+			return true;
 		}
 		catch (SQLException | IOException e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 	
