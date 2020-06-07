@@ -41,6 +41,8 @@ public class OrderFuelForHomeUseController implements Initializable {
 	@FXML
 	private CheckBox fast_suppl;
 	@FXML
+	private Button logoutbutton;
+	@FXML
 	private void onConfirmClick(ActionEvent event){
 		try {
 			String addr = address_input.getText();
@@ -79,7 +81,10 @@ public class OrderFuelForHomeUseController implements Initializable {
 		client.getMainPage().start(client.getMainStage());
 		client.setClientIF(client.getMainPage());
 	}
-	
+	@FXML
+	private void onLogOutClick(ActionEvent event) throws Exception {
+		client.restartApplication(null);
+	}
 	public OrderFuelForHomeUseController(ClientController client) {
 		this.client=client;
 	}

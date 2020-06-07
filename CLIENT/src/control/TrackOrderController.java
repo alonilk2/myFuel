@@ -35,6 +35,8 @@ public class TrackOrderController implements Initializable {
 	private TableColumn<HomeFuelOrder, Boolean> fastsupp;
 	@FXML
 	private TableColumn<HomeFuelOrder, String> orderstatus;
+	@FXML
+	private Button logoutbutton;
 	@FXML 
 	private Button homepagebutton;
 	private ObservableList<HomeFuelOrder> olist;
@@ -43,7 +45,10 @@ public class TrackOrderController implements Initializable {
 		client.getMainPage().start(client.getMainStage());
 		client.setClientIF(client.getMainPage());
 	}
-	
+	@FXML
+	private void onLogOutClick(ActionEvent event) throws Exception {
+		client.restartApplication(null);
+	}
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		try {
