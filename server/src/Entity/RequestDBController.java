@@ -200,7 +200,7 @@ public class RequestDBController {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				return;
+				break;
 			}
 	
 			//		Pull Orders From Supplier List for Fuel Supplier
@@ -214,7 +214,7 @@ public class RequestDBController {
 				} catch (IOException e) {
 						e.printStackTrace();
 				}
-				return;
+				break;
 			}
 			
 			case "FuelType": {
@@ -233,6 +233,7 @@ public class RequestDBController {
 				catch (IOException | SQLException e) {
 					e.printStackTrace();
 				}
+				break;
 			}
 			case "car": {
 				List<Car> list = Server.getCarControl().getCarListByCustomer(Integer.parseInt(Req.getRequestComponent(2)));

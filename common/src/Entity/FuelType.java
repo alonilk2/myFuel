@@ -45,7 +45,8 @@ public class FuelType implements Serializable{
 		return this.stat;
 	}
 
-	public void setQuantity(Double quantity) {
+	public boolean setQuantity(Double quantity) {
+		if(quantity < 0) return false;
 		this.quantity = quantity;
 	}
 
@@ -63,23 +64,6 @@ public class FuelType implements Serializable{
 
 	public void setLowFuelBound(Double lowFuelBound) {
 		this.lowFuelBound = lowFuelBound;
-	}
-
-	
-	//	Updates fuel quantity using the equation: [OldQuantity]+[qty]
-	//	Returns the new quantity
-	public Double updateFuelQuantity(Connection conn, Double qty) {
-		try {
-			PreparedStatement stm = conn.prepareStatement("UPDATE fueltype SET quantity = ? where name = ?");
-			stm.setDouble(1, this.quantity+qty);
-			stm.setString(2, this.name);
-			this.quantity = this.quantity+qty;
-			stm.execute();
-			return this.quantity;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	return 0.0;
 	}
 	@Override
 	public int hashCode() {
