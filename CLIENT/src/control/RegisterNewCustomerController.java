@@ -1,17 +1,28 @@
 package control;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.ResourceBundle;
+
 import Entity.Customer;
 import Entity.CustomerType;
+import Entity.FuelCompany;
+import Entity.FuelCompanyApproach;
+import Entity.PurchasePlan;
+import Entity.Request;
 import Entity.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 
-public class RegisterNewCustomerController {
+public class RegisterNewCustomerController implements Initializable {
 	
 		private ClientController client;
 
@@ -40,8 +51,17 @@ public class RegisterNewCustomerController {
 		@FXML
 		private Button cancel_btn;
 		@FXML
+		private ChoiceBox<String> approach;
+		@FXML
+		private ChoiceBox<String> comp1;
+		@FXML
+		private ChoiceBox<String> comp2;
+		@FXML
+		private ChoiceBox<String> comp3;
+		@FXML
+		private ChoiceBox<String> purchaseplan;
+		@FXML
 		private Button homepagebutton;
-		
 		@FXML
 		private void onConfirmClick(ActionEvent event){
 			try {
@@ -66,8 +86,18 @@ public class RegisterNewCustomerController {
 				if(business_customer)
 					customerType=CustomerType.businesscustomer;
 				else customerType=CustomerType.privatecustomer;
+				PurchasePlan chosenPlan = PurchasePlan.valueOf(purchaseplan.getSelectionModel().getSelectedItem());
+				FuelCompanyApproach chosenApp = FuelCompanyApproach.valueOf(approach.getSelectionModel().getSelectedItem());
+				String chosenComp1 = comp1.getSelectionModel().getSelectedItem();
+				String chosenComp2 = null;
+				String chosenComp3 = null;
+				if(chosenApp.equals(FuelCompanyApproach.MULTI)) {
+					chosenComp2 = comp2.getSelectionModel().getSelectedItem();
+					chosenComp3 = comp3.getSelectionModel().getSelectedItem();
+				}
 				User user = new User(first_name,last_name,eMail,user_name,pass_word,Integer.parseInt(IDnum));
-				Customer customer = new Customer(first_name,last_name,eMail,user_name,pass_word,Integer.parseInt(IDnum),customerType,credit_card);
+				Customer customer = new Customer(first_name,last_name,eMail,user_name,pass_word,Integer.parseInt(IDnum),customerType,credit_card
+						, chosenPlan, chosenApp, chosenComp1, chosenComp2, chosenComp3);
 				
 				//	Update new customer 
 				customer.setPhoneNumber(phone_number);
@@ -82,7 +112,16 @@ public class RegisterNewCustomerController {
 			}
 		}
 
-	
+		public void getDataFromDB() {
+			String msg = "pull newcustomerformdata";
+			Request req = new Request(msg);
+			try {
+				client.sendToServer(req);
+			} catch (IOException e) {
+				client.displayAlert(false, "Error: Couldn't send message to server!");
+				e.printStackTrace();
+			}
+		}
 		@FXML
 		private void onCancelClick(ActionEvent event){
 			try {
@@ -104,8 +143,28 @@ public class RegisterNewCustomerController {
 		}
 		
 		public void getObjectFromUI(Object msg) {
-			@SuppressWarnings("unchecked")
-			List<List<Object>> list = (List<List<Object>>)msg;
+			if(msg instanceof List) {
+				@SuppressWarnings("unchecked")
+				List<FuelCompany> list = (ArrayList<FuelCompany>)msg;
+				ListIterator<FuelCompany> liter = list.listIterator();
+				while(liter.hasNext()) {
+					String name = liter.next().getCompanyName();
+					comp1.getItems().add(name);
+					comp2.getItems().add(name);
+					comp3.getItems().add(name);
+				}
+				approach.getItems().add("UNIQUE");
+				approach.getItems().add("MULTI");
+				purchaseplan.getItems().add("FULL_MONTHLY_SUBSCRIPTION");
+				purchaseplan.getItems().add("REGULAR_FUEL");
+				purchaseplan.getItems().add("MONTHLY_SUBSCRIPTION_SINGLE");
+				purchaseplan.getItems().add("MONTHLY_SUBSCRIPTION_MANY");
+			}
+		}
+
+		@Override
+		public void initialize(URL location, ResourceBundle resources) {
+			getDataFromDB();
 		}
 		
 }

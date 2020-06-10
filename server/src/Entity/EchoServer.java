@@ -40,6 +40,7 @@ public class EchoServer extends AbstractServer
   private RequestDBController ReqControl;
   private CarDBController CarControl;
   private FuelTypeTempDBController FTTControl;
+  private FuelCompanyDBController FCController;
 
   
   //Constructors ****************************************************
@@ -81,6 +82,7 @@ public class EchoServer extends AbstractServer
 					  if(FTControl.checkFuelStock(tempFuelType).booleanValue())
 						  OFSControl.createNewOrderFromFuelSupplier(tempFuelType);
 				  }
+				  return;
 			  }
 			  if(msg instanceof Order) {
 				  Order newOrder = (Order)msg;
@@ -88,12 +90,12 @@ public class EchoServer extends AbstractServer
 				  FuelType tempFuelType = FTControl.findEqualFuelType(newOrder.getFueltype());
 				  //Reduce Specific Fuel Type Stock:
 				  if(tempFuelType != null) {
-					  FTControl.updateFuelQuantity(tempFuelType, newOrder.getQuantity());
 					  if(FTControl.checkFuelStock(tempFuelType).booleanValue())
 						  OFSControl.createNewOrderFromFuelSupplier(tempFuelType);
 				  }
+				  return;
 			  }
-			   else if (msg instanceof Customer) {
+			  else if (msg instanceof Customer) {
 				  Customer customer=(Customer)msg;
 				  User user=(User)msg;
 				  int userID = user.createNewAddSqlStatementUser(sqlcontrol.getConnection());
@@ -102,6 +104,7 @@ public class EchoServer extends AbstractServer
 				  else {
 					  client.sendToClient(true);
 				  }
+				  return;
 			  }
 			  else if (msg instanceof Car) {
 				  Car car=(Car)msg;
@@ -110,6 +113,7 @@ public class EchoServer extends AbstractServer
 				  else {
 					  client.sendToClient(true);
 				  }
+				  return;
 			  }
 		  }
 	  }
@@ -198,6 +202,7 @@ protected void serverStarted()
 	  ReqControl = new RequestDBController(sqlcontrol, this);
 	  CarControl = new CarDBController(sqlcontrol, this);
 	  FTTControl = new FuelTypeTempDBController(sqlcontrol);
+	  FCController = new FuelCompanyDBController(sqlcontrol);
 	    //////////////////////////////////////////////////////
 	    //			Initialize Server Lists & Variables		//
 	    //						On start up					//
@@ -208,9 +213,18 @@ protected void serverStarted()
 	    EmployeeControl.initializeList();
 	    OFSControl.initializeList();
 	    CarControl.initializeList();
+	    FCController.initializeList();
 	    //FTTControl.initializeList();
   }
-  public static void main(String[] args) 
+  public FuelCompanyDBController getFCController() {
+	return FCController;
+}
+
+public void setFCController(FuelCompanyDBController fCController) {
+	FCController = fCController;
+}
+
+public static void main(String[] args) 
   {
     int port = 0;
     try

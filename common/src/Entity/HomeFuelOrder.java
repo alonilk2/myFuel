@@ -19,16 +19,17 @@ public class HomeFuelOrder extends Order implements Serializable, SQLReady {
 	private String address;
 	private Boolean fastSupply;
 	public HomeFuelOrder(double orderSum, FuelType fueltype, double quantity, LocalDate orderDate,
-			OrderStatus status, LocalDate scheduled, String address, Boolean fastSupply, int customerid) {
-		super(orderSum, fueltype, quantity, orderDate, customerid);
+			OrderStatus status, LocalDate scheduled, String address, Boolean fastSupply, int customerid, FuelCompany comp) {
+		super(orderSum, fueltype, quantity, orderDate, customerid, comp);
 		this.status = status;
 		this.scheduled = scheduled;
 		this.address = address;
 		this.fastSupply = fastSupply;
 	}
+
 	public HomeFuelOrder(int orderid, double orderSum, FuelType fueltype, double quantity, LocalDate orderDate,
-			OrderStatus status, LocalDate scheduled, String address, Boolean fastSupply, int customerid) {
-		super(orderid, orderSum, fueltype, quantity, orderDate, customerid);
+			OrderStatus status, LocalDate scheduled, String address, Boolean fastSupply, int customerid, FuelCompany comp) {
+		super(orderid, orderSum, fueltype, quantity, orderDate, customerid, comp);
 		this.status = status;
 		this.scheduled = scheduled;
 		this.address = address;

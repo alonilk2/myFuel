@@ -5,11 +5,13 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.ResourceBundle;
 
 import Entity.Car;
 import Entity.Customer;
 import Entity.CustomerType;
+import Entity.FuelCompany;
 import Entity.Order;
 import Entity.PurchasePlan;
 import Entity.Request;
@@ -27,6 +29,8 @@ public class FastFuelController implements Initializable {
 		@FXML
 		private ChoiceBox<String> caridcombo;
 		@FXML
+		private ChoiceBox<String> fuelcomp;
+		@FXML
 		private Text carcount;
 		@FXML
 		private Button startfuelbutton;
@@ -38,6 +42,7 @@ public class FastFuelController implements Initializable {
 		private TextField litersinput;
 		
 		private List<Car> carList;
+		private List<FuelCompany> fuelCompList;
 		@FXML
 		private void onStartFuelClick(ActionEvent event){
 			Integer Liters = Integer.parseInt(litersinput.getText());
@@ -49,12 +54,22 @@ public class FastFuelController implements Initializable {
 			if(car != null) {
 				if(car.getFuelType().getQuantity() < Liters)
 				{
-					client.displayAlert(false, "Sorry, we don't have enough fuel in this moment. Please come back later.");
+					client.displayAlert(false, "Sorry, we don't have enough fuel at this moment. Please comeback later.");
 					return;
 				}
 				float orderSum = getOrderSum(Liters, car);
-				newOrder = new Order(orderSum, car.getFuelType(), Liters, LocalDate.now(), car.getCustomerID());
-				car.getFuelType().setQuantity(car.getFuelType().getQuantity()-Liters);
+				FuelCompany fuelCompany = null;
+				for(FuelCompany f : fuelCompList) {
+					if(f.getCompanyName().equals(fuelcomp.getSelectionModel().getSelectedItem()))
+						fuelCompany = f;
+				}
+				Customer currentCustomer = (Customer)client.getCurrentProfile();
+				String compName = fuelCompany.getCompanyName();
+				if(compName.equals(currentCustomer.getComp1()) || compName.equals(currentCustomer.getComp2()) || compName.equals(currentCustomer.getComp3())) {
+					newOrder = new Order(orderSum, car.getFuelType(), Liters, LocalDate.now(), car.getCustomerID(), fuelCompany);
+					car.getFuelType().setQuantity(car.getFuelType().getQuantity()-Liters);
+				}
+				else client.displayAlert(false, "Unfortunately, you don't have the privilege to refuel in this company. Please go to the fuel company you registered with.");
 			}
 			try {
 				client.sendToServer(newOrder);
@@ -104,19 +119,23 @@ public class FastFuelController implements Initializable {
 		}
 		
 		public void getCarsFromDB() {
-			String msg = "pull car " + client.getCurrentProfile().getUserid();
+			String msg = "pull car " + client.getCurrentProfile().getUserID();
 			Request req = new Request(msg);
 			try {
+				client.sendToServer(req);
+				msg = "pull newcustomerformdata";
+				req.parseStringIntoComponents(msg);
 				client.sendToServer(req);
 			} catch (IOException e) {
 				client.displayAlert(false, "Error: Couldn't send message to server!");
 				e.printStackTrace();
 			}
 		}
-		
+
 		public FastFuelController(ClientController client) {
 			this.client=client;
 			carList = new ArrayList<Car>();
+			fuelCompList = new ArrayList<FuelCompany>();
 		}
 		
 		@Override
@@ -125,14 +144,34 @@ public class FastFuelController implements Initializable {
 		}
 		
 		public void getObjectFromUI(Object msg) {
-			@SuppressWarnings("unchecked")
-			List<Car> list = (List<Car>)msg;
-			Integer Counter = 0;
-			for(Car c:list) {
-				caridcombo.getItems().add(c.getCarID().toString());
-				Counter++;
+			if(msg instanceof List) {
+				@SuppressWarnings("unchecked")
+				List<Object> temp = (List<Object>)msg;
+				if(temp.size() == 0)
+					return;
+				if(temp.get(0) instanceof FuelCompany) {
+					List<FuelCompany> list = new ArrayList<FuelCompany>();
+					for(Object o : temp)
+						list.add((FuelCompany)o);
+					fuelCompList = list;
+					ListIterator<FuelCompany> liter = list.listIterator();
+					while(liter.hasNext()) {
+						String name = liter.next().getCompanyName();
+						fuelcomp.getItems().add(name);
+					}
+				}
+				else if(temp.get(0) instanceof Car) {
+					List<Car> list = new ArrayList<Car>();
+					for(Object o : temp)
+						list.add((Car)o);
+					Integer Counter = 0;
+					for(Car c:list) {
+						caridcombo.getItems().add(c.getCarID().toString());
+						Counter++;
+					}
+					carcount.setText(Counter.toString());
+					this.carList = list;
+				}
 			}
-			carcount.setText(Counter.toString());
-			this.carList = list;
 		}
 }

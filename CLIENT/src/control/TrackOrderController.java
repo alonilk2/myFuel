@@ -2,14 +2,18 @@ package control;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import Entity.Customer;
 import Entity.HomeFuelOrder;
 import Entity.Order;
+import Entity.OrderStatus;
 import Entity.Request;
 import gui.OrderFuelForHomeUseForm;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
 
 public class TrackOrderController implements Initializable {
 	//Controllers
@@ -85,7 +90,7 @@ public class TrackOrderController implements Initializable {
 	    scheduled.setCellValueFactory(new PropertyValueFactory<HomeFuelOrder,String>("scheduled"));
 	    address.setCellValueFactory(new PropertyValueFactory<HomeFuelOrder,String>("address"));
 	    fastsupp.setCellValueFactory(new PropertyValueFactory<HomeFuelOrder,Boolean>("fastsupp"));
-	    orderstatus.setCellValueFactory(new PropertyValueFactory<HomeFuelOrder,String>("orderstatus"));
+	    orderstatus.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStatus().toString()));
 	    tableview.setItems(olist);
 	}
 

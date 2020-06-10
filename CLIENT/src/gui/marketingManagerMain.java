@@ -7,6 +7,7 @@ import control.mainAdminController;
 import control.mainCustomerController;
 import control.markatingManagerController;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -35,9 +36,14 @@ public class marketingManagerMain extends Application implements ClientIF {
 			AnchorPane root = (AnchorPane)fxmload.load();
 			Scene scene = new Scene(root,772,550);
 			scene.getStylesheets().add(getClass().getResource("prototype.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.show(); 
-			this.mainStage = primaryStage;
+			Platform.runLater(new Runnable() {
+			    @Override
+			    public void run() {
+					primaryStage.setScene(scene);
+					primaryStage.show();
+					mainStage = primaryStage;
+			    }
+			});
 			mmc.setStage(primaryStage);
 		} catch(Exception e) {
 			e.printStackTrace();

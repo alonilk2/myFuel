@@ -99,7 +99,7 @@ public void restartApplication(Runnable runBeforeRestart) throws IOException {
 	}
 public void handleMessageFromServer(Object msg) 
   {
-		if(msg instanceof Boolean) {
+	if(msg instanceof Boolean) {
 		  displayAlert((Boolean)msg, null);
 	  }
 	  else if(msg instanceof List) {

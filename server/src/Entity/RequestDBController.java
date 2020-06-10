@@ -27,6 +27,7 @@ public class RequestDBController {
 			case "login": { 
 				if(!handleLoginRequestFromClient(Req, client)) {
 					client.sendToClient(false); //Report the client about login failure
+					return;
 				}
 				break; 
 			}
@@ -158,13 +159,15 @@ public class RequestDBController {
 			//			returns new Customer instance if so
 			//
 			qrytempl = "SELECT u.username, u.password, u.firstname, u.lastname, u.email, c.customerid, c.customertype, c.purchaseplan,"
-					+ " c.creditcard FROM user u LEFT JOIN customer c On u.userid = c.customerid WHERE c.customerid = ?";
+					+ " c.creditcard,c.fuelcompanyapproach, c.fuelcomp1, c.fuelcomp2, c.fuelcomp3"
+					+ " FROM user u LEFT JOIN customer c On u.userid = c.customerid WHERE c.customerid = ?";
 			stm = conn.prepareStatement(qrytempl);
 			stm.setString(1, tempID);
 			rs = stm.executeQuery();
 			if(rs.next()) {
 				Customer c = new Customer(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), 
-						rs.getString(5), rs.getInt(6), CustomerType.valueOf(rs.getString(7)), rs.getString(8));
+						rs.getString(5), rs.getInt(6), CustomerType.valueOf(rs.getString(7)),rs.getString(9), PurchasePlan.valueOf(rs.getString(8)),
+						FuelCompanyApproach.valueOf(rs.getString(10)), rs.getString(11), rs.getString(12), rs.getString(13));
 				client.sendToClient(c);
 				return true;
 			}
@@ -249,7 +252,7 @@ public class RequestDBController {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				return;
+				break;
 			}
 			/*case "fueltypetemp": { 
 				List<fueltypeTemp> pList = new ArrayList<fueltypeTemp>();
@@ -292,8 +295,17 @@ public class RequestDBController {
 						e.printStackTrace();
 					}
 				}
-			
-
+			case "newcustomerformdata": {
+				try {
+					List<FuelCompany> templ = Server.getFCController().getFclist();
+					if(templ != null && templ.size() > 0)
+						client.sendToClient(templ);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				break;
+			}
 		}
+		
 	}
 }

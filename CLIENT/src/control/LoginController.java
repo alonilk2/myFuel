@@ -144,6 +144,7 @@ public class LoginController implements Initializable {
 		else if(msg instanceof Boolean) {
 			client.displayAlert(false, "Username'\'Password is incorrect!");
 		}
+		return;
 	}
 	public void setClientIF(ClientIF lgnScreen)
 	{

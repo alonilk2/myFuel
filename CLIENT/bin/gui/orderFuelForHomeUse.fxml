@@ -91,6 +91,7 @@
                   <RowConstraints maxHeight="62.800012207031244" minHeight="10.0" prefHeight="37.40000610351561" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="71.20000000000002" minHeight="10.0" prefHeight="44.5999755859375" valignment="CENTER" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="77.60005187988281" minHeight="10.0" prefHeight="38.20002441406251" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="77.60005187988281" minHeight="10.0" prefHeight="38.20002441406251" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
                   <DatePicker fx:id="date_input" prefHeight="34.0" prefWidth="201.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
@@ -124,6 +125,12 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
+                  <Label text="Fuel Company:" GridPane.rowIndex="5">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="fuelcomp" prefHeight="28.0" prefWidth="187.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                </children>
             </GridPane>
             <Label layoutX="188.0" layoutY="24.0" text="Order Fuel For Home Use">

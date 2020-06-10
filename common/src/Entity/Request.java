@@ -22,6 +22,7 @@ public class Request implements Serializable {
 	}
 	
 	public List<String> parseStringIntoComponents(String Sentence) {
+		requestComponents.clear();
 		String firstWord[] = Sentence.split(" ");
 		for(String s : firstWord) {
 			requestComponents.add(s);

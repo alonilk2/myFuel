@@ -2,13 +2,18 @@ package control;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.ResourceBundle;
 import java.time.*;
 
+import Entity.Car;
 import Entity.Customer;
+import Entity.FuelCompany;
 import Entity.FuelType;
 import Entity.HomeFuelOrder;
+import Entity.Order;
 import Entity.OrderStatus;
 import Entity.Request;
 import javafx.event.ActionEvent;
@@ -36,12 +41,15 @@ public class OrderFuelForHomeUseController implements Initializable {
 	private TextField qty_input;
 	@FXML
 	private ChoiceBox<String> fuel_type;
+	@FXML
+	private ChoiceBox<String> fuelcomp;
 	@FXML 
 	private TextField address_input;
 	@FXML
 	private CheckBox fast_suppl;
 	@FXML
 	private Button logoutbutton;
+	private List<FuelCompany> fclist = new ArrayList<FuelCompany>();
 	@FXML
 	private void onConfirmClick(ActionEvent event){
 		try {
@@ -58,10 +66,21 @@ public class OrderFuelForHomeUseController implements Initializable {
 			double qty = Double.parseDouble(qtyStr);
 			double sum = calcOrderSum(fueltype, qty);
 			Customer customer = (Customer)client.getCurrentProfile();
-			HomeFuelOrder newOrder = new HomeFuelOrder(sum, fueltype, qty, orderDate, OrderStatus.PREPARING, deliveryDate, addr, fastSupply, customer.getCustomerID());
-			//	Update fueltype stock
-			fueltype.setQuantity(fueltype.getQuantity()-qty);
+			FuelCompany fuelCompany = null;
+			for(FuelCompany f : fclist) {
+				if(f.getCompanyName().equals(fuelcomp.getSelectionModel().getSelectedItem()))
+					fuelCompany = f;
+			}
+			String compName = fuelCompany.getCompanyName();
+			HomeFuelOrder newOrder = null;
+			if(compName.equals(customer.getComp1()) || compName.equals(customer.getComp2()) || compName.equals(customer.getComp3())) {
+				newOrder = new HomeFuelOrder(sum, fueltype, qty, orderDate, OrderStatus.PREPARING, deliveryDate, 
+						addr, fastSupply, customer.getCustomerID(), fuelCompany);
+				fueltype.setQuantity(fueltype.getQuantity()-qty);
+			}
+			else client.displayAlert(false, "Unfortunately, you don't have the privilege to refuel in this company. Please go to the fuel company you registered with.");
 			client.sendToServer(newOrder);
+			client.displayAlert(true, "Your order has been placed successfully.");
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
@@ -93,6 +112,9 @@ public class OrderFuelForHomeUseController implements Initializable {
 		String msg = "pull FuelType";
 		Request req = new Request(msg);
 		try {
+			client.sendToServer(req);
+			msg = "pull newcustomerformdata";
+			req.parseStringIntoComponents(msg);
 			client.sendToServer(req);
 		} catch (IOException e) {
 			client.displayAlert(false, "Error: Couldn't send message to server!");
@@ -132,21 +154,34 @@ public class OrderFuelForHomeUseController implements Initializable {
 	}
 	
 	public void getObjectFromUI(Object msg) {
-		//NEW METHOD !!!!!!!!!!!
-		@SuppressWarnings("unchecked")
-		List<List<Object>> list = (List<List<Object>>)msg;
-		fueltypearr = new FuelType[list.size()];
-		int i;
-		for(i = 0; i<list.size(); i++) {
-			fueltypearr[i] = createFuelTypeFromList(list.get(i));
-			if(fueltypearr[i].getStatus().equals("ACTIVE")) {
-				fuel_type.getItems().add(fueltypearr[i].getName());
+		if(msg instanceof List) {
+			@SuppressWarnings("unchecked")
+			List<Object> temp = (List<Object>)msg;
+			if(temp.size() == 0)
+				return;
+			if(temp.get(0) instanceof FuelCompany) {
+				List<FuelCompany> list = new ArrayList<FuelCompany>();
+				for(Object o : temp)
+					list.add((FuelCompany)o);
+				fclist = list;
+				ListIterator<FuelCompany> liter = list.listIterator();
+				while(liter.hasNext()) {
+					String name = liter.next().getCompanyName();
+					fuelcomp.getItems().add(name);
+				}
 			}
-			/*			
-			if(fueltypearr[i].getStatus().equals(FuelType.status.ACTIVE)) {
-				fuel_type.getItems().add(fueltypearr[i].getName());
+			else if(temp.get(0) instanceof List) {
+				@SuppressWarnings("unchecked")
+				List<List<Object>> list = (List<List<Object>>)msg;
+				fueltypearr = new FuelType[list.size()];
+				int i;
+				for(i = 0; i<list.size(); i++) {
+					fueltypearr[i] = createFuelTypeFromList(list.get(i));
+					if(fueltypearr[i].getStatus().equals("ACTIVE")) {
+						fuel_type.getItems().add(fueltypearr[i].getName());
+					}
+				}
 			}
-			*/
 		}
 	}
 }
