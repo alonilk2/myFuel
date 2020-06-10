@@ -27,6 +27,19 @@ public class FuelType implements Serializable{
 		this.stat = stat;
 		//status =
 	}
+	public boolean updateFuelQuantity(Connection conn, double qty) {
+		try {
+			PreparedStatement stm = conn.prepareStatement("UPDATE fueltype SET quantity = ? where name = ?");
+			stm.setDouble(1, this.getQuantity()-qty);
+			stm.setString(2, this.getName());
+			this.setQuantity(this.getQuantity() - qty);
+			stm.execute();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+	}
+	return false;
+	}
 	public int getMaxcapacity() {
 		return this.maxCapacity;
 	}

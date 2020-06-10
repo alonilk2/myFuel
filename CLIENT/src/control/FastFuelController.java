@@ -8,7 +8,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import Entity.Car;
+import Entity.Customer;
+import Entity.CustomerType;
 import Entity.Order;
+import Entity.PurchasePlan;
 import Entity.Request;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -49,7 +52,7 @@ public class FastFuelController implements Initializable {
 					client.displayAlert(false, "Sorry, we don't have enough fuel in this moment. Please come back later.");
 					return;
 				}
-				float orderSum = car.getFuelType().getPrice()*Liters;
+				float orderSum = getOrderSum(Liters, car);
 				newOrder = new Order(orderSum, car.getFuelType(), Liters, LocalDate.now(), car.getCustomerID());
 				car.getFuelType().setQuantity(car.getFuelType().getQuantity()-Liters);
 			}
@@ -60,8 +63,31 @@ public class FastFuelController implements Initializable {
 				e.printStackTrace();
 			}
 		}
-
-	
+		private float getOrderSum(Integer Liters, Car car) {
+			float fuelPrice = car.getFuelType().getPrice();
+			Customer clientProfile = (Customer) client.getCurrentProfile();
+			PurchasePlan plan = clientProfile.getPurchasePlan();
+			float orderSum = 0;
+			if(plan.toString().equals("REGULAR_FUEL"))
+				orderSum = fuelPrice*Liters;
+			else if(plan.toString().equals("MONTHLY_SUBSCRIPTION_SINGLE"))
+				orderSum = (float)(fuelPrice-(fuelPrice*0.04/100))*Liters;
+			else if(plan.toString().equals("MONTHLY_SUBSCRIPTION_MANY")) {
+				//4% discount for every car the customer has.
+				orderSum = (float)(fuelPrice-(carList.size()*(fuelPrice*0.04/100)))*Liters;
+				//10 percent discount on total sum
+				orderSum -= orderSum*10/100;
+			}
+			else if(plan.toString().equals("FULL_MONTHLY_SUBSCRIPTION")) {
+				//4% discount for every car the customer has.
+				orderSum = (float)(fuelPrice-(fuelPrice*0.04/100))*Liters;
+				//10 percent discount on total sum
+				orderSum -= orderSum*10/100;
+				//3 percent discount on total sum
+				orderSum -= orderSum*3/100;
+			}
+			return orderSum;
+		}
 		@FXML
 		private void onCancelClick(ActionEvent event){
 			try {
@@ -71,7 +97,6 @@ public class FastFuelController implements Initializable {
 				e.printStackTrace();
 			}
 		}
-		
 		@FXML
 		private void onHomePageClick(ActionEvent event) throws Exception {
 			client.getMainPage().start(client.getMainStage());
@@ -88,10 +113,6 @@ public class FastFuelController implements Initializable {
 				e.printStackTrace();
 			}
 		}
-		
-		
-		
-		
 		
 		public FastFuelController(ClientController client) {
 			this.client=client;
