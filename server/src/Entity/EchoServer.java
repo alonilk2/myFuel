@@ -1,6 +1,3 @@
-// This file contains material supporting section 3.7 of the textbook:
-// "Object Oriented Software Engineering" and is issued under the open-source
-// license found at www.lloseng.com 
 package Entity;
 
 import java.io.*;
@@ -96,10 +93,12 @@ public class EchoServer extends AbstractServer
 						  OFSControl.createNewOrderFromFuelSupplier(tempFuelType);
 				  }
 			  }
-			  else if (msg instanceof Customer) {
+			   else if (msg instanceof Customer) {
 				  Customer customer=(Customer)msg;
+				  User user=(User)msg;
+				  int userID = user.createNewAddSqlStatementUser(sqlcontrol.getConnection());
 				  int custID = customer.createNewAddSqlStatement(sqlcontrol.getConnection());
-				  if(custID == -1) client.sendToClient(false);
+				  if(userID == -1 || custID==-1) client.sendToClient(false);
 				  else {
 					  client.sendToClient(true);
 				  }

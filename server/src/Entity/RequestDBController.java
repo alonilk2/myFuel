@@ -265,6 +265,35 @@ public class RequestDBController {
 				}
 				break;
 			}*/
+				
+				
+			case "CustomerDuringSale": {
+				try {
+					List<List<Object>> list = new ArrayList<List<Object>>();
+					PreparedStatement stm = conn.prepareStatement("SELECT cds.*, count(cds.CustomerID) as AmountOfParticipants , sum(cds.CustomerTotalSumOfPurchases) as TotalProfitFromSale FROM CustomerDuringSale cds");
+					ResultSet rs = stm.executeQuery();
+					while(rs.next()) {
+						List<Object> templist = new ArrayList<Object>();
+						for(int x=1; x<=5; x++) 
+							templist.add(rs.getString(x));
+						list.add(templist);
+					}
+					/*
+					stm = conn.prepareStatement("SELECT count(CustomerID) as AmountOfParticipants , sum(CustomerTotalSumOfPurchases) as TotalProfitFromSale FROM CustomerDuringSale");
+					rs = stm.executeQuery();
+					while(rs.next()) {
+						List<Object> templist = new ArrayList<Object>();
+						for(int x=1; x<=2; x++) 
+							templist.add(rs.getString(x));
+						list.add(templist);
+					}*/
+						client.sendToClient(list);
+					} catch (IOException | SQLException e) {
+						e.printStackTrace();
+					}
+				}
+			
+
 		}
 	}
 }

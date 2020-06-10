@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import Entity.Customer;
 import Entity.CustomerType;
+import Entity.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -65,13 +66,16 @@ public class RegisterNewCustomerController {
 				if(business_customer)
 					customerType=CustomerType.businesscustomer;
 				else customerType=CustomerType.privatecustomer;
+				User user = new User(first_name,last_name,eMail,user_name,pass_word,Integer.parseInt(IDnum));
+				Customer customer = new Customer(first_name,last_name,eMail,user_name,pass_word,Integer.parseInt(IDnum),customerType,credit_card);
 				
-				Customer customer = new Customer(user_name,pass_word,first_name,last_name,eMail,Integer.parseInt(IDnum),customerType,credit_card);
 				//	Update new customer 
 				customer.setPhoneNumber(phone_number);
 				customer.setCompanyID(company_ID);
-				
+								
+				client.sendToServer(user);
 				client.sendToServer(customer);
+				
 			} 
 			catch (IOException e) {
 				e.printStackTrace();
@@ -100,7 +104,6 @@ public class RegisterNewCustomerController {
 		}
 		
 		public void getObjectFromUI(Object msg) {
-			//NEW METHOD !!!!!!!!!!!
 			@SuppressWarnings("unchecked")
 			List<List<Object>> list = (List<List<Object>>)msg;
 		}

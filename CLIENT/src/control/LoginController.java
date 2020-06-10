@@ -36,6 +36,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class LoginController implements Initializable {
+	
 	private ClientController client;
 	private Stage mainStage;
 	final public static int DEFAULT_PORT = 5555;
