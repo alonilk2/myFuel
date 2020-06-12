@@ -26,7 +26,7 @@ public class Customer extends User implements Serializable, SQLReady {
 		super(username, password, firstname, lastname, email, customerID);
 		this.CustomerID = customerID;
 		this.customerType = customerType;
-		this.purchasePlan = PurchasePlan.REGULAR_FUEL;
+		this.purchasePlan = purchasePlan;
 		this.CreditCard = creditCard;
 		this.app = app;
 		this.comp1 = comp1;

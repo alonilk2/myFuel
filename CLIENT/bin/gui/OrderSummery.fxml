@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="775.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane layoutX="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="779.0">
+         <children>
+            <AnchorPane layoutX="121.0" layoutY="64.0" prefHeight="490.0" prefWidth="657.0" scaleShape="false">
+               <children>
+                  <Button id="addCar" fx:id="CONFIRMBUTTON" defaultButton="true" layoutX="33.0" layoutY="422.0" mnemonicParsing="false" onAction="#onConfirmClick" prefHeight="54.0" prefWidth="154.0" style="-fx-background-color: #058015;" text="Confirm" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Button>
+                  <Button id="cancel" fx:id="CANCELBUTTON" cancelButton="true" layoutX="527.0" layoutY="422.0" mnemonicParsing="false" onAction="#onCancelClick" prefHeight="54.0" prefWidth="110.0" style="-fx-background-color: #bc0404;" text="Cancel" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="82.0" prefHeight="64.0" prefWidth="694.0" scaleShape="false" style="-fx-background-color: #027adb;">
+               <children>
+                  <ImageView fitHeight="34.0" fitWidth="35.0" layoutX="607.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/user_account_profile_avatar_person_student_male-512.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="45.0" layoutY="18.0" opacity="0.78" prefHeight="46.0" prefWidth="282.0" text="Marketing representative view" textFill="WHITE" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="-1.0" prefHeight="550.0" prefWidth="124.0" scaleShape="false" style="-fx-background-color: #027adb;">
+               <children>
+                  <Label layoutX="44.0" layoutY="24.0" prefHeight="27.0" prefWidth="76.0" text="MyFuel" textFill="#fffdfd">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="homepagebutton" layoutX="8.0" layoutY="73.0" mnemonicParsing="false" onAction="#onHomePageClick" prefHeight="55.0" prefWidth="110.0" style="-fx-background-color: #57b4ff;" text="Home Page" textFill="#eeeded">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="logoutbutton" layoutX="7.0" layoutY="484.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="110.0" style="-fx-background-color: #57b4ff;" text="Log Out" textFill="#eeeded">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="34.0" fitWidth="45.0" layoutX="9.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/gas-icon-6150.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="142.0" layoutY="26.0" prefHeight="432.0" prefWidth="588.0">
+         <children>
+            <ImageView fitHeight="420.0" fitWidth="590.0" layoutY="102.0" opacity="0.1" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/muscle-car-sketch-wallpaper-preview.jpg" />
+               </image>
+            </ImageView>
+            <Label layoutX="230.0" layoutY="62.0" scaleShape="false" text="Order Summery">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <GridPane layoutX="126.0" layoutY="119.0" prefHeight="287.0" prefWidth="338.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fuel Type:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Base Cost (₪/Ltr):" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="FIRSTDISCTEXT" strokeType="OUTSIDE" strokeWidth="0.0" text="Discount #1:" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="SECDISCTEXT" strokeType="OUTSIDE" strokeWidth="0.0" text="Discount #2:" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total Sum:" GridPane.rowIndex="7">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="SUM" strokeType="OUTSIDE" strokeWidth="0.0" text="SUM" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                     <font>
+                        <Font name="System Bold Italic" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="FUELTYPE" strokeType="OUTSIDE" strokeWidth="0.0" text="FUELTYPE" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="System Bold Italic" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="BASECOST" strokeType="OUTSIDE" strokeWidth="0.0" text="BASECOST" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold Italic" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="FIRSTDISC" strokeType="OUTSIDE" strokeWidth="0.0" text="FIRSTDISC" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="System Bold Italic" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="SECDISC" strokeType="OUTSIDE" strokeWidth="0.0" text="SECDISC" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="System Bold Italic" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Amount:" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="AMOUNT" strokeType="OUTSIDE" strokeWidth="0.0" text="AMOUNT" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold Italic" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="THIRDDISCTEXT" strokeType="OUTSIDE" strokeWidth="0.0" text="Discount #3:" GridPane.rowIndex="5">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="THIRDDISC" strokeType="OUTSIDE" strokeWidth="0.0" text="THIRDDISC" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <font>
+                        <Font name="System Bold Italic" size="15.0" />
+                     </font>
+                  </Text>
+               </children>
+            </GridPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

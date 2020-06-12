@@ -12,9 +12,12 @@ import Entity.Car;
 import Entity.Customer;
 import Entity.CustomerType;
 import Entity.FuelCompany;
+import Entity.FuelType;
 import Entity.Order;
 import Entity.PurchasePlan;
 import Entity.Request;
+import gui.OrderFuelForHomeUseForm;
+import gui.OrderSummeryForm;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -57,7 +60,7 @@ public class FastFuelController implements Initializable {
 					client.displayAlert(false, "Sorry, we don't have enough fuel at this moment. Please comeback later.");
 					return;
 				}
-				float orderSum = getOrderSum(Liters, car);
+				float[] orderSum = getOrderSum(Liters, car);
 				FuelCompany fuelCompany = null;
 				for(FuelCompany f : fuelCompList) {
 					if(f.getCompanyName().equals(fuelcomp.getSelectionModel().getSelectedItem()))
@@ -65,43 +68,57 @@ public class FastFuelController implements Initializable {
 				}
 				Customer currentCustomer = (Customer)client.getCurrentProfile();
 				String compName = fuelCompany.getCompanyName();
-				if(compName.equals(currentCustomer.getComp1()) || compName.equals(currentCustomer.getComp2()) || compName.equals(currentCustomer.getComp3())) {
-					newOrder = new Order(orderSum, car.getFuelType(), Liters, LocalDate.now(), car.getCustomerID(), fuelCompany);
-					car.getFuelType().setQuantity(car.getFuelType().getQuantity()-Liters);
+				try {
+					if(compName.equals(currentCustomer.getComp1()) || compName.equals(currentCustomer.getComp2()) || compName.equals(currentCustomer.getComp3())) {
+						OrderSummeryForm newform = new OrderSummeryForm(client, orderSum, fuelCompany, Liters, car);
+						client.setClientIF(newform);
+						newform.start(client.getMainStage());
+					}
+					else {
+						client.displayAlert(false, "Unfortunately, you don't have the privilege to refuel in this company. Please go to the fuel company you registered with.");
+						return;
+					}
 				}
-				else client.displayAlert(false, "Unfortunately, you don't have the privilege to refuel in this company. Please go to the fuel company you registered with.");
-			}
-			try {
-				client.sendToServer(newOrder);
-				client.displayAlert(true, "Your car has been refueled! Drive safe.");
-			} catch (IOException e) {
-				e.printStackTrace();
+				catch (Exception e) {
+						e.printStackTrace();
+				}
 			}
 		}
-		private float getOrderSum(Integer Liters, Car car) {
+		private float[] getOrderSum(Integer Liters, Car car) {
 			float fuelPrice = car.getFuelType().getPrice();
 			Customer clientProfile = (Customer) client.getCurrentProfile();
 			PurchasePlan plan = clientProfile.getPurchasePlan();
 			float orderSum = 0;
+			float firstdisc = 0, seconddisc = 0, thirddisc = 0;
 			if(plan.toString().equals("REGULAR_FUEL"))
 				orderSum = fuelPrice*Liters;
 			else if(plan.toString().equals("MONTHLY_SUBSCRIPTION_SINGLE"))
 				orderSum = (float)(fuelPrice-(fuelPrice*0.04/100))*Liters;
 			else if(plan.toString().equals("MONTHLY_SUBSCRIPTION_MANY")) {
 				//4% discount for every car the customer has.
-				orderSum = (float)(fuelPrice-(carList.size()*(fuelPrice*0.04/100)))*Liters;
+				firstdisc = (float)(carList.size()*(fuelPrice*0.04/100));
+				orderSum =(fuelPrice-firstdisc)*Liters;
 				//10 percent discount on total sum
-				orderSum -= orderSum*10/100;
+				seconddisc = orderSum*10/100;
+				orderSum -= seconddisc;
 			}
 			else if(plan.toString().equals("FULL_MONTHLY_SUBSCRIPTION")) {
 				//4% discount for every car the customer has.
-				orderSum = (float)(fuelPrice-(fuelPrice*0.04/100))*Liters;
+				firstdisc = (float)(fuelPrice*4/100);
+				orderSum = (fuelPrice-firstdisc)*Liters;
 				//10 percent discount on total sum
-				orderSum -= orderSum*10/100;
+				seconddisc = orderSum*10/100;
+				orderSum -= seconddisc;
 				//3 percent discount on total sum
-				orderSum -= orderSum*3/100;
+				thirddisc = orderSum*3/100;
+				orderSum -= thirddisc;
 			}
-			return orderSum;
+			float[] f = new float[4];
+			f[0] = orderSum;
+			f[1] = firstdisc;
+			f[2] = seconddisc;
+			f[3] = thirddisc;
+			return f;
 		}
 		@FXML
 		private void onCancelClick(ActionEvent event){

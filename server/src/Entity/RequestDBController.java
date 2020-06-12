@@ -145,8 +145,12 @@ public class RequestDBController {
 		try {
 			String qrytempl = "SELECT * FROM user WHERE username = ? AND password = ?";
 			stm = conn.prepareStatement(qrytempl);
-			stm.setString(1, Req.getRequestComponent(1));
-			stm.setString(2, Req.getRequestComponent(2));
+			String username = Req.getRequestComponent(1);
+			String password = Req.getRequestComponent(2);
+			if(username == null || password == null)
+				return false;
+			stm.setString(1, username);
+			stm.setString(2, password);
 			rs = stm.executeQuery();
 			if(rs.next()) 
 				for(int i=1; i<=6; i++)

@@ -14,6 +14,8 @@ public class Request implements Serializable {
 	private List<String> requestComponents = new ArrayList<String>();
 	
 	public String getRequestComponent(int index) {
+		if(index >= requestComponents.size() || index < 0)
+			return null;
 		return requestComponents.get(index);
 	}
 	

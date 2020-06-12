@@ -16,6 +16,8 @@ import Entity.HomeFuelOrder;
 import Entity.Order;
 import Entity.OrderStatus;
 import Entity.Request;
+import gui.OrderSummeryForm;
+import gui.OrderSummeryHomeForm;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -64,7 +66,7 @@ public class OrderFuelForHomeUseController implements Initializable {
 				return;
 			}
 			double qty = Double.parseDouble(qtyStr);
-			double sum = calcOrderSum(fueltype, qty);
+			double[] sumArr = calcOrderSum(fueltype, qty, fastSupply);
 			Customer customer = (Customer)client.getCurrentProfile();
 			FuelCompany fuelCompany = null;
 			for(FuelCompany f : fclist) {
@@ -74,15 +76,18 @@ public class OrderFuelForHomeUseController implements Initializable {
 			String compName = fuelCompany.getCompanyName();
 			HomeFuelOrder newOrder = null;
 			if(compName.equals(customer.getComp1()) || compName.equals(customer.getComp2()) || compName.equals(customer.getComp3())) {
-				newOrder = new HomeFuelOrder(sum, fueltype, qty, orderDate, OrderStatus.PREPARING, deliveryDate, 
-						addr, fastSupply, customer.getCustomerID(), fuelCompany);
-				fueltype.setQuantity(fueltype.getQuantity()-qty);
+				OrderSummeryHomeForm newform = new OrderSummeryHomeForm(client, sumArr, fuelCompany, qty, fueltype, deliveryDate, fastSupply, addr);
+				client.setClientIF(newform);
+				newform.start(client.getMainStage());
 			}
-			else client.displayAlert(false, "Unfortunately, you don't have the privilege to refuel in this company. Please go to the fuel company you registered with.");
+			else {
+				client.displayAlert(false, "Unfortunately, you don't have the privilege to refuel in this company. Please go to the fuel company you registered with.");
+				return;
+			}
 			client.sendToServer(newOrder);
 			client.displayAlert(true, "Your order has been placed successfully.");
 		} 
-		catch (IOException e) {
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -143,7 +148,29 @@ public class OrderFuelForHomeUseController implements Initializable {
 		return null;
 	}
 	
-	private double calcOrderSum(FuelType ft, double qty) { return ft.getPrice()*qty; }
+	private double[] calcOrderSum(FuelType ft, double qty, boolean fast) { 
+		double[] arr = new double[3];
+		double initial = ft.getPrice()*qty;
+		double fastadd = ft.getPrice()*2/100;
+		double discount = 0;
+		if(fast) {
+			initial += fastadd;
+			arr[1] = fastadd;
+		}
+		if(qty >= 600 && qty <= 800) {
+			discount = initial*3/100;
+			initial -= discount;
+		}
+		else if(qty > 800) {
+			discount = initial*4/100;
+			initial -= discount;
+		}
+
+		arr[0] = initial;
+
+		arr[2] = discount;
+		return arr;
+	}
 	
 	private FuelType getFuelTypeFromString(String name) {
 		for(FuelType x : fueltypearr) {
