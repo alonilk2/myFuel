@@ -13,23 +13,24 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class ItemQuantityReportController {
+public class ItemQuantityReportController implements Initializable {
 	//Controllers
 		ClientController client;
-		CustomerDuringSale cds;
+		FuelType ft;
 		@FXML
 		private Button ConfirmBtn;
 		@FXML
 		private TableView<FuelType> tableview;
 		@FXML
-		private TableColumn<FuelType, String> customerTotalSumOfPurchases;
+		private TableColumn<FuelType, String> fuelType;
 		@FXML
-		private TableColumn<FuelType, Double> saleID;
+		private TableColumn<FuelType, Double> quantity;
 		@FXML 
 		private Button homepagebutton;
 		private ObservableList<FuelType> olist;
@@ -59,8 +60,8 @@ public class ItemQuantityReportController {
 		}
 		
 		public void getTableDataFromDB() throws IOException {
-			Customer customer = (Customer)client.getCurrentProfile();
-			String msg = "pull CustomerDuringSale "+cds.getSaleID();
+			//Customer customer = (Customer)client.getCurrentProfile();
+			String msg = "pull FuelType";
 			Request req = new Request(msg);
 			client.sendToServer(req);
 		}
@@ -69,21 +70,20 @@ public class ItemQuantityReportController {
 		@SuppressWarnings("unchecked")
 		public boolean getMessageFromUI(Object obj) {
 			if(obj instanceof List) {
-				setTableDataFromDB((List<CustomerDuringSale>)obj);
+				setTableDataFromDB((List<FuelType>)obj);
 				return true;
 			}
 			return false;
 		}
 		
-		public void setTableDataFromDB(List<CustomerDuringSale> list) {
+		public void setTableDataFromDB(List<FuelType> list) {
 			olist = FXCollections.observableArrayList();
-			for(CustomerDuringSale l : list)
+			for(FuelType l : list)
 				olist.add(l);
 			//JavaFX
 			//Injection
-			customerTotalSumOfPurchases.setCellValueFactory(new PropertyValueFactory<CustomerDuringSale,Integer>("CustomerTotalSumOfPurchases"));
-			saleID.setCellValueFactory(new PropertyValueFactory<CustomerDuringSale,Integer>("SaleID"));
-			customerID.setCellValueFactory(new PropertyValueFactory<CustomerDuringSale,Integer>("CustomerID"));
+			fuelType.setCellValueFactory(new PropertyValueFactory<FuelType,String>("fuelType"));
+			quantity.setCellValueFactory(new PropertyValueFactory<FuelType,Double>("quantity"));
 		    tableview.setItems(olist);
 		}
 
