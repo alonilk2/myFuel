@@ -1,6 +1,7 @@
 package gui;
 
 import control.ClientController;
+import control.ItemQuantityReportController;
 import control.TrackOrderController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,7 +10,6 @@ import javafx.stage.Stage;
 
 import common.ClientIF;
 import control.ClientController;
-import control.TrackOrderController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -19,16 +19,16 @@ import javafx.stage.Stage;
 public class ItemQuantityReportForm extends Application implements ClientIF {
 
 	//CONTROLLER
-	private TrackOrderController tocontroller;
+	private ItemQuantityReportController iqrcontroller;
 	private ClientController client;
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			tocontroller = new TrackOrderController(client);
+			iqrcontroller = new ItemQuantityReportController(client);
 			FXMLLoader fxmload = new FXMLLoader();
 			fxmload.setLocation(getClass().getResource("ItemQuantityReport.fxml"));
-			fxmload.setController(tocontroller);
+			fxmload.setController(iqrcontroller);
 			AnchorPane root = (AnchorPane)fxmload.load();
 			Scene scene = new Scene(root,772,550);
 			scene.getStylesheets().add(getClass().getResource("prototype.css").toExternalForm());
@@ -45,7 +45,7 @@ public class ItemQuantityReportForm extends Application implements ClientIF {
 	}
 	
 	public boolean sendToController(Object obj) {
-		return tocontroller.getMessageFromUI(obj);
+		return iqrcontroller.getMessageFromUI(obj);
 	}
 
 }
