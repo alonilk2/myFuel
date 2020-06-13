@@ -23,6 +23,7 @@ public class ReviewReportController implements Initializable {
 	//Controllers
 	ClientController client;
 	CustomerDuringSale cds;
+	public int sale_ID;
 	@FXML
 	private Button ConfirmBtn;
 	@FXML
@@ -62,7 +63,6 @@ public class ReviewReportController implements Initializable {
 	}
 	
 	public void getTableDataFromDB() throws IOException {
-		Customer customer = (Customer)client.getCurrentProfile();
 		String msg = "pull CustomerDuringSale "+cds.getSaleID();
 		Request req = new Request(msg);
 		client.sendToServer(req);
@@ -95,4 +95,9 @@ public class ReviewReportController implements Initializable {
 	}
 
 
+	
+	public void getObjectFromUI(Object msg) {
+		@SuppressWarnings("unchecked")
+		List<List<Object>> list = (List<List<Object>>)msg;
+	}
 }
