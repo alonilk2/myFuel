@@ -1,64 +1,42 @@
 package gui;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
-import Entity.Customer;
-import Entity.Employee;
-import Entity.User;
-import control.ClientController;
-import control.LoginController;
 import common.ClientIF;
+import control.ClientController;
+import control.ReplyReportSaleSelectionController;
 import javafx.application.Application;
-import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
 
-public class ReplyReportSaleSelectionForm extends Application implements ClientIF {
-	ClientController client;
-	LoginController rvwctrl;
-	private String host = "localhost";
+public class ReplyReportSaleSelectionForm extends Application implements ClientIF{
+	private ClientController client;
+	private ReplyReportSaleSelectionController rrssController;
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage) throws Exception {
+		this.rrssController = new ReplyReportSaleSelectionController(this.client);
 		try {
-			rvwctrl.setClientIF(this);
 			FXMLLoader fxmload = new FXMLLoader();
 			fxmload.setLocation(getClass().getResource("ReplyReportSaleSelection.fxml"));
-			fxmload.setController(rvwctrl);
+			fxmload.setController(rrssController);
 			AnchorPane root = (AnchorPane)fxmload.load();
 			Scene scene = new Scene(root,772,550);
-			//scene.getStylesheets().add(getClass().getResource("loginCSS.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			rvwctrl.setMainStage(primaryStage);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public ReplyReportSaleSelectionForm() 
-	{
-		rvwctrl = new ReviewReportController(host, this);
+	public ReplyReportSaleSelectionForm(ClientController client, Stage stage) throws Exception {
+		this.client = client;
 	}
-	
-	public static void main(String[] args) {
-		launch(args);
-	    ReviewReportForm chat= new ReviewReportForm();
-    }
-	
+
+
 	@Override
 	public boolean sendToController(Object obj) {
-		try {
-			rvwctrl.getObjectFromUI(obj);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		rrssController.getObjectFromUI(obj);
 		return false;
 	}
-}
-
 
 }
