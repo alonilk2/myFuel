@@ -4,15 +4,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import Entity.Car;
-import Entity.FuelType;
-import Entity.Request;
+import gui.ReviewReportForm;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 
 public class ReplyReportSaleSelectionController implements Initializable {
@@ -37,12 +35,16 @@ public class ReplyReportSaleSelectionController implements Initializable {
 					return;
 				}
 			
-				sale_id = Integer.parseInt(SaleID);
-				//Car car = new Car(Integer.parseInt(customer_ID), Integer.parseInt(car_ID), fueltype);
-				//	Update car 
-				client.sendToServer(car);
+				sale_id = Integer.parseInt(SaleID); 
+				ReviewReportController rrc = new ReviewReportController(client);
+				rrc.sale_ID = sale_id;
+				Stage mainStage = client.getMainStage();
+				ReviewReportForm newform = new ReviewReportForm(client, mainStage);
+				client.setClientIF(newform);
+				client.setMainPage(newform);
+				newform.start(mainStage);
 			} 
-			catch (IOException e) {
+			catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -69,17 +71,13 @@ public class ReplyReportSaleSelectionController implements Initializable {
 		}
 
 
-
 		@Override
 		public void initialize(URL arg0, ResourceBundle arg1) {
 
 		}
 		
-		
-		
-		
+	
 		public void getObjectFromUI(Object msg) {
-			//NEW METHOD !!!!!!!!!!!
 			@SuppressWarnings("unchecked")
 			List<List<Object>> list = (List<List<Object>>)msg;
 		}
