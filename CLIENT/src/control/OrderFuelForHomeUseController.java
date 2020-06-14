@@ -60,7 +60,6 @@ public class OrderFuelForHomeUseController implements Initializable {
 			FuelType fueltype = getFuelTypeFromString(fuel_type.getSelectionModel().getSelectedItem());
 			boolean fastSupply = fast_suppl.isSelected();
 			LocalDate deliveryDate = date_input.getValue();
-			LocalDate orderDate = LocalDate.now();
 			if(addr.length()==0 || qtyStr.length() == 0 || fueltype==null || deliveryDate==null) {
 				client.displayAlert(false, "All fields must be filled!");
 				return;
@@ -74,7 +73,6 @@ public class OrderFuelForHomeUseController implements Initializable {
 					fuelCompany = f;
 			}
 			String compName = fuelCompany.getCompanyName();
-			HomeFuelOrder newOrder = null;
 			if(compName.equals(customer.getComp1()) || compName.equals(customer.getComp2()) || compName.equals(customer.getComp3())) {
 				OrderSummeryHomeForm newform = new OrderSummeryHomeForm(client, sumArr, fuelCompany, qty, fueltype, deliveryDate, fastSupply, addr);
 				client.setClientIF(newform);
@@ -84,8 +82,6 @@ public class OrderFuelForHomeUseController implements Initializable {
 				client.displayAlert(false, "Unfortunately, you don't have the privilege to refuel in this company. Please go to the fuel company you registered with.");
 				return;
 			}
-			client.sendToServer(newOrder);
-			client.displayAlert(true, "Your order has been placed successfully.");
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
@@ -154,7 +150,7 @@ public class OrderFuelForHomeUseController implements Initializable {
 		double fastadd = ft.getPrice()*2/100;
 		double discount = 0;
 		if(fast) {
-			initial += fastadd;
+			initial += fastadd*qty;;
 			arr[1] = fastadd;
 		}
 		if(qty >= 600 && qty <= 800) {
@@ -167,7 +163,6 @@ public class OrderFuelForHomeUseController implements Initializable {
 		}
 
 		arr[0] = initial;
-
 		arr[2] = discount;
 		return arr;
 	}

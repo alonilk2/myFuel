@@ -92,11 +92,13 @@ public class FastFuelController implements Initializable {
 			float firstdisc = 0, seconddisc = 0, thirddisc = 0;
 			if(plan.toString().equals("REGULAR_FUEL"))
 				orderSum = fuelPrice*Liters;
-			else if(plan.toString().equals("MONTHLY_SUBSCRIPTION_SINGLE"))
-				orderSum = (float)(fuelPrice-(fuelPrice*0.04/100))*Liters;
+			else if(plan.toString().equals("MONTHLY_SUBSCRIPTION_SINGLE")) {
+				firstdisc = (float)(fuelPrice*4/100);
+				orderSum = (fuelPrice-firstdisc)*Liters; // Discount per liter
+			}
 			else if(plan.toString().equals("MONTHLY_SUBSCRIPTION_MANY")) {
 				//4% discount for every car the customer has.
-				firstdisc = (float)(carList.size()*(fuelPrice*0.04/100));
+				firstdisc = (float)(carList.size()*(fuelPrice*4/100));
 				orderSum =(fuelPrice-firstdisc)*Liters;
 				//10 percent discount on total sum
 				seconddisc = orderSum*10/100;
@@ -190,5 +192,6 @@ public class FastFuelController implements Initializable {
 					this.carList = list;
 				}
 			}
+			return;
 		}
 }

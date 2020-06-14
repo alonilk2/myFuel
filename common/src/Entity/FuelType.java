@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 public class FuelType implements Serializable{
 
-
 	private static final long serialVersionUID = 1L;
 	// Defines the maximum fuel capacity the tanks can contain.
 	private final int maxCapacity = 10000;
@@ -26,6 +25,10 @@ public class FuelType implements Serializable{
 		this.lowFuelBound = lowFuelBound;
 		this.stat = stat;
 		//status =
+	}
+	@Override
+	public String toString() {
+		return name;
 	}
 	public boolean updateFuelQuantity(Connection conn, double qty) {
 		try {

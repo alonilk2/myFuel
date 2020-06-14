@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import iF.SQLReady;
@@ -20,15 +21,17 @@ public class Order implements Serializable, SQLReady{
 	private LocalDate orderDate;
 	private int CustomerID;
 	private FuelCompany fuelCompany;
-	public Order(double orderSum, FuelType fueltype, double quantity, LocalDate orderDate, int CustomerID, FuelCompany fuelCompany) {
+	private LocalTime orderTime;
+	public Order(double orderSum, FuelType fueltype, double quantity, LocalDate orderDate, int CustomerID, FuelCompany fuelCompany, LocalTime orderTime) {
 		this.orderSum = orderSum;
 		this.fueltype = fueltype;
 		this.quantity = quantity;
 		this.orderDate = orderDate;
 		this.CustomerID = CustomerID;
 		this.fuelCompany = fuelCompany;
+		this.orderTime = orderTime;
 	}
-	public Order(int OrderID, double orderSum, FuelType fueltype, double quantity, LocalDate orderDate, int CustomerID, FuelCompany fuelCompany) {
+	public Order(int OrderID, double orderSum, FuelType fueltype, double quantity, LocalDate orderDate, int CustomerID, FuelCompany fuelCompany, LocalTime orderTime) {
 		this.OrderID = OrderID;
 		this.orderSum = orderSum;
 		this.fueltype = fueltype;
@@ -36,12 +39,16 @@ public class Order implements Serializable, SQLReady{
 		this.orderDate = orderDate;
 		this.CustomerID = CustomerID;
 		this.fuelCompany = fuelCompany;
+		this.orderTime = orderTime;
 	}
 	public FuelCompany getFuelCompany() {
 		return fuelCompany;
 	}
-	public void setFuelCompany(String fuelCompany) {
-		fuelCompany = fuelCompany;
+	public LocalTime getOrderTime() {
+		return orderTime;
+	}
+	public void setOrderTime(LocalTime orderTime) {
+		this.orderTime = orderTime;
 	}
 	public int getCustomerID() {
 		return CustomerID;

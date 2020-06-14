@@ -3,6 +3,7 @@ package control;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -72,14 +73,20 @@ public class OrderSummeryHomeController implements Initializable {
 		private void onConfirmClick(ActionEvent event){
 			Customer customer = (Customer)client.getCurrentProfile();
 			HomeFuelOrder newOrder = new HomeFuelOrder(OrderSumArr[0], ft, Liters, LocalDate.now(), OrderStatus.PREPARING, ddate, 
-					addr, fastSupply, customer.getCustomerID(), fuelCompany);
+					addr, fastSupply, customer.getCustomerID(), fuelCompany, LocalTime.now());
 			ft.setQuantity(ft.getQuantity()-Liters);
 			try {
 				client.sendToServer(newOrder);
 				client.displayAlert(true, "Your car has been refueled! Drive safe.");
-			} catch (IOException e) {
+				client.getMainPage().start(client.getMainStage());
+				client.setClientIF(client.getMainPage());
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}
+		@FXML
+		private void onLogOutClick(ActionEvent event) throws Exception {
+			client.restartApplication(null);
 		}
 		@FXML
 		private void onCancelClick(ActionEvent event){

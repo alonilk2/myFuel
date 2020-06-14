@@ -41,6 +41,7 @@ public class EchoServer extends AbstractServer
   private CarDBController CarControl;
   private FuelTypeTempDBController FTTControl;
   private FuelCompanyDBController FCController;
+  private AnalyticSystemDBController ASControl;
 
   
   //Constructors ****************************************************
@@ -203,6 +204,7 @@ protected void serverStarted()
 	  CarControl = new CarDBController(sqlcontrol, this);
 	  FTTControl = new FuelTypeTempDBController(sqlcontrol);
 	  FCController = new FuelCompanyDBController(sqlcontrol);
+	  ASControl = new AnalyticSystemDBController(sqlcontrol,this);
 	    //////////////////////////////////////////////////////
 	    //			Initialize Server Lists & Variables		//
 	    //						On start up					//
@@ -214,9 +216,14 @@ protected void serverStarted()
 	    OFSControl.initializeList();
 	    CarControl.initializeList();
 	    FCController.initializeList();
+	    ASControl.initializeList();
 	    //FTTControl.initializeList();
   }
-  public FuelCompanyDBController getFCController() {
+  public AnalyticSystemDBController getASControl() {
+	return ASControl;
+}
+
+public FuelCompanyDBController getFCController() {
 	return FCController;
 }
 

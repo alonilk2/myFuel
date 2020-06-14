@@ -80,7 +80,7 @@
                   <TableColumn fx:id="tmp_price" prefWidth="288.0" text="New Price" />
               </columns>
             </TableView>
-            <Label layoutX="180.0" layoutY="1.0" text="Confirm New Fuel Prices" textAlignment="CENTER">
+            <Label layoutX="180.0" layoutY="14.0" text="Confirm New Fuel Prices" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>

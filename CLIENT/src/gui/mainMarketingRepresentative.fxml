@@ -27,8 +27,19 @@
                         <Image url="@images/marketingRep.jpg" />
                      </image>
                   </ImageView>
-                  <Button id="registerCustomer" layoutX="165.0" layoutY="82.0" mnemonicParsing="false" onAction="#onRegCustomerClick" prefHeight="55.0" prefWidth="143.0" style="-fx-background-color: #57b4ff;" text="Register A Customer" />
-                  <Button id="registerCar" layoutX="337.0" layoutY="82.0" mnemonicParsing="false" onAction="#onRegCarClick" prefHeight="55.0" prefWidth="97.0" style="-fx-background-color: #57b4ff;" text="Register A Car " />
+                  <Button id="registerCustomer" layoutX="118.0" layoutY="82.0" mnemonicParsing="false" onAction="#onRegCustomerClick" prefHeight="55.0" prefWidth="161.0" style="-fx-background-color: #57b4ff;" text="Register A Customer" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Button>
+                  <Button id="registerCar" layoutX="339.0" layoutY="82.0" mnemonicParsing="false" onAction="#onRegCarClick" prefHeight="55.0" prefWidth="161.0" style="-fx-background-color: #57b4ff;" text="Register A Car " textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Button>
+                  <Button fx:id="analyticButton" layoutX="118.0" layoutY="178.0" mnemonicParsing="false" onAction="#onAnalyticClick" prefHeight="55.0" prefWidth="161.0" style="-fx-background-color: #57b4ff;" text="Analytic System" textFill="#eeeded">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
             <AnchorPane layoutX="82.0" prefHeight="64.0" prefWidth="694.0" scaleShape="false" style="-fx-background-color: #027adb;">
@@ -48,17 +59,17 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Button layoutX="9.0" layoutY="71.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="110.0" style="-fx-background-color: #57b4ff;" text="Home Page" textFill="#eeeded">
+                  <Button fx:id="homepagebutton" layoutX="7.0" layoutY="71.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="110.0" style="-fx-background-color: #57b4ff;" text="Home Page" textFill="#eeeded">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="9.0" layoutY="136.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="110.0" style="-fx-background-color: #57b4ff;" text="Notifications" textFill="#eeeded">
+                  <Button layoutX="7.0" layoutY="136.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="110.0" style="-fx-background-color: #57b4ff;" text="Notifications" textFill="#eeeded">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="8.0" layoutY="484.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="110.0" style="-fx-background-color: #57b4ff;" text="Log Out" textFill="#eeeded">
+                  <Button fx:id="logoutbutton" layoutX="6.0" layoutY="484.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="110.0" style="-fx-background-color: #57b4ff;" text="Log Out" textFill="#eeeded">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>

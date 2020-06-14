@@ -33,7 +33,7 @@ public class HomeFuelOrderDBController {
 	}
 	
 	public boolean addNewOrderToDB(HomeFuelOrder newOrder, ConnectionToClient client) {
-		String qry = "INSERT INTO orders (ordersum, fueltype, quantity, orderdate, customerID, fuelcompany)" + " VALUES (?,?,?,?,?,?)";
+		String qry = "INSERT INTO orders (ordersum, fueltype, quantity, orderdate, customerID, fuelcompany, orderhour)" + " VALUES (?,?,?,?,?,?,?)";
 		Connection conn = sqlcontrol.getConnection();
 		int generatedID = 0;
 		try {
@@ -44,6 +44,7 @@ public class HomeFuelOrderDBController {
 			stm.setObject(4, newOrder.getOrderDate());
 			stm.setInt(5, newOrder.getCustomerID());
 			stm.setString(6, newOrder.getFuelCompany().getCompanyName());
+			stm.setObject(7, newOrder.getOrderTime());
 			FuelType temp = Server.getFTControl().findEqualFuelType(newOrder.getFueltype());
 			Server.getFTControl().updateFuelQuantity(temp, newOrder.getQuantity());
 			Server.getOrderControl().addNewOrder(newOrder);
@@ -77,12 +78,12 @@ public class HomeFuelOrderDBController {
 		try {
 			Statement stm = sqlcontrol.getConnection().createStatement();
 			ResultSet rs = stm.executeQuery("SELECT h.orderid, h.status, h.scheduled, h.address, h.fastsupply,"
-					+ " o.ordersum, o.fueltype, o.quantity, o.orderdate, o.customerid, o.fuelcompany FROM homefuelorder h"
+					+ " o.ordersum, o.fueltype, o.quantity, o.orderdate, o.customerid, o.fuelcompany, o.orderhour FROM homefuelorder h"
 					+ " INNER JOIN orders o ON h.orderid = o.orderid");
 			while(rs.next()) {
 				HomeFuelOrder o = new HomeFuelOrder(rs.getInt(1), rs.getDouble(6), Server.getFTControl().getFuelTypeFromString(rs.getString(7)),
 					rs.getDouble(8), rs.getDate(9).toLocalDate(),OrderStatus.valueOf(rs.getString(2)),
-					rs.getDate(3).toLocalDate(), rs.getString(4), rs.getBoolean(5), rs.getInt(10),Server.getFCController().getFuelCompanyFromString(rs.getString(11)));
+					rs.getDate(3).toLocalDate(), rs.getString(4), rs.getBoolean(5), rs.getInt(10),Server.getFCController().getFuelCompanyFromString(rs.getString(11)), rs.getTime(12).toLocalTime());
 				HomeFuelOrdersList.add(o);
 			}
 			return true;

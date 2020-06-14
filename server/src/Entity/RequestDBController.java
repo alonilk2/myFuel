@@ -37,6 +37,22 @@ public class RequestDBController {
 			case "approve": { handleApprovePriceRequest(Req, client); break; }
 			case "rejecte": { handleRejectPriceRequest(Req, client); break; }
 			case "update": { handleUpdateRequest(Req, client); break; }
+			case "analytic": { handleAnalyticSystemRequest(Req, client); break; }
+		}
+	}
+	private void handleAnalyticSystemRequest(Request Req, ConnectionToClient client) {
+		switch(Req.getRequestComponent(1)) {
+			case "recalculate" : {
+				Server.getASControl().RecalculateRankings(client);
+				break;
+			}
+			case "pull" : {
+				if(Req.getRequestComponent(2) == null)
+					Server.getASControl().getCustomersRankList(client);
+				else 
+					Server.getASControl().getCustomersByFuelType(client, Req.getRequestComponent(2));
+				break;
+			}
 		}
 	}
 	private void handleUpdateRequest(Request Req, ConnectionToClient client) {
