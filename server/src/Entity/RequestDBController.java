@@ -301,15 +301,6 @@ public class RequestDBController {
 							templist.add(rs.getString(x));
 						list.add(templist);
 					}
-					/*
-					stm = conn.prepareStatement("SELECT count(CustomerID) as AmountOfParticipants , sum(CustomerTotalSumOfPurchases) as TotalProfitFromSale FROM CustomerDuringSale");
-					rs = stm.executeQuery();
-					while(rs.next()) {
-						List<Object> templist = new ArrayList<Object>();
-						for(int x=1; x<=2; x++) 
-							templist.add(rs.getString(x));
-						list.add(templist);
-					}*/
 						client.sendToClient(list);
 					} catch (IOException | SQLException e) {
 						e.printStackTrace();

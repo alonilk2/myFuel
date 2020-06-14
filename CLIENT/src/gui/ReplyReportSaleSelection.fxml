@@ -46,7 +46,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Button layoutX="10.0" layoutY="72.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="110.0" style="-fx-background-color: #57b4ff;" text="Home Page" textFill="#eeeded">
+                  <Button fx:id="homepagebutton" layoutX="10.0" layoutY="72.0" mnemonicParsing="false" onAction="#onHomePageClick" prefHeight="55.0" prefWidth="110.0" style="-fx-background-color: #57b4ff;" text="Home Page" textFill="#eeeded">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
