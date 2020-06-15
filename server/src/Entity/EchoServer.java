@@ -42,7 +42,7 @@ public class EchoServer extends AbstractServer
   private FuelTypeTempDBController FTTControl;
   private FuelCompanyDBController FCController;
   private AnalyticSystemDBController ASControl;
-
+  private saleTemplateDBController saleTempControl;
   
   //Constructors ****************************************************
   
@@ -119,7 +119,12 @@ public class EchoServer extends AbstractServer
 		  }
 	  }
   }
-	
+  public saleTemplateDBController getSaleTemplateControler() {
+		return this.saleTempControl;
+	}
+	public void setSaleTemplateController(saleTemplateDBController saleControl) {
+		this.saleTempControl=saleControl;
+	}
   public HomeFuelOrderDBController getHFOControl() {
 		return HFOControl;
 	}
@@ -205,6 +210,7 @@ protected void serverStarted()
 	  FTTControl = new FuelTypeTempDBController(sqlcontrol);
 	  FCController = new FuelCompanyDBController(sqlcontrol);
 	  ASControl = new AnalyticSystemDBController(sqlcontrol,this);
+	  saleTempControl=new saleTemplateDBController(sqlcontrol);
 	    //////////////////////////////////////////////////////
 	    //			Initialize Server Lists & Variables		//
 	    //						On start up					//
@@ -218,6 +224,7 @@ protected void serverStarted()
 	    FCController.initializeList();
 	    ASControl.initializeList();
 	    //FTTControl.initializeList();
+	    saleTempControl.initializeList();
   }
   public AnalyticSystemDBController getASControl() {
 	return ASControl;

@@ -9,50 +9,83 @@ import Entity.Customer;
 import Entity.CustomerDuringSale;
 import Entity.Order;
 import Entity.Request;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 
 public class ReviewReportController implements Initializable {
 	//Controllers
 	ClientController client;
-	CustomerDuringSale cds;
-	public int sale_ID;
+	private String SaleID;
+
+
+
 	@FXML
 	private Button ConfirmBtn;
 	@FXML
 	private TableView<CustomerDuringSale> tableview;
 	@FXML
-	private TableColumn<CustomerDuringSale, Integer> customerTotalSumOfPurchases;
+	private TableColumn<CustomerDuringSale, String> totalSumPerCustomerCol;
 	@FXML
-	private TableColumn<CustomerDuringSale, Integer> saleID;
+	private TableColumn<CustomerDuringSale, String> customerIDCol;
 	@FXML
-	private TableColumn<CustomerDuringSale, Integer> customerID;
-	@FXML 
-	private Button homepagebutton;
+	private Label purchsum;
+	@FXML
+	private Label custcount;
+	//@FXML 
+	//private Button homepagebutton;
 	private ObservableList<CustomerDuringSale> olist;
 	@FXML
 	private void onHomePageClick(ActionEvent event) throws Exception {
-		client.getMainPage().start(client.getMainStage());
-		client.setClientIF(client.getMainPage());
 	}
 	
 	@FXML
 	private void onConfirmClick(ActionEvent event){
+		/*
 		try {
 			client.getMainPage().start(client.getMainStage());
 		} catch (Exception e) {
 			client.displayAlert(false, null);
 			e.printStackTrace();
 		}
+		*/
 	}
-	
+	public String getSale_ID() {
+		return SaleID;
+	}
+	public void setTableDataFromDB(List<CustomerDuringSale> list) {
+		Double count = 0.0;
+		olist = FXCollections.observableArrayList();
+		for(CustomerDuringSale l : list) {
+			if(l.getSaleID().equals(SaleID)) {
+				olist.add(l);
+				count += l.getTotalSumOfPurchases();
+			}
+		}
+		customerIDCol.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getCustomerID())));
+		totalSumPerCustomerCol.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getTotalSumOfPurchases())));
+	    tableview.setItems(olist);
+	    custcount.setText(String.valueOf(olist.size()));
+	    custcount.autosize();
+	    purchsum.setText(count.toString());
+	    purchsum.autosize();
+
+	    return;
+	}
+	@FXML
+	private void onLogOutClick(ActionEvent event) throws Exception {
+		client.restartApplication(null);
+	}
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		try {
@@ -63,7 +96,7 @@ public class ReviewReportController implements Initializable {
 	}
 	
 	public void getTableDataFromDB() throws IOException {
-		String msg = "pull CustomerDuringSale "+cds.getSaleID();
+		String msg = "pull CustomerDuringSale";
 		Request req = new Request(msg);
 		client.sendToServer(req);
 	}
@@ -75,29 +108,18 @@ public class ReviewReportController implements Initializable {
 			setTableDataFromDB((List<CustomerDuringSale>)obj);
 			return true;
 		}
+		else if(obj instanceof String) {
+			this.SaleID = String.valueOf(obj);
+			return true;
+		}
 		return false;
 	}
 	
-	public void setTableDataFromDB(List<CustomerDuringSale> list) {
-		olist = FXCollections.observableArrayList();
-		for(CustomerDuringSale l : list)
-			olist.add(l);
-		//JavaFX
-		//Injection
-		customerTotalSumOfPurchases.setCellValueFactory(new PropertyValueFactory<CustomerDuringSale,Integer>("CustomerTotalSumOfPurchases"));
-		saleID.setCellValueFactory(new PropertyValueFactory<CustomerDuringSale,Integer>("SaleID"));
-		customerID.setCellValueFactory(new PropertyValueFactory<CustomerDuringSale,Integer>("CustomerID"));
-	    tableview.setItems(olist);
-	}
 
-	public ReviewReportController(ClientController client) {
+	public ReviewReportController(ClientController client, String SaleID) {
 		this.client = client;
+		this.SaleID = SaleID;
 	}
 
 
-	
-	public void getObjectFromUI(Object msg) {
-		@SuppressWarnings("unchecked")
-		List<List<Object>> list = (List<List<Object>>)msg;
-	}
 }

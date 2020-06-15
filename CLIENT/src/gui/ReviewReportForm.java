@@ -12,9 +12,10 @@ import javafx.stage.Stage;
 public class ReviewReportForm extends Application implements ClientIF{
 	private ClientController client;
 	private ReviewReportController rnmmController;
+	private String SaleID;
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		this.rnmmController = new ReviewReportController(this.client);
+		this.rnmmController = new ReviewReportController(this.client, SaleID);
 		try {
 			FXMLLoader fxmload = new FXMLLoader();
 			fxmload.setLocation(getClass().getResource("ReplyReportMarketingManager.fxml"));
@@ -28,14 +29,15 @@ public class ReviewReportForm extends Application implements ClientIF{
 		}
 	}
 	
-	public ReviewReportForm(ClientController client, Stage stage) throws Exception {
+	public ReviewReportForm(ClientController client, Stage stage, String SaleID) throws Exception {
 		this.client = client;
+		this.SaleID = SaleID;
 	}
 
 
 	@Override
 	public boolean sendToController(Object obj) {
-		rnmmController.getObjectFromUI(obj);
+		rnmmController.getMessageFromUI(obj);
 		return false;
 	}
 

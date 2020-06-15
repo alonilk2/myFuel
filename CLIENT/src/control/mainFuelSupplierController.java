@@ -21,6 +21,7 @@ import gui.LoginForm;
 import gui.OrderFuelForHomeUseForm;
 import gui.TrackOrderForm;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -42,7 +43,6 @@ import javafx.stage.Stage;
 
 public class mainFuelSupplierController implements Initializable {
 	private ClientController client;
-	private static final int DEFAULT_PORT = 5555;
 	@FXML
 	private TableView<OrderFromSupplier> ordertable;
 	@FXML
@@ -64,12 +64,13 @@ public class mainFuelSupplierController implements Initializable {
 	private ObservableList<OrderFromSupplier> olist;
 	@FXML
 	private void onUpdateClick(ActionEvent event) throws Exception {
-		String status = statuschoicebox.getSelectionModel().getSelectedItem();
-		String orderID = orderidinput.getText();
-		String msg = "update orderstatus " + orderID + " " + status;
+		String orderID = statuschoicebox.getSelectionModel().getSelectedItem();
+		String msg = "update orderstatus " + orderID + " DELIVERED";
 		Request req = new Request(msg);
 		client.sendToServer(req);
 		client.displayAlert(true, "Fuel order status has been updated successfully!");
+		statuschoicebox.getItems().clear();
+		getTableDataFromDB();
 	}
 	@FXML
 	private void OnLogOutClick(ActionEvent event) throws Exception {
@@ -78,13 +79,9 @@ public class mainFuelSupplierController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		getTableDataFromDB();
-		statuschoicebox.getItems().add(OrderStatus.DELIVERED.toString());
-		statuschoicebox.getItems().add(OrderStatus.PREPARING.toString());
-		statuschoicebox.getItems().add(OrderStatus.SHIPPING.toString());
 	}
 	
 	public void getTableDataFromDB() {
-		Employee fuelsupplier = (Employee)client.getCurrentProfile();
 		String msg = "pull orderfromsupplier";
 		Request req = new Request(msg);
 		try {
@@ -95,24 +92,28 @@ public class mainFuelSupplierController implements Initializable {
 	}
 
 	public void setTableDataFromDB(List<OrderFromSupplier> list) {
+
+		ordertable.getItems().clear();
+		ordertable.setItems(FXCollections.observableArrayList(list));
+
 		olist = FXCollections.observableArrayList();
-		for(OrderFromSupplier l : list)
-			olist.add(l);
+		for(OrderFromSupplier l : list) {
+			if(l.getOrderStatus().equals(OrderStatus.SHIPPING)) {
+				olist.add(l);
+				statuschoicebox.getItems().add(l.getorderID().toString());
+			}
+		}
 		//JavaFX
 		//Injection
-		//OrderID.setCellValueFactory(new PropertyValueFactory<OrderFromSupplier,Integer>("OrderID"));
 		OrderID.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getorderID()).asObject());
-		//Status.setCellValueFactory(new PropertyValueFactory<OrderFromSupplier,OrderStatus>("Status"));
 		Status.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getOrderStatus().toString()));
-
 		//FuelType.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFuelType().toString()));
 		Quantity.setCellValueFactory(new PropertyValueFactory<OrderFromSupplier,Double>("Quantity"));
 		ordertable.setItems(olist);
+		ordertable.refresh();
 	}
-
 	public mainFuelSupplierController(String args, ClientIF ClientUI, ClientController client) {
 		this.client = client;
-
 	}
 
 	public boolean getObjectFromUI(Object obj) {

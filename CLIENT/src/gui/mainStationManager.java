@@ -4,6 +4,7 @@ import common.ClientIF;
 import control.ClientController;
 import control.mainStationManegerController;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -21,7 +22,29 @@ public class mainStationManager extends Application implements ClientIF {
 	}
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		
 		try {
+			FXMLLoader fxmload = new FXMLLoader();
+			fxmload.setLocation(getClass().getResource("mainStationManager.fxml"));
+			fxmload.setController(msc);
+			AnchorPane root = (AnchorPane)fxmload.load();
+			Scene scene = new Scene(root,772,550);
+			scene.getStylesheets().add(getClass().getResource("prototype.css").toExternalForm());
+			Platform.runLater(new Runnable() {
+			    @Override
+			    public void run() {
+					primaryStage.setScene(scene);
+					primaryStage.show();
+					mainStage = primaryStage;
+			    }
+			});
+			msc.setStage(primaryStage);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		/*try {
 			FXMLLoader fxmload = new FXMLLoader();
 			fxmload.setLocation(getClass().getResource("mainStationManager.fxml"));
 			fxmload.setController(msc);
@@ -34,7 +57,7 @@ public class mainStationManager extends Application implements ClientIF {
 			msc.setStage(primaryStage);
 		} catch(Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	private Stage getMainStage() {

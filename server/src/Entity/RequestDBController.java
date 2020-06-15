@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -38,7 +39,76 @@ public class RequestDBController {
 			case "rejecte": { handleRejectPriceRequest(Req, client); break; }
 			case "update": { handleUpdateRequest(Req, client); break; }
 			case "analytic": { handleAnalyticSystemRequest(Req, client); break; }
+			case "saleTemaplte":{handelSaleTemplate(Req,client); break;}
+			case "start_a_sale":{handelStartASale(Req,client); break;}
+			case "end_a_sale":{handelEndASale(Req,client); break;}
 		}
+	}
+	private void  handelEndASale (Request Req,ConnectionToClient client) {
+		PreparedStatement stm;
+		String sale_name = Req.getRequestComponent(1);
+		
+		String qry;
+		
+		qry = "UPDATE saletemplate SET status=? WHERE sale_name = ? ";
+		try {
+             stm = conn.prepareStatement(qry);
+            stm.setString(1,"off");
+			stm.setString(2,sale_name);
+			stm.execute();
+		}
+		 catch (SQLException e) {
+				e.printStackTrace();
+			}
+		
+	}
+	private void  handelStartASale (Request Req,ConnectionToClient client) {
+		PreparedStatement stm;
+		String sale_name = Req.getRequestComponent(1);
+		
+		String qry;
+		
+		qry = "UPDATE saletemplate SET status=? WHERE sale_name = ? ";
+		try {
+             stm = conn.prepareStatement(qry);
+            stm.setString(1,"on");
+			stm.setString(2,sale_name);
+			stm.execute();
+		}
+		 catch (SQLException e) {
+				e.printStackTrace();
+			}
+		
+	}
+	
+	private void handelSaleTemplate(Request Req,ConnectionToClient client) {
+		PreparedStatement stm;
+		
+		
+		String price = Req.getRequestComponent(1);
+		String saleName = Req.getRequestComponent(2);
+		String Fuel=Req.getRequestComponent(3);
+		String start=Req.getRequestComponent(4);
+		String end=Req.getRequestComponent(5);
+		//(fuelType, price, start, end, status, sale name)
+		String qry;
+		qry = "INSERT INTO saletemplate (fuelType, price, start, end, status, sale_name) VALUES (?,?,?,?,?,?)";
+		try {
+			stm = conn.prepareStatement(qry);
+			
+			stm.setString(1,Fuel);
+			stm.setFloat(2,Float.parseFloat(price));
+			stm.setString(3,start);
+			stm.setString(4,end);
+			stm.setString(5,"off");
+			stm.setString(6,saleName);
+			
+			stm.execute();
+		}
+		 catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	private void handleAnalyticSystemRequest(Request Req, ConnectionToClient client) {
 		switch(Req.getRequestComponent(1)) {
@@ -265,6 +335,28 @@ public class RequestDBController {
 				}
 				break;
 			}
+			case "purchasereport": {
+				List<Order> l = Server.getOrderControl().getOrdersList();
+				double[] count = new double[4];
+				for(Order o : l) {
+					if(o.getFueltype().getName().equals("95"))
+						count[0] += o.getQuantity();
+					else if(o.getFueltype().getName().equals("BikeFuel"))
+						count[1] += o.getQuantity();
+					else if(o.getFueltype().getName().equals("Diesel"))
+						count[2] += o.getQuantity();
+					else if(o.getFueltype().getName().equals("HomeFuel"))
+						count[3] += o.getQuantity();
+				}
+				try {
+					client.sendToClient(count);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
+			}
+			
 			case "car": {
 				List<Car> list = Server.getCarControl().getCarListByCustomer(Integer.parseInt(Req.getRequestComponent(2)));
 				try {
@@ -292,20 +384,27 @@ public class RequestDBController {
 				
 			case "CustomerDuringSale": {
 				try {
-					List<List<Object>> list = new ArrayList<List<Object>>();
-					PreparedStatement stm = conn.prepareStatement("SELECT cds.*, count(cds.CustomerID) as AmountOfParticipants , sum(cds.CustomerTotalSumOfPurchases) as TotalProfitFromSale FROM CustomerDuringSale cds");
-					ResultSet rs = stm.executeQuery();
+					List<CustomerDuringSale> list = new ArrayList<CustomerDuringSale>();
+					Statement stm = this.conn.createStatement();
+					ResultSet rs = stm.executeQuery("SELECT * FROM customerduringsale");
 					while(rs.next()) {
-						List<Object> templist = new ArrayList<Object>();
-						for(int x=1; x<=5; x++) 
-							templist.add(rs.getString(x));
-						list.add(templist);
+						list.add(new CustomerDuringSale(rs.getDouble(1), rs.getString(2), rs.getInt(3)));
 					}
-						client.sendToClient(list);
-					} catch (IOException | SQLException e) {
-						e.printStackTrace();
+					int i, n;
+					for(i = 0; i < list.size(); i++) {
+						for(n=i+1; n<list.size(); n++) {
+							if(list.get(n).getCustomerID() == list.get(i).getCustomerID()) {
+								list.get(i).addToTotalSum(list.get(n).getTotalSumOfPurchases());
+								list.remove(n);
+							}
+						}
 					}
+					client.sendToClient(list);
+				} catch (IOException | SQLException e) {
+					e.printStackTrace();
 				}
+				break;
+			}
 			case "newcustomerformdata": {
 				try {
 					List<FuelCompany> templ = Server.getFCController().getFclist();

@@ -22,7 +22,9 @@ public class marketingManagerMain extends Application implements ClientIF {
 	private ClientController client;
 	public marketingManagerMain(ClientController client, Stage main) {
 		this.client = client;
+		client.setMainPage(this);
 		this.mainStage = main;
+		client.setMainStage(main);
 		this.mmc = new markatingManagerController(host, this, client);
 	}
 	

@@ -97,20 +97,20 @@ public void restartApplication(Runnable runBeforeRestart) throws IOException {
 			throw new IOException("Error while trying to restart the application", e);
 		}
 	}
-public void handleMessageFromServer(Object msg) 
-  {
-	if(msg instanceof Boolean) {
-		  displayAlert((Boolean)msg, null);
+	public void handleMessageFromServer(Object msg) 
+	  {
+		if(msg instanceof Boolean) {
+			  displayAlert((Boolean)msg, null);
+		  }
+		  else if(msg instanceof List || msg instanceof double[]) {
+			  clientUI.sendToController(msg);
+		  }
+		  else if(msg instanceof User) {
+			  this.currentProfile = (User)msg;
+			  clientUI.sendToController(msg);
+			  
+		  }
 	  }
-	  else if(msg instanceof List) {
-		  clientUI.sendToController(msg);
-	  }
-	  else if(msg instanceof User) {
-		  this.currentProfile = (User)msg;
-		  clientUI.sendToController(msg);
-		  
-	  }
-  }
 	  
 
   public void displayAlert(Boolean b, String message) {

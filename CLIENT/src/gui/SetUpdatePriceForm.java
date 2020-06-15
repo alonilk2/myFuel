@@ -21,7 +21,7 @@ public class SetUpdatePriceForm extends Application implements ClientIF{
 			fxmload.setLocation(getClass().getResource("set_Update_Price.fxml"));
 			fxmload.setController(setUpPriceController);
 			AnchorPane root = (AnchorPane)fxmload.load();
-			Scene scene = new Scene(root,1280,800);
+			Scene scene = new Scene(root,700,500);
 			scene.getStylesheets().add(getClass().getResource("prototype.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();

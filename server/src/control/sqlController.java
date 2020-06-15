@@ -28,9 +28,9 @@ public class sqlController {
 	    try 
 	    {
 	    	Scanner scn = new Scanner(System.in);
-	    	System.out.println("Please enter your DB Password:");
-	    	password = scn.next();
-	        conn = DriverManager.getConnection("jdbc:mysql://localhost/myfuel?serverTimezone=Asia/Jerusalem","root",password);
+	    	//System.out.println("Please enter your DB Password:");
+	    	//password = scn.next();
+	        conn = DriverManager.getConnection("jdbc:mysql://localhost/myfuel?serverTimezone=Asia/Jerusalem","root","abc12345");
 	        System.out.println("SQL connection succeed");
 	        isConnected = true;
 	 	} 

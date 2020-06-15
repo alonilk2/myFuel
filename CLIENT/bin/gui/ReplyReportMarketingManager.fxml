@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -16,7 +15,7 @@
          <children>
             <AnchorPane layoutX="121.0" layoutY="64.0" prefHeight="490.0" prefWidth="657.0" scaleShape="false">
                <children>
-                  <Button fx:id= "ConfirmBtn" layoutX="436.0" layoutY="404.0" mnemonicParsing="false" onAction="#onConfirmClick" prefHeight="54.0" prefWidth="154.0" style="-fx-background-color: #058015;" text="Confirm" textAlignment="CENTER" textFill="WHITE" />
+                  <Button fx:id="ConfirmBtn" layoutX="436.0" layoutY="404.0" mnemonicParsing="false" onAction="#onConfirmClick" prefHeight="54.0" prefWidth="154.0" style="-fx-background-color: #058015;" text="Confirm" textAlignment="CENTER" textFill="WHITE" />
                </children>
             </AnchorPane>
             <AnchorPane layoutX="82.0" prefHeight="64.0" prefWidth="694.0" scaleShape="false" style="-fx-background-color: #027adb;">
@@ -36,17 +35,12 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Button layoutX="10.0" layoutY="72.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="110.0" style="-fx-background-color: #57b4ff;" text="Home Page" textFill="#eeeded">
+                  <Button fx:id="homepagebutton" layoutX="7.0" layoutY="67.0" mnemonicParsing="false" onAction="#onHomePageClick" prefHeight="55.0" prefWidth="110.0" style="-fx-background-color: #57b4ff;" text="Home Page" textFill="#eeeded">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="9.0" layoutY="136.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="110.0" style="-fx-background-color: #57b4ff;" text="Notifications" textFill="#eeeded">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Button>
-                  <Button layoutX="8.0" layoutY="484.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="110.0" style="-fx-background-color: #57b4ff;" text="Log Out" textFill="#eeeded">
+                  <Button fx:id="logoutbutton" layoutX="7.0" layoutY="481.0" mnemonicParsing="false" onAction="#onLogOutClick" prefHeight="55.0" prefWidth="110.0" style="-fx-background-color: #57b4ff;" text="Log Out" textFill="#eeeded">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -67,24 +61,32 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="14.0" layoutY="396.0" text="Sum of purchases:">
+            <Label layoutX="43.0" layoutY="396.0" text="Sum of purchases:">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="sumOfAllPurchasesDuringTheSale" layoutX="396.0" layoutY="397.0" />
-            <Label layoutX="14.0" layoutY="97.0" prefHeight="27.0" prefWidth="445.0" text="Amout of customers that purchased through sale:">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <TextField fx:id="AmountOfParticipants" layoutX="460.0" layoutY="98.0" prefHeight="26.0" prefWidth="124.0" />
-            <TableView layoutX="43.0" layoutY="136.0" prefHeight="250.0" prefWidth="500.0">
+            <TableView fx:id="tableview" layoutX="14.0" layoutY="98.0" prefHeight="250.0" prefWidth="588.0">
               <columns>
                 <TableColumn fx:id="customerIDCol" prefWidth="136.80003356933594" text="CustomerID" />
                 <TableColumn fx:id="totalSumPerCustomerCol" prefWidth="395.99993896484375" text="Amount that was spent by participating customer" />
               </columns>
             </TableView>
+            <Label layoutX="43.0" layoutY="358.0" text="Number Of Customers:">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="custcount" layoutX="249.0" layoutY="358.0" prefHeight="27.0" prefWidth="204.0" text="Number Of Customers:">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="purchsum" layoutX="249.0" layoutY="396.0" prefHeight="27.0" prefWidth="218.0" text="Number Of Customers:">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

@@ -21,6 +21,7 @@
                   <Image url="@images/user_account_profile_avatar_person_student_male-512.png" />
                </image>
             </ImageView>
+            <Label layoutX="52.0" layoutY="13.0" opacity="0.78" prefHeight="34.0" prefWidth="206.0" text="Customer view" textFill="WHITE" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="-1.0" prefHeight="550.0" prefWidth="124.0" scaleShape="false" style="-fx-background-color: #027adb;">
@@ -30,7 +31,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Button layoutX="10.0" layoutY="72.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="103.0" style="-fx-background-color: #57b4ff;" text="Home Page" textFill="#eeeded">
+            <Button layoutX="9.0" layoutY="72.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="103.0" style="-fx-background-color: #57b4ff;" text="Home Page" textFill="#eeeded">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -59,21 +60,26 @@
                   <Image url="@../AppData/Local/Temp/Pictures/gui_Porject/f7ef765679f733bd90e7775448a09aba.jpg" />
                </image>
             </ImageView>
-            <Button id="orderfuelhomebtn" layoutX="42.0" layoutY="120.0" mnemonicParsing="false" onAction="#onOrderFuelClick" prefHeight="55.0" prefWidth="195.0" style="-fx-background-color: #57b4ff;" text="Order Fuel For Home Use" textAlignment="CENTER">
+            <Button id="orderfuelhomebtn" layoutX="56.0" layoutY="93.0" mnemonicParsing="false" onAction="#onOrderFuelClick" prefHeight="55.0" prefWidth="195.0" style="-fx-background-color: #57b4ff;" text="Order Fuel For Home Use" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Arial Black" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="fastfuelbutton" layoutX="321.0" layoutY="120.0" mnemonicParsing="false" onAction="#onFastFuelClick" prefHeight="55.0" prefWidth="195.0" style="-fx-background-color: #57b4ff;" text="Fast Fuel">
+            <Button fx:id="fastfuelbutton" layoutX="313.0" layoutY="93.0" mnemonicParsing="false" onAction="#onFastFuelClick" prefHeight="55.0" prefWidth="195.0" style="-fx-background-color: #57b4ff;" text="Fast Fuel" textFill="WHITE">
                <font>
                   <Font name="Arial Black" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="trackbutton" layoutX="42.0" layoutY="272.0" mnemonicParsing="false" onAction="#onTrackOrderClick" prefHeight="55.0" prefWidth="195.0" style="-fx-background-color: #57b4ff;" text="Tracking orders">
+            <Button fx:id="trackbutton" layoutX="56.0" layoutY="196.0" mnemonicParsing="false" onAction="#onTrackOrderClick" prefHeight="55.0" prefWidth="195.0" style="-fx-background-color: #57b4ff;" text="Tracking orders" textFill="WHITE">
                <font>
                   <Font name="Arial Black" size="12.0" />
                </font>
             </Button>
+            <Label layoutX="180.0" layoutY="14.0" prefHeight="35.0" prefWidth="230.0" text="Welcome To MyFuel!" textFill="#10045e">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

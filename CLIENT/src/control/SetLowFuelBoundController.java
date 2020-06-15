@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 
 import Entity.FuelType;
 import Entity.HomeFuelOrder;
+import Entity.Request;
 import control.ClientController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,9 +31,9 @@ public class SetLowFuelBoundController implements Initializable {
 	@FXML
 	private Button Set;
 	@FXML
-	private TextField Boundary;
+	private TextField bound;
 	@FXML
-	private ChoiceBox<String> Fuel_Type;//////////
+	private ChoiceBox<String> type;//////////
 
 	
 
@@ -40,21 +41,24 @@ public class SetLowFuelBoundController implements Initializable {
 	@FXML
 	private void onSetBound(ActionEvent event) throws Exception {
 	
-		String bound = Boundary.getText();
+		String boundery = bound.getText();
 	
 		
-		FuelType fueltype = getFuelTypeFromString(Fuel_Type.getSelectionModel().getSelectedItem());
+		FuelType fueltype = getFuelTypeFromString(type.getSelectionModel().getSelectedItem());
 		
-	    if (bound.length()==0 ||Fuel_Type.getSelectionModel().getSelectedItem().length()==0 ) {
-	    	System.out.println("all filde must be field");
-	    //	ShowInfoAlert("all filde must be field");
+	    if (boundery.length()==0 ||type.getSelectionModel().getSelectedItem().length()==0 ) {
+	    	
+	    	 client.displayAlert(false,"all filde must be field");
+	    	
 	    }
-        String msg = "boundery "+bound +" "+ Fuel_Type.getSelectionModel().getSelectedItem();
+        String msg = "boundery "+boundery +" "+ type.getSelectionModel().getSelectedItem();
+        Request qry=new Request(msg);
         try {
-		client.sendToServer(msg);
+		client.sendToServer(qry);
 	} catch (IOException e) {
 		e.printStackTrace();
 	}
+        client.displayAlert(true,"set low fuel boundery successed !");
 	}
 
 	
@@ -62,9 +66,10 @@ public class SetLowFuelBoundController implements Initializable {
 
 
 	public void getFuelTypesFromDB() {
-		String msg = "SELECT FuelType";
+		String msg = "pull FuelType";
+		Request qry=new Request(msg);
 		try {
-			client.sendToServer(msg);
+			client.sendToServer(qry);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -102,7 +107,8 @@ public class SetLowFuelBoundController implements Initializable {
 	}
 	
 	public void getObjectFromUI(Object msg) {
-		//NEW METHOD !!!!!!!!!!!
+	
+		 String x="";
 		@SuppressWarnings("unchecked")
 		List<List<Object>> list = (List<List<Object>>)msg;
 		fueltypearr = new FuelType[list.size()];
@@ -110,9 +116,11 @@ public class SetLowFuelBoundController implements Initializable {
 		for(i = 0; i<list.size(); i++) {
 			fueltypearr[i] = createFuelTypeFromList(list.get(i));
 			if(fueltypearr[i].getStatus().equals("ACTIVE")) {
-				Fuel_Type.getItems().add(fueltypearr[i].getName());
+				x=fueltypearr[i].getName();
+				type.getItems().add(x);
 			}
-
+		
 		}
+		
 	}
 }

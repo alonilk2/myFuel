@@ -12,9 +12,11 @@ import javafx.stage.Stage;
 public class ReplyReportSaleSelectionForm extends Application implements ClientIF{
 	private ClientController client;
 	private ReplyReportSaleSelectionController rrssController;
+	private Stage mainStage;
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		this.rrssController = new ReplyReportSaleSelectionController(this.client);
+		this.mainStage = primaryStage;
+		this.rrssController = new ReplyReportSaleSelectionController(this.client, mainStage);
 		try {
 			FXMLLoader fxmload = new FXMLLoader();
 			fxmload.setLocation(getClass().getResource("ReplyReportSaleSelection.fxml"));

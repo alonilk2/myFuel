@@ -5,14 +5,58 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ChoiceBox fx:id="type" layoutX="242.0" layoutY="101.0" prefWidth="150.0" />
-      <TextField fx:id="bound" layoutX="243.0" layoutY="161.0" />
-      <Label layoutX="88.0" layoutY="105.0" text="Fuel Type" />
-      <Label layoutX="88.0" layoutY="165.0" text="Boundary" />
-      <Button fx:id="setBound" layoutX="444.0" layoutY="316.0" mnemonicParsing="false" onAction="#onSetBound" text="Set" />
+      <ChoiceBox fx:id="type" layoutX="279.0" layoutY="170.0" prefWidth="150.0" />
+      <TextField fx:id="bound" layoutX="279.0" layoutY="230.0" />
+      <Label layoutX="164.0" layoutY="174.0" text="Fuel Type">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <Label layoutX="171.0" layoutY="234.0" text="Boundary">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <Button fx:id="setBound" layoutX="190.0" layoutY="323.0" mnemonicParsing="false" onAction="#onSetBound" style="-fx-background-color: #058015;" text="Set" textFill="#fcf9f9">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <AnchorPane layoutX="88.0" prefHeight="74.0" prefWidth="513.0" style="-fx-background-color: #027adb;" />
+      <AnchorPane prefHeight="400.0" prefWidth="96.0" style="-fx-background-color: #027adb;">
+         <children>
+            <Button layoutX="8.0" layoutY="84.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="106.0" style="-fx-background-color: #57b4ff;" text="Home Page" textFill="#fffbfb">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button layoutX="8.0" layoutY="131.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="106.0" style="-fx-background-color: #57b4ff;" text="Notifications" textFill="#fff8f8">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button layoutX="8.0" layoutY="347.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="106.0" style="-fx-background-color: #57b4ff;" text="Log Out" textFill="#f2eded">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Label layoutX="43.0" layoutY="33.0" text="MyFuel" textFill="#fffafa">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Button layoutX="446.0" layoutY="326.0" mnemonicParsing="false" style="-fx-background-color: #bc0404;" text="Cancel" textFill="#eeebeb">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Label layoutX="215.0" layoutY="102.0" text="Set Low Fuel Boundery" textFill="#290883">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

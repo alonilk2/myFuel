@@ -26,6 +26,11 @@ public class FuelType implements Serializable{
 		this.stat = stat;
 		//status =
 	}
+	public FuelType(String name, double quantity) {
+		this.name = name;
+		this.quantity = quantity;
+		//status =
+	}
 	@Override
 	public String toString() {
 		return name;

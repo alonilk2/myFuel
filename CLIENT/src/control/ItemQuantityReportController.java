@@ -9,6 +9,7 @@ import Entity.Customer;
 import Entity.CustomerDuringSale;
 import Entity.FuelType;
 import Entity.Request;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,10 +31,11 @@ public class ItemQuantityReportController implements Initializable {
 		@FXML
 		private TableColumn<FuelType, String> fuelType;
 		@FXML
-		private TableColumn<FuelType, Double> quantity;
+		private TableColumn<FuelType, String> quantity;
 		@FXML 
 		private Button homepagebutton;
 		private ObservableList<FuelType> olist;
+		private FuelType[] fueltypearr;
 		@FXML
 		private void onHomePageClick(ActionEvent event) throws Exception {
 			client.getMainPage().start(client.getMainStage());
@@ -69,21 +71,46 @@ public class ItemQuantityReportController implements Initializable {
 		//Handle objects sent from UI
 		@SuppressWarnings("unchecked")
 		public boolean getMessageFromUI(Object obj) {
+
 			if(obj instanceof List) {
-				setTableDataFromDB((List<FuelType>)obj);
+				setTableDataFromDB(obj);
 				return true;
 			}
 			return false;
 		}
-		
-		public void setTableDataFromDB(List<FuelType> list) {
+
+		public FuelType createFuelTypeFromList(List<Object> list) {
+			FuelType newVal;
+			if(list.size() > 0) {
+				newVal = new FuelType(
+					list.get(0).toString(),
+					Double.parseDouble(list.get(1).toString()),
+					Float.parseFloat(list.get(2).toString()),
+					Double.parseDouble(list.get(3).toString()),
+					list.get(4).toString());
+				return newVal;
+			}
+			return null;
+		}
+		public void setTableDataFromDB(Object list) {
+			if(list instanceof List) {
+				List<Object> temp = (List<Object>)list;
+				if(temp.get(0) instanceof List) {
+					@SuppressWarnings("unchecked")
+					List<List<Object>> templist = (List<List<Object>>)list;
+					fueltypearr = new FuelType[temp.size()];
+					int i;
+					for(i = 0; i<temp.size(); i++)
+						fueltypearr[i] = createFuelTypeFromList(templist.get(i));
+				}
+			}
 			olist = FXCollections.observableArrayList();
-			for(FuelType l : list)
+			for(FuelType l : fueltypearr)
 				olist.add(l);
 			//JavaFX
 			//Injection
-			fuelType.setCellValueFactory(new PropertyValueFactory<FuelType,String>("fuelType"));
-			quantity.setCellValueFactory(new PropertyValueFactory<FuelType,Double>("quantity"));
+			fuelType.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+			quantity.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getQuantity().toString()));
 		    tableview.setItems(olist);
 		}
 

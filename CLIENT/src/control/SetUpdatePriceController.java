@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 
 import Entity.FuelType;
 import Entity.HomeFuelOrder;
+import Entity.Request;
 import control.ClientController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -46,22 +47,26 @@ public class SetUpdatePriceController implements Initializable {
 			FuelType fueltype = getFuelTypeFromString(fuel_type.getSelectionModel().getSelectedItem());
 			
 		    if (Price.length()==0 ||fuel_type.getSelectionModel().getSelectedItem().length()==0 ) {
-		    	System.out.println("all filde must be field");
-		    //	ShowInfoAlert("all filde must be field");
+		    	
+		    	client.displayAlert(false, "All fields must be filled");
+		
 		    }
 	        String msg = "Price "+Price +" "+ fuel_type.getSelectionModel().getSelectedItem();
+	    	Request qry= new Request(msg);
 	        try {
-			client.sendToServer(msg);
+			client.sendToServer(qry);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	    	client.displayAlert(true, "Fuel price change succeeded!");
 		}
 		
 	
 	public void getFuelTypesFromDB() {
-		String msg = "SELECT FuelType";
+		String msg = "pull FuelType";
+		Request qry= new Request(msg);
 		try {
-			client.sendToServer(msg);
+			client.sendToServer(qry);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -88,6 +93,8 @@ public class SetUpdatePriceController implements Initializable {
 			return newVal;
 		}
 		return null;
+		
+		
 	}
 	
 	private FuelType getFuelTypeFromString(String name) {
@@ -100,6 +107,7 @@ public class SetUpdatePriceController implements Initializable {
 	
 	public void getObjectFromUI(Object msg) {
 		//NEW METHOD !!!!!!!!!!!
+		/*
 		@SuppressWarnings("unchecked")
 		List<List<Object>> list = (List<List<Object>>)msg;
 		fueltypearr = new FuelType[list.size()];
@@ -110,7 +118,20 @@ public class SetUpdatePriceController implements Initializable {
 				fuel_type.getItems().add(fueltypearr[i].getName());
 			}
 		
-		}
+		}*/
+		
+		@SuppressWarnings("unchecked")
+		List<List<Object>> list = (List<List<Object>>)msg;
+		fueltypearr = new FuelType[list.size()];
+		int i;
+		for(i = 0; i<list.size(); i++) {
+			fueltypearr[i] = createFuelTypeFromList(list.get(i));
+			if(fueltypearr[i].getStatus().equals("ACTIVE")) {
+				fuel_type.getItems().add(fueltypearr[i].getName());
+			}
+
+		
 	}
+		}
 
 }

@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import gui.ReplyReportSaleSelectionForm;
 import gui.SetUpdatePriceForm;
+import gui.start_a_saleForm;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,10 +20,17 @@ public class markatingManagerController implements Initializable {
 	private static final int DEFAULT_PORT = 5555;
 	
 	@FXML
-	private Button SetUpdetePrice;
+	private Button setUpdatePriceBtn;
+
+	@FXML
+	private Button startSaleBtn;
+	@FXML
+	private Button reviewReportBtn;
+	@FXML
+	private Button personificReportBtn;
 	
 	@FXML
-	private void onSet(ActionEvent event) throws Exception {
+	private void onUpdatePriceClick(ActionEvent event) throws Exception {
 		
 		SetUpdatePriceForm newform = new SetUpdatePriceForm(client, mainStage);
 		client.setClientIF(newform);
@@ -36,13 +45,22 @@ public class markatingManagerController implements Initializable {
 	}
 	
 	@FXML
-	private void onGenerating(ActionEvent event) throws Exception {
+	private void onReviewReportClick(ActionEvent event) throws Exception {
+		ReplyReportSaleSelectionForm newform = new ReplyReportSaleSelectionForm(client, mainStage);
+		client.setClientIF(newform);
+		newform.start(mainStage);
+	}
+
+	@FXML
+	private void onPersonificReportClick(ActionEvent event) throws Exception {
 
 	}
 	
-	
 	@FXML
-	private void OnStart(ActionEvent event) throws Exception {
+	private void onStartSaleClick(ActionEvent event) throws Exception {
+		start_a_saleForm newform = new start_a_saleForm(client, mainStage);
+		client.setClientIF(newform);
+		newform.start(mainStage);
 
 	}
 	

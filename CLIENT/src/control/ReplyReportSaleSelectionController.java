@@ -24,8 +24,7 @@ public class ReplyReportSaleSelectionController implements Initializable {
 		@FXML
 		private Button homepagebutton;
 		
-		private int sale_id;
-
+		private Stage mainStage;
 		@FXML
 		private void onNextClick(ActionEvent event){
 			try {
@@ -34,15 +33,11 @@ public class ReplyReportSaleSelectionController implements Initializable {
 					client.displayAlert(false, "All fields must be filled!");
 					return;
 				}
-			
-				sale_id = Integer.parseInt(SaleID); 
-				ReviewReportController rrc = new ReviewReportController(client);
-				rrc.sale_ID = sale_id;
-				Stage mainStage = client.getMainStage();
-				ReviewReportForm newform = new ReviewReportForm(client, mainStage);
+				ReviewReportForm newform = new ReviewReportForm(client, mainStage, SaleID);
 				client.setClientIF(newform);
 				client.setMainPage(newform);
 				newform.start(mainStage);
+
 			} 
 			catch (Exception e) {
 				e.printStackTrace();
@@ -66,8 +61,9 @@ public class ReplyReportSaleSelectionController implements Initializable {
 			client.setClientIF(client.getMainPage());
 		}
 		
-		public ReplyReportSaleSelectionController(ClientController client) {
+		public ReplyReportSaleSelectionController(ClientController client, Stage mainStage) {
 			this.client=client;
+			this.mainStage = mainStage;
 		}
 
 

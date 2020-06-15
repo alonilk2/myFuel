@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="490.0" fitWidth="647.0" layoutX="123.0" layoutY="63.0" opacity="0.18" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../AppData/Local/Temp/Pictures/gui_Porject/f7ef765679f733bd90e7775448a09aba.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="82.0" prefHeight="64.0" prefWidth="694.0" scaleShape="false" style="-fx-background-color: #027adb;">
+         <children>
+            <ImageView fitHeight="34.0" fitWidth="35.0" layoutX="646.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/user_account_profile_avatar_person_student_male-512.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="-1.0" prefHeight="550.0" prefWidth="124.0" scaleShape="false" style="-fx-background-color: #027adb;">
+         <children>
+            <Label layoutX="44.0" layoutY="24.0" prefHeight="27.0" prefWidth="76.0" text="MyFuel" textFill="#fffdfd">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="homepagebutton" layoutX="5.0" layoutY="64.0" mnemonicParsing="false" onAction="#onHomePageClick" prefHeight="55.0" prefWidth="114.0" style="-fx-background-color: #57b4ff;" text="Home Page" textFill="#eeeded">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="logoutbutton" layoutX="5.0" layoutY="481.0" mnemonicParsing="false" onAction="#onLogOutClick" prefHeight="55.0" prefWidth="114.0" style="-fx-background-color: #57b4ff;" text="Log Out" textFill="#eeeded">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="34.0" fitWidth="45.0" layoutX="9.0" layoutY="14.0" opacity="0.75" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/gas-icon-6150.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="155.0" layoutY="63.0" prefHeight="432.0" prefWidth="588.0">
+         <children>
+            <Pane layoutX="13.0" layoutY="305.0" prefHeight="172.0" prefWidth="193.0">
+               <children>
+                  <Button fx:id="StartButten" layoutX="53.0" layoutY="133.0" mnemonicParsing="false" onAction="#onStart" prefHeight="34.0" prefWidth="150.0" style="-fx-background-color: #058015;" text="Start\Stop Sale" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
+                  </Button>
+                  <ChoiceBox fx:id="sale" layoutX="22.0" layoutY="86.0" prefWidth="150.0" />
+                  <Label layoutX="22.0" layoutY="45.0" text="Select a sale template to start:" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <TableView fx:id="saleTable" layoutY="73.0" prefHeight="259.0" prefWidth="595.0">
+              <columns>
+                  <TableColumn fx:id="saleName" prefWidth="151.0" text="Sale name" />
+                  <TableColumn fx:id="FuelType" maxWidth="144.0" prefWidth="91.0" text="Fuel type" />
+                  <TableColumn fx:id="price" maxWidth="131.0" prefWidth="99.0" text="Sale Price" />
+                  <TableColumn fx:id="start" prefWidth="82.0" text="Start Time" />
+                  <TableColumn fx:id="end" prefWidth="98.0" text="End Time" />
+                  <TableColumn fx:id="status" prefWidth="64.0" text="Status" />
+              </columns>
+            </TableView>
+            <Label layoutX="208.0" layoutY="1.0" text="Start\End A Sale" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="13.0" layoutY="47.0" />
+            <Label layoutX="21.0" layoutY="39.0" />
+            <Label layoutX="13.0" layoutY="46.0" text="Sale Tempaltes" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="21.0" layoutY="328.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="cancel" layoutX="480.0" layoutY="438.0" mnemonicParsing="false" onAction="#onCancel" prefHeight="34.0" prefWidth="87.0" style="-fx-background-color: #bc0404;" text="Cancel" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="12.0" />
+               </font>
+            </Button>
+            <ChoiceBox fx:id="saleEnd" layoutX="318.0" layoutY="391.0" prefWidth="150.0" />
+            <Label layoutX="318.0" layoutY="348.0" text="Select a sale template to end:" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="262.0" layoutY="350.0" text="or">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="141.0" layoutY="29.0" text="On this screen you can activate or stop a sale.">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

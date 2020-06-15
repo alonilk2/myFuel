@@ -136,7 +136,10 @@ public class FastFuelController implements Initializable {
 			client.getMainPage().start(client.getMainStage());
 			client.setClientIF(client.getMainPage());
 		}
-		
+		@FXML
+		private void onLogOutClick(ActionEvent event) throws Exception {
+			client.restartApplication(null);
+		}
 		public void getCarsFromDB() {
 			String msg = "pull car " + client.getCurrentProfile().getUserID();
 			Request req = new Request(msg);

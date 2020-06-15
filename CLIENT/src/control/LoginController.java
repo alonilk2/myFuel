@@ -24,6 +24,7 @@ import gui.mainFuelSupplier;
 import gui.mainMarketingRepresentative;
 import gui.mainStationManager;
 import gui.marketingManagerMain;
+import gui.marketingWorker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -119,6 +120,13 @@ public class LoginController implements Initializable {
 			}
 			else if(((Employee) msg).getRole().equals(Role.STATION_MANAGER)) {
 				mainStationManager newform = new mainStationManager(client, mainStage);
+				client.setClientIF(newform);
+				client.setMainPage(newform);
+				client.setCurrentProfile((Employee)msg);
+				newform.start(mainStage); 
+			}
+			else if(((Employee) msg).getRole().equals(Role.MARKETING_WORKER)) {
+				marketingWorker newform = new marketingWorker(client, mainStage);
 				client.setClientIF(newform);
 				client.setMainPage(newform);
 				client.setCurrentProfile((Employee)msg);

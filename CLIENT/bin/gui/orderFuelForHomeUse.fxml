@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -13,6 +12,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -71,48 +71,40 @@
                   <RowConstraints maxHeight="74.0" minHeight="10.0" prefHeight="41.20001220703125" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="65.19998168945312" minHeight="10.0" prefHeight="39.00000610351563" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="62.800012207031244" minHeight="10.0" prefHeight="37.40000610351561" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="62.800012207031244" minHeight="10.0" prefHeight="37.40000610351561" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="71.20000000000002" minHeight="10.0" prefHeight="44.5999755859375" valignment="CENTER" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="77.60005187988281" minHeight="10.0" prefHeight="38.20002441406251" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="77.60005187988281" minHeight="10.0" prefHeight="38.20002441406251" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <DatePicker fx:id="date_input" prefHeight="34.0" prefWidth="201.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <TextField fx:id="qty_input" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <ChoiceBox fx:id="fuel_type" prefHeight="28.0" prefWidth="187.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="Fuel Type:" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
+                  <DatePicker fx:id="date_input" prefHeight="34.0" prefWidth="201.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="qty_input" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <TextField fx:id="address_input" GridPane.columnIndex="1" />
-                  <Label text="Address to deliver :">
+                  <Label text="Home Address:">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <CheckBox fx:id="fast_suppl" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="18.0" prefWidth="28.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <CheckBox fx:id="fast_suppl" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="18.0" prefWidth="28.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label GridPane.rowIndex="2" />
-                  <Label text="Quantity (Liters):" GridPane.rowIndex="2">
+                  <Label text="Quantity (Liters):" GridPane.rowIndex="1">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label text="Fast supplement (additional charge) :" GridPane.rowIndex="3">
+                  <Label text="Fast Supplement:*" GridPane.rowIndex="2">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label text="Date to receive order :" GridPane.rowIndex="4">
+                  <Label text="Date to receive order :" GridPane.rowIndex="3">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label text="Fuel Company:" GridPane.rowIndex="5">
+                  <Label GridPane.rowIndex="4">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="fuelcomp" prefHeight="28.0" prefWidth="187.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                </children>
             </GridPane>
             <Label layoutX="188.0" layoutY="24.0" text="Order Fuel For Home Use">
@@ -130,6 +122,11 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
+            <Text layoutX="55.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(*) Additional charges may be applied">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
    </children>

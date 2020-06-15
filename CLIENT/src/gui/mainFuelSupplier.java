@@ -41,7 +41,6 @@ public class mainFuelSupplier extends Application implements ClientIF {
 					mainStage = primaryStage;
 			    }
 			});
-
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

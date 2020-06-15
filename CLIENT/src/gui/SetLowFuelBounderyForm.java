@@ -20,7 +20,7 @@ public class SetLowFuelBounderyForm extends Application implements ClientIF{
 			fxmload.setLocation(getClass().getResource("SetLowFuelBound.fxml"));
 			fxmload.setController(setLowController);
 			AnchorPane root = (AnchorPane)fxmload.load();
-			Scene scene = new Scene(root,1280,800);
+			Scene scene = new Scene(root,600,400);
 			scene.getStylesheets().add(getClass().getResource("prototype.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();

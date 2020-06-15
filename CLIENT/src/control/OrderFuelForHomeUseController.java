@@ -57,7 +57,7 @@ public class OrderFuelForHomeUseController implements Initializable {
 		try {
 			String addr = address_input.getText();
 			String qtyStr = qty_input.getText();
-			FuelType fueltype = getFuelTypeFromString(fuel_type.getSelectionModel().getSelectedItem());
+			FuelType fueltype = getFuelTypeFromString("HomeFuel");
 			boolean fastSupply = fast_suppl.isSelected();
 			LocalDate deliveryDate = date_input.getValue();
 			if(addr.length()==0 || qtyStr.length() == 0 || fueltype==null || deliveryDate==null) {
@@ -67,21 +67,9 @@ public class OrderFuelForHomeUseController implements Initializable {
 			double qty = Double.parseDouble(qtyStr);
 			double[] sumArr = calcOrderSum(fueltype, qty, fastSupply);
 			Customer customer = (Customer)client.getCurrentProfile();
-			FuelCompany fuelCompany = null;
-			for(FuelCompany f : fclist) {
-				if(f.getCompanyName().equals(fuelcomp.getSelectionModel().getSelectedItem()))
-					fuelCompany = f;
-			}
-			String compName = fuelCompany.getCompanyName();
-			if(compName.equals(customer.getComp1()) || compName.equals(customer.getComp2()) || compName.equals(customer.getComp3())) {
-				OrderSummeryHomeForm newform = new OrderSummeryHomeForm(client, sumArr, fuelCompany, qty, fueltype, deliveryDate, fastSupply, addr);
-				client.setClientIF(newform);
-				newform.start(client.getMainStage());
-			}
-			else {
-				client.displayAlert(false, "Unfortunately, you don't have the privilege to refuel in this company. Please go to the fuel company you registered with.");
-				return;
-			}
+			OrderSummeryHomeForm newform = new OrderSummeryHomeForm(client, sumArr, null, qty, fueltype, deliveryDate, fastSupply, addr);
+			client.setClientIF(newform);
+			newform.start(client.getMainStage());
 		} 
 		catch (Exception e) {
 			e.printStackTrace();

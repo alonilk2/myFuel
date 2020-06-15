@@ -62,7 +62,6 @@ public class OrderSummeryHomeController implements Initializable {
 		private Button logoutbutton;
 		private ClientController client;
 		private double[] OrderSumArr;
-		private FuelCompany fuelCompany;
 		private double Liters;
 		private FuelType ft;
 		private OrderSummeryHomeForm form;
@@ -73,7 +72,7 @@ public class OrderSummeryHomeController implements Initializable {
 		private void onConfirmClick(ActionEvent event){
 			Customer customer = (Customer)client.getCurrentProfile();
 			HomeFuelOrder newOrder = new HomeFuelOrder(OrderSumArr[0], ft, Liters, LocalDate.now(), OrderStatus.PREPARING, ddate, 
-					addr, fastSupply, customer.getCustomerID(), fuelCompany, LocalTime.now());
+					addr, fastSupply, customer.getCustomerID(), null, LocalTime.now());
 			ft.setQuantity(ft.getQuantity()-Liters);
 			try {
 				client.sendToServer(newOrder);
@@ -105,7 +104,6 @@ public class OrderSummeryHomeController implements Initializable {
 		public OrderSummeryHomeController(ClientController client, double[] OrderSumArr, FuelCompany fuelCompany, double Liters, FuelType ft, LocalDate ddate, boolean fastSupply, String addr, OrderSummeryHomeForm form) {
 			this.client = client;
 			this.OrderSumArr = OrderSumArr;
-			this.fuelCompany = fuelCompany;
 			this.Liters = Liters;
 			this.ft = ft;
 			this.ddate = ddate;
