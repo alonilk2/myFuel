@@ -135,6 +135,7 @@ public class AnalyticSystemController implements Initializable {
 						}
 						return false; // Does not match.
 					});
+					customercount.setText(String.valueOf(filteredData.size()));
 					tableview.refresh();
 		        });
 				
@@ -148,6 +149,7 @@ public class AnalyticSystemController implements Initializable {
 						}
 						return false; // Does not match.
 					});
+					customercount.setText(String.valueOf(filteredData.size()));
 					tableview.refresh();
 		        });
 				fuelhourscombo.valueProperty().addListener((obs, oldItem, newItem) -> {
@@ -166,6 +168,7 @@ public class AnalyticSystemController implements Initializable {
 						}
 						return false; // Does not match.
 					});
+					customercount.setText(String.valueOf(filteredData.size()));
 					tableview.refresh();
 		        });
 			} catch (IOException e) {

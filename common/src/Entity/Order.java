@@ -41,6 +41,23 @@ public class Order implements Serializable, SQLReady{
 		this.fuelCompany = fuelCompany;
 		this.orderTime = orderTime;
 	}
+	public Order(double orderSum, FuelType fueltype, double quantity, LocalDate orderDate, int CustomerID, LocalTime orderTime) {
+		this.orderSum = orderSum;
+		this.fueltype = fueltype;
+		this.quantity = quantity;
+		this.orderDate = orderDate;
+		this.CustomerID = CustomerID;
+		this.orderTime = orderTime;
+	}
+	public Order(int OrderID, double orderSum, FuelType fueltype, double quantity, LocalDate orderDate, int CustomerID, LocalTime orderTime) {
+		this.OrderID = OrderID;
+		this.orderSum = orderSum;
+		this.fueltype = fueltype;
+		this.quantity = quantity;
+		this.orderDate = orderDate;
+		this.CustomerID = CustomerID;
+		this.orderTime = orderTime;
+	}
 	public FuelCompany getFuelCompany() {
 		return fuelCompany;
 	}

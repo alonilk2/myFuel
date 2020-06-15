@@ -72,7 +72,7 @@ public class OrderSummeryHomeController implements Initializable {
 		private void onConfirmClick(ActionEvent event){
 			Customer customer = (Customer)client.getCurrentProfile();
 			HomeFuelOrder newOrder = new HomeFuelOrder(OrderSumArr[0], ft, Liters, LocalDate.now(), OrderStatus.PREPARING, ddate, 
-					addr, fastSupply, customer.getCustomerID(), null, LocalTime.now());
+					addr, fastSupply, customer.getCustomerID(), LocalTime.now());
 			ft.setQuantity(ft.getQuantity()-Liters);
 			try {
 				client.sendToServer(newOrder);

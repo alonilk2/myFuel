@@ -51,7 +51,6 @@ public class OrderFuelForHomeUseController implements Initializable {
 	private CheckBox fast_suppl;
 	@FXML
 	private Button logoutbutton;
-	private List<FuelCompany> fclist = new ArrayList<FuelCompany>();
 	@FXML
 	private void onConfirmClick(ActionEvent event){
 		try {
@@ -101,9 +100,6 @@ public class OrderFuelForHomeUseController implements Initializable {
 		String msg = "pull FuelType";
 		Request req = new Request(msg);
 		try {
-			client.sendToServer(req);
-			msg = "pull newcustomerformdata";
-			req.parseStringIntoComponents(msg);
 			client.sendToServer(req);
 		} catch (IOException e) {
 			client.displayAlert(false, "Error: Couldn't send message to server!");
@@ -169,17 +165,6 @@ public class OrderFuelForHomeUseController implements Initializable {
 			List<Object> temp = (List<Object>)msg;
 			if(temp.size() == 0)
 				return;
-			if(temp.get(0) instanceof FuelCompany) {
-				List<FuelCompany> list = new ArrayList<FuelCompany>();
-				for(Object o : temp)
-					list.add((FuelCompany)o);
-				fclist = list;
-				ListIterator<FuelCompany> liter = list.listIterator();
-				while(liter.hasNext()) {
-					String name = liter.next().getCompanyName();
-					fuelcomp.getItems().add(name);
-				}
-			}
 			else if(temp.get(0) instanceof List) {
 				@SuppressWarnings("unchecked")
 				List<List<Object>> list = (List<List<Object>>)msg;
@@ -187,9 +172,6 @@ public class OrderFuelForHomeUseController implements Initializable {
 				int i;
 				for(i = 0; i<list.size(); i++) {
 					fueltypearr[i] = createFuelTypeFromList(list.get(i));
-					if(fueltypearr[i].getStatus().equals("ACTIVE")) {
-						fuel_type.getItems().add(fueltypearr[i].getName());
-					}
 				}
 			}
 		}

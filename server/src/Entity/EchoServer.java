@@ -79,13 +79,12 @@ public class EchoServer extends AbstractServer
 				  //Reduce Specific Fuel Type Stock:
 				  FuelType tempFuelType = FTControl.findEqualFuelType(newOrder.getFueltype());
 				  if(tempFuelType != null) {
-					  FTControl.updateFuelQuantity(tempFuelType, newOrder.getQuantity());
 					  if(FTControl.checkFuelStock(tempFuelType).booleanValue())
 						  OFSControl.createNewOrderFromFuelSupplier(tempFuelType);
 				  }
 				  return;
 			  }
-			  if(msg instanceof Order) {
+			  else if(msg instanceof Order) {
 				  Order newOrder = (Order)msg;
 				  OrderControl.addNewOrderToDB(newOrder, client);
 				  FuelType tempFuelType = FTControl.findEqualFuelType(newOrder.getFueltype());

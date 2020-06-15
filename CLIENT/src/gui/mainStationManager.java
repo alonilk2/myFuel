@@ -65,7 +65,7 @@ public class mainStationManager extends Application implements ClientIF {
 	}
 	@Override
 	public boolean sendToController(Object obj) {
-
+		msc.getObjectFromUI(obj);
 		return false;
 	}
 }
