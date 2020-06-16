@@ -39,6 +39,7 @@ public class mainStationManager extends Application implements ClientIF {
 			    }
 			});
 			msc.setStage(primaryStage);
+			msc.getDataFromDB();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

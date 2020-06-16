@@ -26,7 +26,7 @@
                            </font>
                         </Label>
                         <Button fx:id="setLowFuelBoundary" layoutX="84.0" layoutY="131.0" mnemonicParsing="false" onAction="#onLowFuelBound" prefHeight="55.0" prefWidth="143.0" style="-fx-background-color: #57b4ff;" text="Set Low Fuel Boundary" />
-                        <Button fx:id="confirmNewOrders" layoutX="379.0" layoutY="131.0" mnemonicParsing="false" onAction="#onConfirmNewOrders" prefHeight="55.0" prefWidth="134.0" style="-fx-background-color: #57b4ff;" text="Confirm New Orders" />
+                        <Button fx:id="confirmNewOrders" layoutX="379.0" layoutY="131.0" mnemonicParsing="false" onAction="#onConfirmNewOrders" prefHeight="55.0" prefWidth="134.0" style="-fx-background-color: #57b4ff;" text="-" />
                         <Button fx:id="incomeReport" layoutX="72.0" layoutY="216.0" mnemonicParsing="false" onAction="#onIncomeReport" prefHeight="55.0" prefWidth="168.0" style="-fx-background-color: #57b4ff;" text="Generate Income Report" />
                         <Button fx:id="quantityReport" layoutX="374.0" layoutY="216.0" mnemonicParsing="false" onAction="#onQuantityReport" prefHeight="55.0" prefWidth="157.0" style="-fx-background-color: #57b4ff;" text="Generate Quantity Report" />
                         <Button fx:id="purchaseReport" layoutX="200.0" layoutY="303.0" mnemonicParsing="false" onAction="#onPurchaseReport" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #57b4ff;" text="Generate Purchases Report" />

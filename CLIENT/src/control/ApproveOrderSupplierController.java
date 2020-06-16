@@ -65,12 +65,15 @@ public class ApproveOrderSupplierController implements Initializable {
 	@FXML
 	private void onUpdateClick(ActionEvent event) throws Exception {
 		String orderID = orderidcombo.getSelectionModel().getSelectedItem();
-		String msg = "update orderstatus " + orderID + " SHIPPING";
-		Request req = new Request(msg);
-		client.sendToServer(req);
-		client.displayAlert(true, "Fuel order status has been updated successfully!");
-		orderidcombo.getItems().clear();
-		getTableDataFromDB();
+		if(orderID != null) {
+			String msg = "update orderstatus " + orderID + " SHIPPING";
+			Request req = new Request(msg);
+			client.sendToServer(req);
+			client.displayAlert(true, "Fuel order status has been updated successfully!");
+			orderidcombo.getItems().clear();
+			getTableDataFromDB();
+		}
+		else client.displayAlert(true, "You need to choose an order from the list.");
 	}
 	
 	@FXML
