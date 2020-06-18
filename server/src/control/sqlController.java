@@ -14,7 +14,6 @@ import Entity.User;
 public class sqlController {
 	private Connection conn;
 	private boolean isConnected;
-	private String password;
 	public sqlController() {
 		try 
 		{

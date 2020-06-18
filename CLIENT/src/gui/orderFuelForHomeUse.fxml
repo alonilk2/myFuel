@@ -22,15 +22,7 @@
          </image>
       </ImageView>
       <AnchorPane layoutX="121.0" layoutY="64.0" prefHeight="490.0" prefWidth="657.0" scaleShape="false" />
-      <AnchorPane layoutX="82.0" prefHeight="64.0" prefWidth="694.0" scaleShape="false" style="-fx-background-color: #027adb;">
-         <children>
-            <ImageView fitHeight="34.0" fitWidth="35.0" layoutX="646.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/user_account_profile_avatar_person_student_male-512.png" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
+      <AnchorPane layoutX="82.0" prefHeight="64.0" prefWidth="694.0" scaleShape="false" style="-fx-background-color: #027adb;" />
       <AnchorPane layoutX="-1.0" prefHeight="550.0" prefWidth="124.0" scaleShape="false" style="-fx-background-color: #027adb;">
          <children>
             <Label layoutX="44.0" layoutY="24.0" prefHeight="27.0" prefWidth="76.0" text="MyFuel" textFill="#fffdfd">
@@ -64,8 +56,9 @@
             </ImageView>
             <GridPane alignment="CENTER" hgap="10.0" layoutX="55.0" layoutY="89.0" prefHeight="240.0" prefWidth="512.0" vgap="10.0">
                <columnConstraints>
-                  <ColumnConstraints halignment="LEFT" maxWidth="352.79998779296875" minWidth="10.0" prefWidth="322.40001220703124" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="153.59998779296876" />
+                  <ColumnConstraints halignment="LEFT" maxWidth="352.79998779296875" minWidth="10.0" prefWidth="150.0" />
+                  <ColumnConstraints halignment="LEFT" maxWidth="352.79998779296875" minWidth="10.0" prefWidth="114.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="272.0" minWidth="10.0" prefWidth="228.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints maxHeight="74.0" minHeight="10.0" prefHeight="41.20001220703125" vgrow="SOMETIMES" />
@@ -75,27 +68,22 @@
                   <RowConstraints maxHeight="71.20000000000002" minHeight="10.0" prefHeight="44.5999755859375" valignment="CENTER" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <DatePicker fx:id="date_input" prefHeight="34.0" prefWidth="201.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextField fx:id="qty_input" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="address_input" GridPane.columnIndex="1" />
+                  <DatePicker fx:id="date_input" prefHeight="30.0" prefWidth="228.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <TextField fx:id="qty_input" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="address_input" GridPane.columnIndex="2" />
                   <Label text="Home Address:">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <CheckBox fx:id="fast_suppl" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="18.0" prefWidth="28.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <CheckBox fx:id="fast_suppl" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="18.0" prefWidth="28.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                   <Label GridPane.rowIndex="2" />
                   <Label text="Quantity (Liters):" GridPane.rowIndex="1">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label text="Fast Supplement:*" GridPane.rowIndex="2">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <Label text="Date to receive order :" GridPane.rowIndex="3">
+                  <Label GridPane.rowIndex="3">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -105,9 +93,24 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
+                  <Label text="Fast Supplement:" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label text="Delivery Date:" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="17.0" prefWidth="21.0" text="(*)" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
                </children>
             </GridPane>
-            <Label layoutX="188.0" layoutY="24.0" text="Order Fuel For Home Use">
+            <Label layoutX="200.0" layoutY="24.0" text="Order Fuel For Home Use">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -122,11 +125,16 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
-            <Text layoutX="55.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(*) Additional charges may be applied">
+            <Text layoutX="64.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Additional charges may be applied">
                <font>
                   <Font size="13.0" />
                </font>
             </Text>
+            <Label layoutX="48.0" layoutY="336.0" prefHeight="17.0" prefWidth="21.0" text="(*)" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

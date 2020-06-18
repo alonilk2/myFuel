@@ -19,7 +19,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-
+/**
+ * This controller class contains the methods that links between the client and the server
+ * and also the client's unique Stage 
+ * For Item Quantity report form
+ * @author Alon Barenboim
+ *
+ */
 public class ItemQuantityReportController implements Initializable {
 	//Controllers
 		ClientController client;
@@ -34,6 +40,8 @@ public class ItemQuantityReportController implements Initializable {
 		private TableColumn<FuelType, String> quantity;
 		@FXML 
 		private Button homepagebutton;
+		@FXML 
+		private Button logoutbutton;
 		private ObservableList<FuelType> olist;
 		private FuelType[] fueltypearr;
 		@FXML
@@ -41,7 +49,10 @@ public class ItemQuantityReportController implements Initializable {
 			client.getMainPage().start(client.getMainStage());
 			client.setClientIF(client.getMainPage());
 		}
-		
+		@FXML
+		private void onLogOutButton(ActionEvent event) throws Exception {
+			client.restartApplication(null);
+		}
 		@FXML
 		private void onConfirmClick(ActionEvent event){
 			try {
@@ -78,7 +89,11 @@ public class ItemQuantityReportController implements Initializable {
 			}
 			return false;
 		}
-
+		/**
+		 * Create a fuel type instance of list of Object's
+		 * @param list List of Objects
+		 * @return FuelType instance
+		 */
 		public FuelType createFuelTypeFromList(List<Object> list) {
 			FuelType newVal;
 			if(list.size() > 0) {
@@ -92,6 +107,10 @@ public class ItemQuantityReportController implements Initializable {
 			}
 			return null;
 		}
+		/**
+		 * Initialize table with data received from the server.
+		 * @param list Object
+		 */
 		public void setTableDataFromDB(Object list) {
 			if(list instanceof List) {
 				List<Object> temp = (List<Object>)list;

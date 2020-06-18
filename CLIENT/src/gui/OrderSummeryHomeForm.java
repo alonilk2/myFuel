@@ -16,7 +16,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
+/**
+ * This form class handles the JavaFX start process for Order summary form
+ * @author Alon Barenboim
+ *
+ */
 public class OrderSummeryHomeForm extends Application implements ClientIF{
 	private ClientController client;
 	private OrderSummeryHomeController ffController;

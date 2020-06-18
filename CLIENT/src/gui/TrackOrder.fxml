@@ -23,13 +23,13 @@
             <Glow />
          </effect>
          <children>
-            <TableView fx:id="tableview" layoutX="4.0" layoutY="93.0" prefHeight="391.0" prefWidth="647.0" style="-fx-border-color: #ffffff;">
+            <TableView fx:id="tableview" layoutX="4.0" layoutY="93.0" prefHeight="385.0" prefWidth="637.0" style="-fx-border-color: #ffffff;">
               <columns>
                 <TableColumn fx:id="OrderID" prefWidth="96.0" text="Order ID" />
                 <TableColumn fx:id="scheduled" prefWidth="119.0" text="Scheduled Date" />
                   <TableColumn fx:id="address" prefWidth="130.0" text="Address" />
                   <TableColumn fx:id="fastsupp" prefWidth="149.0" text="Fast Supply" />
-                  <TableColumn fx:id="orderstatus" prefWidth="151.0" text="Status" />
+                  <TableColumn fx:id="orderstatus" prefWidth="151.0" style="-fx-background-color: #57b4ff; -fx-font-weight: bold; -fx-alignment: center; -fx-text-inner-color: red;" text="Status" />
               </columns>
             </TableView>
             <Text layoutX="278.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Track Order">
@@ -55,11 +55,6 @@
                </font>
             </Label>
             <Button fx:id="homepagebutton" layoutX="10.0" layoutY="72.0" mnemonicParsing="false" onAction="#onHomePageClick" prefHeight="55.0" prefWidth="103.0" style="-fx-background-color: #57b4ff;" text="Home Page" textFill="#eeeded">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
-            <Button layoutX="9.0" layoutY="136.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="103.0" style="-fx-background-color: #57b4ff;" text="Notifications" textFill="#eeeded">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

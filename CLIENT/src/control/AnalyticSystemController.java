@@ -38,8 +38,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
-
+/**
+ * This controller class controls all the logic behind Analytic System functionality.
+ * @author Alon Barenboim
+ *
+ */
 public class AnalyticSystemController implements Initializable {
+
 		@FXML
 		private	ComboBox<String> fueltypecombo;
 		@FXML
@@ -103,7 +108,10 @@ public class AnalyticSystemController implements Initializable {
 		public AnalyticSystemController(ClientController client) {
 			this.client = client;
 		}
-		
+		/**
+		 * This method initializes all the JavaFX Objects in AnalyticSystemForm with the correct initial values,
+		 * and also add listeners to those objects.
+		 */
 		@Override
 		public void initialize(URL arg0, ResourceBundle arg1) {
 			try {
@@ -185,7 +193,10 @@ public class AnalyticSystemController implements Initializable {
 			client.sendToServer(req);
 		}
 		
-		//Handle objects sent from UI
+		/**
+		 * This method is used to get data from the Form java file.
+		 * @param obj The object being transferred from server to client.
+		 */
 		@SuppressWarnings("unchecked")
 		public boolean getMessageFromUI(Object obj) {
 			if(obj instanceof List) {
@@ -213,6 +224,10 @@ public class AnalyticSystemController implements Initializable {
 			}
 			return false;
 		}
+		/**
+		 * This method is creating a Fuel Type instance from list of Objects.
+		 * @param list The list of Object to be recieved from the server.
+		 */
 		public FuelType createFuelTypeFromList(List<Object> list) {
 			FuelType newVal;
 			if(list.size() > 0) {
@@ -226,6 +241,10 @@ public class AnalyticSystemController implements Initializable {
 			}
 			return null;
 		}
+		/**
+		 * This method initializes the table view with a specific data from server.
+		 * @param list The list of RankingCustomer to be recieved.
+		 */
 		public void setTableDataFromDB(List<RankingCustomer> list) {
 			olist = FXCollections.observableArrayList();
 			for(RankingCustomer l : list)

@@ -50,7 +50,7 @@ public class LoginController implements Initializable {
 	
 	private ClientIF lgnForm;
 
-	public LoginController(String args, Object logForm) {
+	public LoginController(String args, Object logForm, Stage mainStage) {
 		
 	    String host = "";
 	    int port = 0;  //The port number
@@ -65,7 +65,8 @@ public class LoginController implements Initializable {
 	    }
 	    try 
 	    {
-	    	client= new ClientController(host, DEFAULT_PORT, logForm);
+	    	client= new ClientController(host, DEFAULT_PORT, logForm, mainStage);
+	    	this.mainStage = mainStage;
 	    } 
 	    catch(IOException exception) 
 	    {

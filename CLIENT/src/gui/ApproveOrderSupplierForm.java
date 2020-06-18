@@ -11,7 +11,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
+/**
+ * This form class handles the JavaFX start process for Order From Supplier Approval
+ * @author Alon Barenboim
+ *
+ */
 public class ApproveOrderSupplierForm extends Application implements ClientIF {
 	//
 	ApproveOrderSupplierController mfsc;

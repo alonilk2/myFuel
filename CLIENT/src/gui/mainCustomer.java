@@ -10,7 +10,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
+/**
+ * This form class handles the JavaFX start process for Main Customer form
+ * @author Alon Barenboim
+ *
+ */
 public class mainCustomer extends Application implements ClientIF {
 	//
 	mainCustomerController mcc;
@@ -45,6 +49,7 @@ public class mainCustomer extends Application implements ClientIF {
 					mcc.setStage(primaryStage);
 			    }
 			});
+			mcc.getDataFromDB();
 
 		} catch(Exception e) {
 			e.printStackTrace();

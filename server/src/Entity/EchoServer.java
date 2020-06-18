@@ -1,20 +1,9 @@
 package Entity;
 
 import java.io.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-
-import control.ServerController;
 import control.UserController;
 import control.sqlController;
 import iF.SQLReady;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import ocsf.server.*;
 
 
@@ -23,7 +12,6 @@ public class EchoServer extends AbstractServer
 {
   //Class variables *************************************************
   final public static int DEFAULT_PORT = 5555;
-  private List<List<Object>> list;
   
   //Global Lists ****************************************************
   
@@ -31,7 +19,6 @@ public class EchoServer extends AbstractServer
   
   private UserController usercontrol;
   private sqlController sqlcontrol;
-  private ServerController serverControl;
   private HomeFuelOrderDBController HFOControl;
   private OrderDBController OrderControl;
   private FuelTypesDBController FTControl;
@@ -39,10 +26,10 @@ public class EchoServer extends AbstractServer
   private OrderFromSupplierDBController OFSControl;
   private RequestDBController ReqControl;
   private CarDBController CarControl;
-  private FuelTypeTempDBController FTTControl;
   private FuelCompanyDBController FCController;
   private AnalyticSystemDBController ASControl;
   private saleTemplateDBController saleTempControl;
+  private FuelTypeTempDBController FTTControl;
   
   //Constructors ****************************************************
   
@@ -201,7 +188,7 @@ protected void serverStarted()
   private void init() {
 	  FTControl = new FuelTypesDBController(sqlcontrol);
 	  OrderControl = new OrderDBController(sqlcontrol, this);
-	  HFOControl = new HomeFuelOrderDBController(sqlcontrol, OrderControl, this);
+	  HFOControl = new HomeFuelOrderDBController(sqlcontrol, this);
 	  EmployeeControl = new EmployeeDBController(sqlcontrol);
 	  OFSControl = new OrderFromSupplierDBController(sqlcontrol, this);
 	  ReqControl = new RequestDBController(sqlcontrol, this);

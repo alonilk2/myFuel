@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import control.ServerController;
-import control.UserController;
 import control.sqlController;
 import ocsf.server.ConnectionToClient;
 
@@ -18,12 +16,10 @@ public class HomeFuelOrderDBController {
 
 
 	private sqlController sqlcontrol;
-	private OrderDBController OrderController;
 	private EchoServer Server;
 	private List<HomeFuelOrder> HomeFuelOrdersList;
-	public HomeFuelOrderDBController(sqlController sqlcontrol, OrderDBController OrderController, EchoServer Server) {
+	public HomeFuelOrderDBController(sqlController sqlcontrol, EchoServer Server) {
 		this.sqlcontrol = sqlcontrol;
-		this.OrderController = OrderController;
 		this.Server = Server;
 		HomeFuelOrdersList = new ArrayList<HomeFuelOrder>();
 	}
@@ -65,6 +61,7 @@ public class HomeFuelOrderDBController {
 				stm.setBoolean(5, newOrder.isFastSupply());
 				stm.execute();
 				HomeFuelOrdersList.add(newOrder);
+				newOrder.setOrderID(generatedID);
 				return true;
 			} 
 		}catch (SQLException e) {

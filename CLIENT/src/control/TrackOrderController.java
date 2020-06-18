@@ -37,7 +37,7 @@ public class TrackOrderController implements Initializable {
 	@FXML
 	private TableColumn<HomeFuelOrder, String> address;
 	@FXML
-	private TableColumn<HomeFuelOrder, Boolean> fastsupp;
+	private TableColumn<HomeFuelOrder, String> fastsupp;
 	@FXML
 	private TableColumn<HomeFuelOrder, String> orderstatus;
 	@FXML
@@ -89,7 +89,7 @@ public class TrackOrderController implements Initializable {
 		OrderID.setCellValueFactory(new PropertyValueFactory<Order,Integer>("OrderID"));
 	    scheduled.setCellValueFactory(new PropertyValueFactory<HomeFuelOrder,String>("scheduled"));
 	    address.setCellValueFactory(new PropertyValueFactory<HomeFuelOrder,String>("address"));
-	    fastsupp.setCellValueFactory(new PropertyValueFactory<HomeFuelOrder,Boolean>("fastsupp"));
+	    fastsupp.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().isFastSupply().toString()));
 	    orderstatus.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStatus().toString()));
 	    tableview.setItems(olist);
 	}

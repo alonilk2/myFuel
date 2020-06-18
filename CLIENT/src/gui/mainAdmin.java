@@ -10,7 +10,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
+/**
+ * This form class handles the JavaFX start process for Main Admin form
+ * @author Alon Barenboim
+ *
+ */
 public class mainAdmin extends Application implements ClientIF {
 	//
 	mainAdminController mac;

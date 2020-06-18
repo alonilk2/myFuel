@@ -24,10 +24,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
-
+/**
+ * This controller class controls the functions required to run the Order Fuel For Home Use functionality
+ * @author Alon
+ *
+ */
 public class OrderFuelForHomeUseController implements Initializable {
 	//Controllers
 	ClientController client;
@@ -52,6 +58,8 @@ public class OrderFuelForHomeUseController implements Initializable {
 	@FXML
 	private Button logoutbutton;
 	@FXML
+	private Text name;
+	@FXML
 	private void onConfirmClick(ActionEvent event){
 		try {
 			String addr = address_input.getText();
@@ -64,6 +72,16 @@ public class OrderFuelForHomeUseController implements Initializable {
 				return;
 			}
 			double qty = Double.parseDouble(qtyStr);
+			if(qty <= 0)
+			{
+				client.displayAlert(false, "Quantity must be a positive number!");
+				return;
+			}
+			if(fueltype.getQuantity() < qty)
+			{
+				client.displayAlert(false, "Sorry, we don't have enough fuel at this moment. Please comeback later.");
+				return;
+			}
 			double[] sumArr = calcOrderSum(fueltype, qty, fastSupply);
 			Customer customer = (Customer)client.getCurrentProfile();
 			OrderSummeryHomeForm newform = new OrderSummeryHomeForm(client, sumArr, null, qty, fueltype, deliveryDate, fastSupply, addr);
@@ -95,7 +113,9 @@ public class OrderFuelForHomeUseController implements Initializable {
 	public OrderFuelForHomeUseController(ClientController client) {
 		this.client=client;
 	}
-	
+	/**
+	 * This method asks a Fuel Types list from server
+	 */
 	public void getFuelTypesFromDB() {
 		String msg = "pull FuelType";
 		Request req = new Request(msg);
@@ -111,9 +131,21 @@ public class OrderFuelForHomeUseController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		getFuelTypesFromDB();
+		date_input.setDayCellFactory(picker -> new DateCell() {
+	        public void updateItem(LocalDate date, boolean empty) {
+	            super.updateItem(date, empty);
+	            LocalDate today = LocalDate.now();
+
+	            setDisable(empty || date.compareTo(today) < 0 );
+	        }
+	    });
 	}
 	
-	
+	/**
+	 * This method gets a list of Objects and returns a FuelType instance from those objects.
+	 * @param list List of Objects.
+	 * @return Fueltype instance.
+	 */
 	public FuelType createFuelTypeFromList(List<Object> list) {
 		FuelType newVal;
 		if(list.size() > 0) {
@@ -127,7 +159,13 @@ public class OrderFuelForHomeUseController implements Initializable {
 		}
 		return null;
 	}
-	
+	/**
+	 * This method calculates order summary according to specific arguments.
+	 * @param ft The fuel type ordered.
+	 * @param qty The quantity that was requested.
+	 * @param fast A flag specifies if the customer want a fast shipping.
+	 * @return Array of type double[] = [Order Summary, Discount(Optional)]
+	 */
 	private double[] calcOrderSum(FuelType ft, double qty, boolean fast) { 
 		double[] arr = new double[3];
 		double initial = ft.getPrice()*qty;
@@ -150,7 +188,11 @@ public class OrderFuelForHomeUseController implements Initializable {
 		arr[2] = discount;
 		return arr;
 	}
-	
+	/**
+	 * Finds a fuel type instance from array of fueltype and returns it.
+	 * @param name The name of the required fuel type instance.
+	 * @return FuelType instance.
+	 */
 	private FuelType getFuelTypeFromString(String name) {
 		for(FuelType x : fueltypearr) {
 			if(x.getName().equals(name))
@@ -158,7 +200,10 @@ public class OrderFuelForHomeUseController implements Initializable {
 		}
 		return null;
 	}
-	
+	/**
+	 * This method is used to get data from the Form java file.
+	 * @param obj The object being transferred from server to client.
+	 */
 	public void getObjectFromUI(Object msg) {
 		if(msg instanceof List) {
 			@SuppressWarnings("unchecked")

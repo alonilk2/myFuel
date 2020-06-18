@@ -9,7 +9,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
+/**
+ * This form class handles the JavaFX start process for Fast Fuel
+ * @author Alon Barenboim
+ *
+ */
 public class FastFuelForm extends Application implements ClientIF{
 	private ClientController client;
 	private FastFuelController ffController;

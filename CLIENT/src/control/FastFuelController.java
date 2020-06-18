@@ -26,7 +26,11 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
-
+/**
+ * This controller class contains all the methods that are required to run the Fast Fuel form.
+ * @author Alon Barenboim
+ *
+ */
 public class FastFuelController implements Initializable {
 		private ClientController client;
 		@FXML
@@ -42,13 +46,26 @@ public class FastFuelController implements Initializable {
 		@FXML
 		private Button homepagebutton;
 		@FXML
+		private Button logoutbutton;
+		@FXML
 		private TextField litersinput;
-		
 		private List<Car> carList;
 		private List<FuelCompany> fuelCompList;
 		@FXML
 		private void onStartFuelClick(ActionEvent event){
-			Integer Liters = Integer.parseInt(litersinput.getText());
+			Integer Liters = 0;
+			try{
+				Liters = Integer.parseInt(litersinput.getText());
+				if(Liters <= 0)
+				{
+					client.displayAlert(false, "Quantity must be a positive number!");
+					return;
+				}
+			}
+			catch(NumberFormatException e) {
+				client.displayAlert(false, "Quantity must be a rounded number");
+			}
+
 			Car car = null;
 			Order newOrder = null;
 			for(Car c:carList)
@@ -84,6 +101,13 @@ public class FastFuelController implements Initializable {
 				}
 			}
 		}
+		/**
+		 * This method gets requested fuel quantity and Car, and calculates the order summary according to the fuel type specified for this car.
+		 * (*) - Optional
+		 * @param Liters The requested quantity of fuel
+		 * @param car The client's car
+		 * @return Order summary as a Float[4] = [OrderSum, FirstDiscount*, SecondDiscound*, ThirdDiscount*]
+		 */
 		private float[] getOrderSum(Integer Liters, Car car) {
 			float fuelPrice = car.getFuelType().getPrice();
 			Customer clientProfile = (Customer) client.getCurrentProfile();
@@ -140,6 +164,9 @@ public class FastFuelController implements Initializable {
 		private void onLogOutClick(ActionEvent event) throws Exception {
 			client.restartApplication(null);
 		}
+		/**
+		 * This method asks a list of Cars from the server.
+		 */
 		public void getCarsFromDB() {
 			String msg = "pull car " + client.getCurrentProfile().getUserID();
 			Request req = new Request(msg);
@@ -164,7 +191,10 @@ public class FastFuelController implements Initializable {
 		public void initialize(URL arg0, ResourceBundle arg1) {
 			getCarsFromDB();
 		}
-		
+		/**
+		 * This method handles received object from the server.
+		 * @param msg The object that accepted from server
+		 */
 		public void getObjectFromUI(Object msg) {
 			if(msg instanceof List) {
 				@SuppressWarnings("unchecked")

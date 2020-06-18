@@ -27,7 +27,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
-
+/**
+ * This controller class controls the functions required to run the Order Summary functionality
+ * @author Alon Barenboim
+ *
+ */
 public class OrderSummeryController implements Initializable {
 		@FXML
 		private	Text FUELTYPE;
@@ -90,7 +94,10 @@ public class OrderSummeryController implements Initializable {
 			client.getMainPage().start(client.getMainStage());
 			client.setClientIF(client.getMainPage());
 		}
-
+		@FXML
+		private void onLogOutClick(ActionEvent event) throws Exception {
+			client.restartApplication(null);
+		}
 		public OrderSummeryController(ClientController client, float[] OrderSumArr, FuelCompany fuelCompany, Integer Liters, Car car, OrderSummeryForm form) {
 			this.client = client;
 			this.OrderSumArr = OrderSumArr;

@@ -8,7 +8,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
+/**
+ * This Form class is responsible for the JavaFX start process for Order Fuel For Home Use
+ * @author Alon Barenboim
+ *
+ */
 public class OrderFuelForHomeUseForm extends Application implements ClientIF{
 	private ClientController client;
 	private OrderFuelForHomeUseController ofhController;
@@ -33,7 +37,9 @@ public class OrderFuelForHomeUseForm extends Application implements ClientIF{
 		this.client = client;
 	}
 
-
+	/**
+	 * This method sends Objects received as a response from server to the controller.
+	 */
 	@Override
 	public boolean sendToController(Object obj) {
 		ofhController.getObjectFromUI(obj);

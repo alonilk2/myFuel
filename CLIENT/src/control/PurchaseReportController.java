@@ -34,13 +34,18 @@ public class PurchaseReportController implements Initializable {
 		private TableColumn<FuelType, String> purchase;
 		@FXML 
 		private Button homepagebutton;
+		@FXML 
+		private Button logoutbutton;
 		private ObservableList<FuelType> olist;
 		@FXML
 		private void onHomePageClick(ActionEvent event) throws Exception {
 			client.getMainPage().start(client.getMainStage());
 			client.setClientIF(client.getMainPage());
 		}
-		
+		@FXML
+		private void onLogOutClick(ActionEvent event) throws Exception {
+			client.restartApplication(null);
+		}
 		@FXML
 		private void onConfirmClick(ActionEvent event){
 			try {

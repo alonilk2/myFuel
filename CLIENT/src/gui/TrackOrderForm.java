@@ -8,7 +8,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
+/**
+ * This Form class is responsible for the JavaFX start process for Track Order
+ * @author Alon Barenboim
+ *
+ */
 public class TrackOrderForm extends Application implements ClientIF {
 
 	//CONTROLLER
@@ -24,7 +28,7 @@ public class TrackOrderForm extends Application implements ClientIF {
 			fxmload.setController(tocontroller);
 			AnchorPane root = (AnchorPane)fxmload.load();
 			Scene scene = new Scene(root,772,550);
-			scene.getStylesheets().add(getClass().getResource("prototype.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("TrackOrderCSS.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {
@@ -36,7 +40,9 @@ public class TrackOrderForm extends Application implements ClientIF {
 		this.client = client;
 
 	}
-	
+	/**
+	 * This method sends Objects received as a response from server to the controller.
+	 */
 	public boolean sendToController(Object obj) {
 		return tocontroller.getMessageFromUI(obj);
 	}

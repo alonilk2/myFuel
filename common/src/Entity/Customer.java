@@ -23,7 +23,7 @@ public class Customer extends User implements Serializable, SQLReady {
 	public Customer(String username, String password, String firstname, String lastname, String email, int customerID,
 			CustomerType customerType, String creditCard, PurchasePlan purchasePlan, FuelCompanyApproach app,
 			String comp1, String comp2 ,String comp3) {
-		super(username, password, firstname, lastname, email, customerID);
+		super(firstname, lastname, email, username, password, customerID);
 		this.CustomerID = customerID;
 		this.customerType = customerType;
 		this.purchasePlan = purchasePlan;

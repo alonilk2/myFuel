@@ -30,7 +30,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
-
+/**
+ * This controller class controls the functions required to run the Order Summary functionality
+ * @author Alon Barenboim
+ *
+ */
 public class OrderSummeryHomeController implements Initializable {
 		@FXML
 		private	Text FUELTYPE;

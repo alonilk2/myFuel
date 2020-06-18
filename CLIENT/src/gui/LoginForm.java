@@ -25,6 +25,7 @@ public class LoginForm extends Application implements ClientIF {
 	private String host = "localhost";
 	@Override
 	public void start(Stage primaryStage) {
+		loginctrl = new LoginController(host, this, primaryStage);
 		try {
 			loginctrl.setClientIF(this);
 			FXMLLoader fxmload = new FXMLLoader();
@@ -36,17 +37,12 @@ public class LoginForm extends Application implements ClientIF {
 			//scene.getStylesheets().add(getClass().getResource("loginCSS.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			loginctrl.setMainStage(primaryStage);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public LoginForm() 
-	{
-		loginctrl = new LoginController(host, this);
-	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	    LoginForm chat= new LoginForm();

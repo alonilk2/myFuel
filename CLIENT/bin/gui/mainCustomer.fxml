@@ -16,11 +16,6 @@
       </ImageView>
       <AnchorPane layoutX="82.0" prefHeight="64.0" prefWidth="694.0" scaleShape="false" style="-fx-background-color: #027adb;">
          <children>
-            <ImageView fitHeight="34.0" fitWidth="35.0" layoutX="646.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/user_account_profile_avatar_person_student_male-512.png" />
-               </image>
-            </ImageView>
             <Label layoutX="52.0" layoutY="13.0" opacity="0.78" prefHeight="34.0" prefWidth="206.0" text="Customer view" textFill="WHITE" />
          </children>
       </AnchorPane>
@@ -32,11 +27,6 @@
                </font>
             </Label>
             <Button layoutX="9.0" layoutY="72.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="103.0" style="-fx-background-color: #57b4ff;" text="Home Page" textFill="#eeeded">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
-            <Button layoutX="9.0" layoutY="136.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="103.0" style="-fx-background-color: #57b4ff;" text="Notifications" textFill="#eeeded">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -70,7 +60,7 @@
                   <Font name="Arial Black" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="trackbutton" layoutX="56.0" layoutY="196.0" mnemonicParsing="false" onAction="#onTrackOrderClick" prefHeight="55.0" prefWidth="195.0" style="-fx-background-color: #57b4ff;" text="Tracking orders" textFill="WHITE">
+            <Button fx:id="trackbutton" layoutX="56.0" layoutY="196.0" mnemonicParsing="false" onAction="#onTrackOrderClick" prefHeight="55.0" prefWidth="195.0" style="-fx-background-color: #57b4ff;" text=" " textFill="WHITE">
                <font>
                   <Font name="Arial Black" size="12.0" />
                </font>
