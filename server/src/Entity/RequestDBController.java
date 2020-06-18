@@ -302,6 +302,27 @@ public class RequestDBController {
 				}
 				break;
 			}
+				
+			// Pull customerID and the amount of orders the customer has made as a List from orders table. 
+			// Results will be received in descending order.   
+			case "order": {
+				try {
+					List<OrdersPerCustomer> list = new ArrayList<OrdersPerCustomer>();
+					
+					PreparedStatement stm = conn.prepareStatement("SELECT customerID, count(customerID) as custcount FROM myfuel.orders GROUP BY customerID ORDER BY custcount DESC;");
+					ResultSet rs = stm.executeQuery();
+					
+					while(rs.next()) {	// loop on results from DB
+						OrdersPerCustomer e = new OrdersPerCustomer(rs.getInt(1),rs.getInt(2)); // create an object to keep the data stored in it. 
+						list.add(e); // add it to the list that will later be returned
+					}
+					client.sendToClient(list);
+				} 
+				catch (IOException | SQLException e) {
+					e.printStackTrace();
+				}
+				break;
+			}
 	
 			//		Pull Orders From Supplier List for Fuel Supplier
 			case "orderfromsupplier": {
@@ -335,9 +356,11 @@ public class RequestDBController {
 				}
 				break;
 			}
+				
+			// Pull the quantity of each fuel type from the FuelType table. the results will be returned in an array of doubles.
 			case "purchasereport": {
 				List<Order> l = Server.getOrderControl().getOrdersList();
-				double[] count = new double[4];
+				double[] count = new double[4]; // the array will be automatically initialized with zeros.
 				for(Order o : l) {
 					if(o.getFueltype().getName().equals("95"))
 						count[0] += o.getQuantity();
@@ -357,6 +380,7 @@ public class RequestDBController {
 				break;
 			}
 			
+			// Pull all the cars that exist in the DB. An arrayList of Car objects will be returned. 
 			case "car": {
 				List<Car> list = Server.getCarControl().getCarListByCustomer(Integer.parseInt(Req.getRequestComponent(2)));
 				try {
@@ -366,30 +390,20 @@ public class RequestDBController {
 				}
 				break;
 			}
-			/*case "fueltypetemp": { 
-				List<fueltypeTemp> pList = new ArrayList<fueltypeTemp>();
-				for(fueltypeTemp h : tempFuelList) {
-					if(h.getStatus().equals("wait")) { 
-						pList.add(h);
-					}
-				}
-				try {
-					client.sendToClient(pList);
-				} catch (IOException e) {
-						e.printStackTrace();
-				}
-				break;
-			}*/
 				
-				
+			// Pull all the customers which ever participated in a sale that exist in the DB. An arrayList of CustomerDuringSale objects will be returned.
+			// Automatically removes duplicates.	
 			case "CustomerDuringSale": {
 				try {
 					List<CustomerDuringSale> list = new ArrayList<CustomerDuringSale>();
+					// the "Get data" section
 					Statement stm = this.conn.createStatement();
 					ResultSet rs = stm.executeQuery("SELECT * FROM customerduringsale");
 					while(rs.next()) {
 						list.add(new CustomerDuringSale(rs.getDouble(1), rs.getString(2), rs.getInt(3)));
 					}
+					
+					// the "Remove duplicates" section 
 					int i, n;
 					for(i = 0; i < list.size(); i++) {
 						for(n=i+1; n<list.size(); n++) {
@@ -399,12 +413,15 @@ public class RequestDBController {
 							}
 						}
 					}
+					// the return:
 					client.sendToClient(list);
 				} catch (IOException | SQLException e) {
 					e.printStackTrace();
 				}
 				break;
 			}
+				
+				
 			case "newcustomerformdata": {
 				try {
 					List<FuelCompany> templ = Server.getFCController().getFclist();
