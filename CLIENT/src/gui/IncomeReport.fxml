@@ -15,7 +15,7 @@
          <children>
             <AnchorPane layoutX="121.0" layoutY="64.0" prefHeight="490.0" prefWidth="657.0" scaleShape="false">
                <children>
-                  <Button fx:id="ConfirmBtn" layoutX="436.0" layoutY="404.0" mnemonicParsing="false" onAction="#onConfirmClick" prefHeight="54.0" prefWidth="154.0" style="-fx-background-color: #058015;" text="Confirm" textAlignment="CENTER" textFill="WHITE" />
+                  <Button fx:id="ConfirmBtn" layoutX="231.0" layoutY="408.0" mnemonicParsing="false" onAction="#onConfirmClick" prefHeight="54.0" prefWidth="154.0" style="-fx-background-color: #058015;" text="OK" textAlignment="CENTER" textFill="WHITE" />
                </children>
             </AnchorPane>
             <AnchorPane layoutX="82.0" prefHeight="64.0" prefWidth="694.0" scaleShape="false" style="-fx-background-color: #027adb;">
@@ -35,12 +35,12 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Button layoutX="10.0" layoutY="72.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="110.0" style="-fx-background-color: #57b4ff;" text="Home Page" textFill="#eeeded">
+                  <Button fx:id="homepagebutton" layoutX="10.0" layoutY="72.0" mnemonicParsing="false" onAction="#onHomePageClick" prefHeight="55.0" prefWidth="110.0" style="-fx-background-color: #57b4ff;" text="Home Page" textFill="#eeeded">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="8.0" layoutY="484.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="110.0" style="-fx-background-color: #57b4ff;" text="Log Out" textFill="#eeeded">
+                  <Button fx:id="logoutbutton" layoutX="8.0" layoutY="484.0" mnemonicParsing="false" onAction="#onLogOutClick" prefHeight="55.0" prefWidth="110.0" style="-fx-background-color: #57b4ff;" text="Log Out" textFill="#eeeded">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
