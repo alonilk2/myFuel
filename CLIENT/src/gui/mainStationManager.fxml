@@ -51,12 +51,12 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Button layoutX="10.0" layoutY="72.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="110.0" style="-fx-background-color: #57b4ff;" text="Home Page" textFill="#eeeded">
+                  <Button fx:id="homepagebutton" layoutX="10.0" layoutY="72.0" mnemonicParsing="false" onAction="#onHomePageClick" prefHeight="55.0" prefWidth="110.0" style="-fx-background-color: #57b4ff;" text="Home Page" textFill="#eeeded">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="8.0" layoutY="484.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="110.0" style="-fx-background-color: #57b4ff;" text="Log Out" textFill="#eeeded">
+                  <Button fx:id="logoutbutton" layoutX="8.0" layoutY="484.0" mnemonicParsing="false" onAction="#onLogOutClick" prefHeight="55.0" prefWidth="110.0" style="-fx-background-color: #57b4ff;" text="Log Out" textFill="#eeeded">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
