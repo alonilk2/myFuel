@@ -9,13 +9,13 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="490.0" fitWidth="647.0" layoutX="123.0" layoutY="63.0" opacity="0.18" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../AppData/Local/Temp/Pictures/gui_Porject/f7ef765679f733bd90e7775448a09aba.jpg" />
-         </image>
-      </ImageView>
-      <AnchorPane layoutX="82.0" prefHeight="64.0" prefWidth="694.0" scaleShape="false" style="-fx-background-color: #027adb;">
+      <AnchorPane layoutX="82.0" prefHeight="64.0" prefWidth="690.0" scaleShape="false" style="-fx-background-color: #027adb;">
          <children>
+            <ImageView fitHeight="34.0" fitWidth="35.0" layoutX="646.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/user_account_profile_avatar_person_student_male-512.png" />
+               </image>
+            </ImageView>
             <Label layoutX="52.0" layoutY="13.0" opacity="0.78" prefHeight="34.0" prefWidth="206.0" text="Customer view" textFill="WHITE" />
          </children>
       </AnchorPane>
@@ -60,7 +60,7 @@
                   <Font name="Arial Black" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="trackbutton" layoutX="56.0" layoutY="196.0" mnemonicParsing="false" onAction="#onTrackOrderClick" prefHeight="55.0" prefWidth="195.0" style="-fx-background-color: #57b4ff;" text=" " textFill="WHITE">
+            <Button fx:id="trackbutton" layoutX="56.0" layoutY="196.0" mnemonicParsing="false" onAction="#onTrackOrderClick" prefHeight="55.0" prefWidth="195.0" style="-fx-background-color: #57b4ff;" text="Tracking orders" textFill="WHITE">
                <font>
                   <Font name="Arial Black" size="12.0" />
                </font>
