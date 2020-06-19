@@ -22,8 +22,8 @@
                   <Image url="@images/SeekPng.com_customers-png_2051245.png" />
                </image>
             </ImageView>
-            <Button fx:id="addCustomer" cacheShape="false" centerShape="false" layoutX="433.0" layoutY="421.0" mnemonicParsing="false" onAction="#onConfirmClick" prefHeight="54.0" prefWidth="154.0" scaleShape="false" style="-fx-background-color: #058015;" text="Add Customer" textAlignment="CENTER" textFill="WHITE" />
-            <Button fx:id="cancel_btn" layoutX="50.0" layoutY="429.0" mnemonicParsing="false" onAction="#onCancelClick" prefHeight="46.0" prefWidth="86.0" style="-fx-background-color: #bc0404;" text="cancel" textFill="WHITE">
+            <Button fx:id="addCustomer" cacheShape="false" centerShape="false" layoutX="79.0" layoutY="417.0" mnemonicParsing="false" onAction="#onConfirmClick" prefHeight="40.0" prefWidth="154.0" scaleShape="false" style="-fx-background-color: #058015;" text="Add Customer" textAlignment="CENTER" textFill="WHITE" />
+            <Button fx:id="cancel_btn" layoutX="478.0" layoutY="417.0" mnemonicParsing="false" onAction="#onCancelClick" prefHeight="40.0" prefWidth="86.0" style="-fx-background-color: #bc0404;" text="Cancel" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -189,12 +189,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="6.0" layoutY="134.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="111.0" style="-fx-background-color: #57b4ff;" text="Notifications" textFill="#eeeded">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
-            <Button layoutX="4.0" layoutY="480.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="114.0" style="-fx-background-color: #57b4ff;" text="Log Out" textFill="#eeeded">
+            <Button fx:id="logoutbutton" layoutX="4.0" layoutY="480.0" mnemonicParsing="false" onAction="#onLogOutClick" prefHeight="55.0" prefWidth="114.0" style="-fx-background-color: #57b4ff;" text="Log Out" textFill="#eeeded">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
