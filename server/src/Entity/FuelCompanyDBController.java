@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import control.sqlController;
-
+/**
+ * This server controller contains all the Run-Time data of the FuelCompany's system.
+ * and also contains all the methods required for FuelCompany's functionalities.
+ */
 public class FuelCompanyDBController {
 	private List<FuelCompany> fclist = new ArrayList<FuelCompany>();
 	private sqlController sqlcontrol;
@@ -26,6 +29,9 @@ public class FuelCompanyDBController {
 	public FuelCompanyDBController(sqlController sqlcontrol) {
 		this.sqlcontrol = sqlcontrol;
 	}
+	/**
+	 * This method initializes the List of Cars on server startup.
+	 */
 	public void initializeList() {
 		Statement stm;
 		try {
@@ -39,6 +45,11 @@ public class FuelCompanyDBController {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * This method returns FuelCompany instance by a given name.
+	 * @param name The requested FuelCompany name
+	 * @return FuelCompany instance.
+	 */
 	public FuelCompany getFuelCompanyFromString(String name) {
 		for(FuelCompany f : fclist) {
 			if(f.getCompanyName().equals(name))

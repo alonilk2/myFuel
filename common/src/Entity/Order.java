@@ -11,7 +11,10 @@ import java.time.LocalTime;
 import java.util.List;
 
 import iF.SQLReady;
-
+/**
+ * This entity class contains all the information that Order is being represented by.
+ *
+ */
 public class Order implements Serializable, SQLReady{
 	private static final long serialVersionUID = 1L;
 	private int OrderID;
@@ -103,6 +106,11 @@ public class Order implements Serializable, SQLReady{
 	public void setOrderDate(LocalDate orderDate) {
 		this.orderDate = orderDate;
 	}
+	/**
+	 * This method creates a new Statement to add a new Order to the DB.
+	 * @param conn Connection to SQL Server
+	 * @return New row's ID in the DB.
+	 */
 	@Override
 	public int createNewAddSqlStatement(Connection conn) {
 		String qry;

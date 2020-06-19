@@ -15,21 +15,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
 /**
- * This class loads the fxml file and connects it to the controller (for viewing the quantity of items in stock report process)
- * 
- * @author team 14 , 2020
+ * This form class handles the JavaFX start process for Item Quantity Report form
+ * @author Alon Barenboim
  *
  */
 public class ItemQuantityReportForm extends Application implements ClientIF {
 
-	private ClientController client;					// a general controller for handling alerts, messages, etc.
-	private ItemQuantityReportController iqrcontroller; // the specific controller of this window
+	//CONTROLLER
+	private ItemQuantityReportController iqrcontroller;
+	private ClientController client;
 
-	/**
-	 * this method is used to set up the fxml file of the window.
-	 */
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -37,36 +33,21 @@ public class ItemQuantityReportForm extends Application implements ClientIF {
 			FXMLLoader fxmload = new FXMLLoader();
 			fxmload.setLocation(getClass().getResource("ItemQuantityReport.fxml"));
 			fxmload.setController(iqrcontroller);
-			
 			AnchorPane root = (AnchorPane)fxmload.load();
 			Scene scene = new Scene(root,772,550);
-			
 			scene.getStylesheets().add(getClass().getResource("prototype.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-
-	/**
-	 * A constructor for the form.
-	 * 
-	 * @param client - an instance of a ClientController
-	 * @param stage - the current stage on which we are presenting windows.
-	 * @throws Exception
-	 */
 	public ItemQuantityReportForm(ClientController client, Stage stage) {
 		this.client = client;
 
 	}
 	
-	/**
-	 * This method sends an object to the controller of the window through the form
-	 * @param obj - the object to be sent
-	 */
 	public boolean sendToController(Object obj) {
 		return iqrcontroller.getMessageFromUI(obj);
 	}

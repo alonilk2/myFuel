@@ -11,7 +11,10 @@ import java.util.ListIterator;
 
 import control.sqlController;
 import ocsf.server.ConnectionToClient;
-
+/**
+ * This server controller contains all the Run-Time data of the HomeFuelOrder system.
+ * and also contains all the methods required for HomeFuelOrder's functionalities.
+ */
 public class HomeFuelOrderDBController {
 
 
@@ -27,7 +30,11 @@ public class HomeFuelOrderDBController {
 	public ListIterator<HomeFuelOrder> getListIterator() {
 		return HomeFuelOrdersList.listIterator();
 	}
-	
+	/**
+	 * This method creates adds a new order to DB.
+	 * @param client Connection instance to the client.
+	 * @return True on success.
+	 */
 	public boolean addNewOrderToDB(HomeFuelOrder newOrder, ConnectionToClient client) {
 		String qry = "INSERT INTO orders (ordersum, fueltype, quantity, orderdate, customerID, orderhour)" + " VALUES (?,?,?,?,?,?)";
 		Connection conn = sqlcontrol.getConnection();
@@ -70,6 +77,9 @@ public class HomeFuelOrderDBController {
 		return false;
 
 	}
+	/**
+	 * This method initializes the List of HomeFuelOrders on server startup.
+	 */
 	public boolean initializeList() {
 		try {
 			Statement stm = sqlcontrol.getConnection().createStatement();

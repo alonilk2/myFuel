@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
+/**
+ * This entity class contains all the information that FuelType is being represented by.
+ *
+ */
 public class FuelType implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -35,6 +38,12 @@ public class FuelType implements Serializable{
 	public String toString() {
 		return name;
 	}
+	/**
+	 * This method receives an order quantity in order to reduce it from the station's stock.
+	 * @param conn Connection to SQL Server	
+	 * @param qty Quantity of fuel that was purchased
+	 * @return True on success
+	 */
 	public boolean updateFuelQuantity(Connection conn, double qty) {
 		try {
 			PreparedStatement stm = conn.prepareStatement("UPDATE fueltype SET quantity = ? where name = ?");

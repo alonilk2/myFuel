@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.ListIterator;
 
 import control.sqlController;
-
+/**
+ * This server controller contains all the Run-Time data of the OrderFromSupplier system.
+ * and also contains all the methods required for Order's functionalities.
+ */
 public class OrderFromSupplierDBController {
 	private List<OrderFromSupplier> orderFromSupplierList;
 	private sqlController sqlcontrol;
@@ -19,7 +22,9 @@ public class OrderFromSupplierDBController {
 		this.Server = Server;
 		orderFromSupplierList = new ArrayList<OrderFromSupplier>();
 	}
-
+	/**
+	 * This method initializes the List of OrderFromSupplier's on server startup.
+	 */
 	public boolean initializeList() {
 		//Initialize Orders List
 		try {

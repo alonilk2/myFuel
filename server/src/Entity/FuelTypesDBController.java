@@ -10,7 +10,10 @@ import java.util.List;
 
 
 import control.sqlController;
-
+/**
+ * This server controller contains all the Run-Time data of the FuelType system.
+ * and also contains all the methods required for FuelType's functionalities.
+ */
 public class FuelTypesDBController {
 	private List<FuelType> fuelTypesList;
 	private sqlController sqlcontrol;
@@ -19,6 +22,9 @@ public class FuelTypesDBController {
 		this.sqlcontrol = sqlcontrol;
 		fuelTypesList = new ArrayList<FuelType>();
 	}
+	/**
+	 * This method initializes the List of Cars on server startup.
+	 */
 	public void initializeList() {
 		Statement stm;
 		try {
@@ -34,6 +40,12 @@ public class FuelTypesDBController {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * This method receives an order quantity in order to reduce it from the station's stock.
+	 * @param ft The FuelType instance to change it's stock quantity.
+	 * @param qty Quantity of fuel that was purchased
+	 * @return True on success
+	 */
 	public boolean updateFuelQuantity(FuelType ft, Double qty) {
 		try {
 			PreparedStatement stm = sqlcontrol.getConnection().prepareStatement("UPDATE fueltype SET quantity = ? where name = ?");
@@ -47,6 +59,11 @@ public class FuelTypesDBController {
 		}
 	return false;
 	}
+	/**
+	 * This method returns a FuelType instance from given name.
+	 * @param name The name of the requested FuelType.
+	 * @return FuelType instance.
+	 */
 	public FuelType getFuelTypeFromString(String name) {
 		for(FuelType x : fuelTypesList) {
 			if(x.getName().equals(name))
@@ -54,6 +71,11 @@ public class FuelTypesDBController {
 		}
 		return null;
 	}
+	/**
+	 * Returns a FuelType instance from the Server List equals to a given instance of FuelType (according to inner "equals" method)
+	 * @param fuelType The instance of FuelType to look for
+	 * @return Instance of FuelType.
+	 */
 	public FuelType findEqualFuelType(FuelType fuelType) {
 		  for(FuelType f : fuelTypesList) {
 			  if(f.equals(fuelType)) {
@@ -62,6 +84,11 @@ public class FuelTypesDBController {
 		  }
 		  return null;
 	}
+	/**
+	 * This method checks if a FuelType stock is lower than the minimum bound.
+	 * @param f The fueltype to check it's stock
+	 * @return True = lower then bound. 
+	 */
 	public Boolean checkFuelStock(FuelType f) {
 		if(f.getQuantity() < f.getLowFuelBound())
 			return true;

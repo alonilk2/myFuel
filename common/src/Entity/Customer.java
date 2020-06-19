@@ -8,7 +8,10 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
 import iF.SQLReady;
-
+/**
+ * This entity class contains all the information that Customer is being represented by.
+ *
+ */
 public class Customer extends User implements Serializable, SQLReady {
 	private int CustomerID;
 	private CustomerType customerType;
@@ -113,7 +116,11 @@ public class Customer extends User implements Serializable, SQLReady {
 	public void setCompanyID(String companyID) {
 		CompanyID = companyID;
 	}
-
+	/**
+	 * This method creates a new Statement to add a new Customer to the DB.
+	 * @param conn Connection to SQL Server
+	 * @return New row's ID in the DB.
+	 */
 	public int createNewAddSqlStatement(Connection conn) {
 		int custID = getCustomerID();
 		if (custID > -1) {

@@ -11,7 +11,10 @@ import java.util.List;
 import control.sqlController;
 import ocsf.server.ConnectionToClient;
 
-
+/**
+ * This server controller contains all the Run-Time data of the Order system.
+ * and also contains all the methods required for Order's functionalities.
+ */
 public class OrderDBController {
 	private sqlController sqlcontrol;
 	private EchoServer Server;
@@ -21,6 +24,9 @@ public class OrderDBController {
 		this.Server = Server;
 	    ordersList = new ArrayList<Order>();
 	}
+	/**
+	 * This method initializes the List of Orders on server startup.
+	 */
 	public boolean initializeList() {
 		//Initialize Orders List
 		try {
@@ -37,6 +43,11 @@ public class OrderDBController {
 		}
 		return false;
 	}
+	/**
+	 * This method creates adds a new order to DB.
+	 * @param client Connection instance to the client.
+	 * @return True on success.
+	 */
 	public boolean addNewOrderToDB(Order newOrder, ConnectionToClient client) {
 		String qry = "INSERT INTO orders (ordersum, fueltype, quantity, orderdate, customerID, fuelcompany, orderhour)" + " VALUES (?,?,?,?,?,?,?)";
 		Connection conn = sqlcontrol.getConnection();

@@ -10,7 +10,10 @@ import java.time.*;
 import java.util.List;
 
 import iF.SQLReady;
-
+/**
+ * This entity class contains all the information that HomeFuelOrder is being represented by.
+ *
+ */
 public class HomeFuelOrder extends Order implements Serializable, SQLReady {
 
 	private static final long serialVersionUID = -5842846747340584537L;
@@ -59,7 +62,11 @@ public class HomeFuelOrder extends Order implements Serializable, SQLReady {
 	public void setFastSupply(Boolean fastSupply) {
 		this.fastSupply = fastSupply;
 	}
-
+	/**
+	 * This method creates a new Statement to add a new Order to the DB.
+	 * @param conn Connection to SQL Server
+	 * @return New row's ID in the DB.
+	 */
 	public int createNewAddSqlStatement(Connection conn) {
 		int genID = super.createNewAddSqlStatement(conn);
 		if(genID > -1) {

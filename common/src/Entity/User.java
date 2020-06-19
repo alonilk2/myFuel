@@ -7,7 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import iF.SQLReady;
-
+/**
+ * This entity class contains all the information that a User is being represented by.
+ *
+ */
 public class User implements Serializable{
 
 	private String firstname;
@@ -77,7 +80,11 @@ public class User implements Serializable{
 	public void setUserID(int userid) {
 		UserID = userid;
 	}
-
+	/**
+	 * This method creates a new Statement to add a new User to the DB.
+	 * @param conn Connection to SQL Server
+	 * @return New row's ID in the DB.
+	 */
 	public int createNewAddSqlStatementUser(Connection conn) {
 		int userid = getUserID();
 		if(userid > -1 && !(this instanceof Employee)) {

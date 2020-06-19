@@ -1,7 +1,10 @@
 package Entity;
 
 import java.io.Serializable;
-
+/**
+ * This entity class contains all the information that Fuel Company is being represented by.
+ *
+ */
 public class FuelCompany implements Serializable {
 	private String companyName;
 	private int companyID;

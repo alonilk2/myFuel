@@ -7,7 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import iF.SQLReady;
-
+/**
+ * This entity class contains all the information that car is being represented by.
+ *
+ */
 public class Car implements Serializable, SQLReady{
 	private Integer CustomerID;
 	private Integer CarID;
@@ -41,7 +44,11 @@ public class Car implements Serializable, SQLReady{
 	}
 	
 	
-
+	/**
+	 * This method creates a new Statement to add a new car to the DB.
+	 * @param conn Connection to SQL Server
+	 * @return New row's ID in the DB.
+	 */
 	public int createNewAddSqlStatement(Connection conn) {
 		int carID = getCarID();
 		if(carID > -1) {

@@ -7,7 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import iF.SQLReady;
-
+/**
+ * This entity class contains all the information that OrderFromSupplier is being represented by.
+ *
+ */
 public class OrderFromSupplier implements Serializable, SQLReady {
 	private Integer orderID;
 	private OrderStatus orderStatus;
@@ -48,6 +51,11 @@ public class OrderFromSupplier implements Serializable, SQLReady {
 	public void setorderID(Integer orderID) {
 		this.orderID = orderID;
 	}
+	/**
+	 * This method creates a new Statement to add a new Order to the DB.
+	 * @param conn Connection to SQL Server
+	 * @return New row's ID in the DB.
+	 */
 	@Override
 	public int createNewAddSqlStatement(Connection conn) {
 		String qry;

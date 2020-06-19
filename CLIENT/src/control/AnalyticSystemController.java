@@ -25,6 +25,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -110,7 +111,7 @@ public class AnalyticSystemController implements Initializable {
 		}
 		/**
 		 * This method initializes all the JavaFX Objects in AnalyticSystemForm with the correct initial values,
-		 * and also add listeners to those objects.
+		 * and also adds listeners to those objects.
 		 */
 		@Override
 		public void initialize(URL arg0, ResourceBundle arg1) {
@@ -258,10 +259,11 @@ public class AnalyticSystemController implements Initializable {
 			    @Override
 			    public void run() {
 					filteredData = new FilteredList<>(olist, p -> true);
-					tableview.setItems(filteredData);
-					rankcol.setSortType(TableColumn.SortType.DESCENDING);
 					tableview.getSortOrder().add(rankcol);
-					tableview.sort();
+					rankcol.setSortType(TableColumn.SortType.DESCENDING);
+			        SortedList<RankingCustomer> SortedList = new SortedList<>(filteredData);
+					tableview.setItems(SortedList);
+			        SortedList.comparatorProperty().bind(tableview.comparatorProperty());
 					customercount.setText(String.valueOf(tableview.getItems().size()));
 			    }
 			});

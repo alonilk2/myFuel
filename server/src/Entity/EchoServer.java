@@ -7,16 +7,15 @@ import iF.SQLReady;
 import ocsf.server.*;
 
 
-
+/**
+ * This server controller contains instances of all Server-side controllers
+ * and also contains all the methods required for the Server to work properly.
+ */
 public class EchoServer extends AbstractServer 
 {
-  //Class variables *************************************************
   final public static int DEFAULT_PORT = 5555;
   
-  //Global Lists ****************************************************
-  
   //Controllers *****************************************************
-  
   private UserController usercontrol;
   private sqlController sqlcontrol;
   private HomeFuelOrderDBController HFOControl;
@@ -32,13 +31,17 @@ public class EchoServer extends AbstractServer
   private FuelTypeTempDBController FTTControl;
   
   //Constructors ****************************************************
-  
   public EchoServer(int port) 
   {
     super(port);
     usercontrol = new UserController();
   }
-
+/**
+ * This method get's an object from the client and passes it to the Request controller for parsing, 
+ * or passes it to the handleObjectsFromClient method if it's an "add Object" request.
+ *	@param msg The object sent from the client.
+ *	@param client The connection instance to the client.
+ */
   public void handleMessageFromClient(Object msg, ConnectionToClient client)  {
 	System.out.println("Message received: " + msg + " from " + client);
 	if(msg instanceof Request) {
@@ -56,7 +59,12 @@ public class EchoServer extends AbstractServer
 	}
 
   }
-  private void handleObjectsFromClient(Object msg, ConnectionToClient client) throws IOException {
+  /**
+   * This method get's an object from the client and handles it as an "Add object" request.
+   *	@param msg The object sent from the client.
+   *	@param client The connection instance to the client.
+   */
+  	private void handleObjectsFromClient(Object msg, ConnectionToClient client) throws IOException {
 	  if(msg != null) {
 		  if(msg instanceof SQLReady) {
 			  //New HomeFuelOrder instance creation
@@ -105,7 +113,7 @@ public class EchoServer extends AbstractServer
 		  }
 	  }
   }
-  public saleTemplateDBController getSaleTemplateControler() {
+  	public saleTemplateDBController getSaleTemplateControler() {
 		return this.saleTempControl;
 	}
 	public void setSaleTemplateController(saleTemplateDBController saleControl) {
@@ -118,13 +126,13 @@ public class EchoServer extends AbstractServer
 	public void setHFOControl(HomeFuelOrderDBController hFOControl) {
 		HFOControl = hFOControl;
 	}
-	  public CarDBController getCarControl() {
-			return CarControl;
-		}
+	public CarDBController getCarControl() {
+		return CarControl;
+	}
 
-		public void setCarControl(CarDBController carControl) {
-			CarControl = carControl;
-		}
+	public void setCarControl(CarDBController carControl) {
+		CarControl = carControl;
+	}
 
 	public OrderDBController getOrderControl() {
 		return OrderControl;
@@ -158,7 +166,7 @@ public class EchoServer extends AbstractServer
 		OFSControl = oFSControl;
 	}
 
-public UserController getUsercontrol() {
+	public UserController getUsercontrol() {
 		return usercontrol;
 	}
 
@@ -174,29 +182,30 @@ public UserController getUsercontrol() {
 		this.sqlcontrol = sqlcontrol;
 	}
 
-protected void serverStarted()
-  {
-    System.out.println("Server listening for connections on port " + getPort());
-  }
+	protected void serverStarted()
+	{
+		System.out.println("Server listening for connections on port " + getPort());
+	}
   
-
-
-  protected void serverStopped()
-  {
-    System.out.println("Server has stopped listening for connections.");
-  }
-  private void init() {
-	  FTControl = new FuelTypesDBController(sqlcontrol);
-	  OrderControl = new OrderDBController(sqlcontrol, this);
-	  HFOControl = new HomeFuelOrderDBController(sqlcontrol, this);
-	  EmployeeControl = new EmployeeDBController(sqlcontrol);
-	  OFSControl = new OrderFromSupplierDBController(sqlcontrol, this);
-	  ReqControl = new RequestDBController(sqlcontrol, this);
-	  CarControl = new CarDBController(sqlcontrol, this);
-	  FTTControl = new FuelTypeTempDBController(sqlcontrol);
-	  FCController = new FuelCompanyDBController(sqlcontrol);
-	  ASControl = new AnalyticSystemDBController(sqlcontrol,this);
-	  saleTempControl=new saleTemplateDBController(sqlcontrol);
+	protected void serverStopped()
+	{
+		System.out.println("Server has stopped listening for connections.");
+	}
+	/**
+	 * This method initializes all Server-Side controllers and calls it's initializeList methods.
+	 */
+	private void init() {
+		FTControl = new FuelTypesDBController(sqlcontrol);
+		OrderControl = new OrderDBController(sqlcontrol, this);
+		HFOControl = new HomeFuelOrderDBController(sqlcontrol, this);
+		EmployeeControl = new EmployeeDBController(sqlcontrol);
+		OFSControl = new OrderFromSupplierDBController(sqlcontrol, this);
+		ReqControl = new RequestDBController(sqlcontrol, this);
+		CarControl = new CarDBController(sqlcontrol, this);
+		FTTControl = new FuelTypeTempDBController(sqlcontrol);
+		FCController = new FuelCompanyDBController(sqlcontrol);
+		ASControl = new AnalyticSystemDBController(sqlcontrol,this);
+		saleTempControl=new saleTemplateDBController(sqlcontrol);
 	    //////////////////////////////////////////////////////
 	    //			Initialize Server Lists & Variables		//
 	    //						On start up					//
@@ -211,41 +220,41 @@ protected void serverStarted()
 	    ASControl.initializeList();
 	    //FTTControl.initializeList();
 	    saleTempControl.initializeList();
-  }
-  public AnalyticSystemDBController getASControl() {
-	return ASControl;
-}
+	}
+	public AnalyticSystemDBController getASControl() {
+		return ASControl;
+	}
 
-public FuelCompanyDBController getFCController() {
-	return FCController;
-}
+	public FuelCompanyDBController getFCController() {
+		return FCController;
+	}
+	
+	public void setFCController(FuelCompanyDBController fCController) {
+		FCController = fCController;
+	}
 
-public void setFCController(FuelCompanyDBController fCController) {
-	FCController = fCController;
-}
-
-public static void main(String[] args) 
-  {
-    int port = 0;
-    try
-    {
-      port = Integer.parseInt(args[0]); //Get port from command line
-    }
-    catch(Throwable t)
-    {
-      port = DEFAULT_PORT;
-    }
-    EchoServer sv = new EchoServer(port);
-    try 
-    {
-      sv.listen();
-    } 
-    catch (Exception ex) 
-    {
-      System.out.println("ERROR - Could not listen for clients!");
-    }
-    sv.sqlcontrol = new sqlController();
-    sv.init();
-  }
+	public static void main(String[] args) 
+	{
+	    int port = 0;
+	    try
+	    {
+	      port = Integer.parseInt(args[0]); //Get port from command line
+	    }
+	    catch(Throwable t)
+	    {
+	      port = DEFAULT_PORT;
+	    }
+	    EchoServer sv = new EchoServer(port);
+	    try 
+	    {
+	      sv.listen();
+	    } 
+	    catch (Exception ex) 
+	    {
+	      System.out.println("ERROR - Could not listen for clients!");
+	    }
+	    sv.sqlcontrol = new sqlController();
+	    sv.init();
+	}
 }
 //End of EchoServer class

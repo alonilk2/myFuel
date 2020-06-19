@@ -12,7 +12,10 @@ import java.util.List;
 
 import control.sqlController;
 import ocsf.server.ConnectionToClient;
-
+/**
+ * This server controller contains all the Run-Time data of the Analytic System,
+ * and also contains all the methods required for Analytic System operations.
+ */
 public class AnalyticSystemDBController {
 	private sqlController sqlcontrol;
 	private EchoServer Server;
@@ -23,6 +26,10 @@ public class AnalyticSystemDBController {
 		this.Server = Server;
 		rankingCustomers = new ArrayList<RankingCustomer>();
 	}
+	/**
+	 * This method recalculates rankings for all the customers and updates the client's tableview with the updated data.
+	 * @param client The connection instance of the specific client.
+	 */
 	public void RecalculateRankings(ConnectionToClient client) {
 		ordersList = Server.getOrderControl().getOrdersList();
 		rankingCustomers = new ArrayList<RankingCustomer>();
@@ -50,6 +57,9 @@ public class AnalyticSystemDBController {
 			client.sendToClient(rankingCustomers);
 		} catch (SQLException | IOException e) {e.printStackTrace();}
 	}
+	/**
+	 * This method uploads new rankings to the DB.
+	 */
 	private void uploadRankingsToDB() throws SQLException {
 		PreparedStatement stm;
 		stm = sqlcontrol.getConnection().prepareStatement("DELETE FROM analyticsystem");
@@ -62,6 +72,9 @@ public class AnalyticSystemDBController {
 			stm.execute();
 		}
 	}
+	/**
+	 * This method initializes the List of RankingCustomers on server startup.
+	 */
 	public boolean initializeList() {
 		try {
 			ordersList = Server.getOrderControl().getOrdersList();
@@ -87,6 +100,10 @@ public class AnalyticSystemDBController {
 		}
 		return false;
 	}
+	/**
+	 * This method sends the Rankings list to the client.
+	 * @param client The connection instance to the specific client.
+	 */
 	public void getCustomersRankList(ConnectionToClient client) {
 		try {
 			client.sendToClient(this.rankingCustomers);
@@ -94,6 +111,11 @@ public class AnalyticSystemDBController {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * This method sends list of ID's of customers that bought fuel of type FuelType.
+	 * @param client The connection instance of a specific client.
+	 * @param FuelType The FuelType the customers bought.
+	 */
 	public void getCustomersByFuelType(ConnectionToClient client, String FuelType) {
 		try {
 			ordersList = Server.getOrderControl().getOrdersList();

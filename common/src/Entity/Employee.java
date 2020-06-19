@@ -4,7 +4,10 @@ import java.io.Serializable;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
+/**
+ * This entity class contains all the information that Employee is being represented by.
+ *
+ */
 public class Employee extends User implements Serializable{
 
 	private int employeeid;
